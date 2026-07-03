@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ══════════════════════════════════════════════════════════════
+  DIVICA — FICHA DE EQUIPO (diseño Equipment Store)
+  Una sola página muestra todas las fichas según la URL:
+    ficha.html?id=tanque-vacuum
+    ficha.html?id=frac-tank
+    ficha.html?id=low-boy
+    ficha.html?id=plataforma
+    ficha.html?id=cisterna-granel
+
+  CÓMO PUBLICAR:
+  1. Sube este archivo al repo "equipos" con el nombre "ficha.html"
+     (queda en mdivica.github.io/equipos/ficha.html)
+  2. En cada página de producto de Squarespace, reemplaza el contenido
+     por el bloque de código correspondiente (ver archivo
+     squarespace-bloques-fichas.html)
+══════════════════════════════════════════════════════════════ -->
+<title>Ficha de Equipo | DIVICA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F5F6F8;
+  --surface: #FFFFFF;
+  --border:  #E4E6EA;
+  --text:    #111827;
+  --muted:   #6B7280;
+  --faint:   #9CA3AF;
+  --navy:    #1B2F4E;
+  --navy-dk: #111f34;
+  --accent:  #D05F1B;
+  --accent-bg:#FEF3EC;
+  --tag-bg:  #EEF2FF;
+  --tag:     #3730A3;
+  --r: 10px;
+  --tr: 0.16s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+
+/* ── TOPBAR ── */
+#topbar{background:var(--navy-dk);color:rgba(255,255,255,.7);font-size:12px;text-align:center;padding:7px 16px}
+#topbar a{color:rgba(255,255,255,.9);text-decoration:none;font-weight:500}
+
+/* ── HEADER ── */
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 1px 8px rgba(0,0,0,.07)}
+.header-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:16px}
+.logo-wrap{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+.logo-img{height:40px;width:auto}
+.logo-label{display:flex;flex-direction:column;line-height:1.2}
+.logo-label .brand{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.logo-label .sub{font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.header-actions{display:flex;gap:10px;margin-left:auto;flex-shrink:0}
+.btn-wa{display:flex;align-items:center;gap:8px;background:var(--accent);color:white;border:none;border-radius:7px;padding:10px 18px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--tr);white-space:nowrap}
+.btn-wa:hover{background:#b8511a}
+.btn-phone{display:flex;align-items:center;gap:7px;background:none;border:1.5px solid var(--border);border-radius:7px;padding:9px 14px;font-family:inherit;font-size:13px;font-weight:500;color:var(--text);text-decoration:none;transition:var(--tr);white-space:nowrap}
+.btn-phone:hover{border-color:var(--navy);color:var(--navy)}
+
+/* ── BREADCRUMB / HERO ── */
+#ficha-hero{background:var(--navy);padding:34px 24px 38px;position:relative;overflow:hidden}
+#fichaHeroBg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(17,31,52,.96) 0%,rgba(27,47,78,.85) 100%);z-index:1}
+#fichaHeroImg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.30}
+.hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto}
+.crumb{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:14px}
+.crumb a{color:rgba(255,255,255,.8);text-decoration:none;font-weight:600}
+.crumb a:hover{color:white}
+.ficha-eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-bg);padding:4px 12px;border-radius:50px;margin-bottom:12px}
+.ficha-title{font-size:clamp(22px,4vw,36px);font-weight:800;color:white;line-height:1.12;letter-spacing:-.02em;margin-bottom:8px;max-width:820px}
+.ficha-sub{font-size:15px;color:rgba(255,255,255,.65);max-width:640px;line-height:1.6}
+.ficha-sku{font-size:11.5px;color:rgba(255,255,255,.45);margin-top:10px;letter-spacing:.06em}
+
+/* ── LAYOUT ── */
+.ficha-layout{max-width:1200px;margin:28px auto;padding:0 24px;display:grid;grid-template-columns:1.15fr 1fr;gap:28px;align-items:start}
+
+/* ── GALERÍA ── */
+.gallery-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;position:sticky;top:84px}
+.gallery-main{height:430px;display:flex;align-items:center;justify-content:center;background:#F8F9FB;border-bottom:1px solid var(--border);overflow:hidden;font-size:90px}
+.gallery-main img{width:100%;height:100%;object-fit:contain;object-position:center;padding:16px}
+.gallery-thumbs{display:flex;gap:8px;padding:12px 14px;overflow-x:auto;scrollbar-width:thin;background:#fff}
+.gallery-thumbs:empty{display:none}
+.gallery-thumb{width:70px;height:70px;flex-shrink:0;border-radius:6px;overflow:hidden;border:2px solid var(--border);cursor:pointer;background:#F8F9FB;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+.gallery-thumb:hover{border-color:var(--navy)}
+.gallery-thumb.active{border-color:var(--accent)}
+.gallery-thumb img{width:100%;height:100%;object-fit:contain;padding:3px}
+
+/* ── PANEL DERECHO ── */
+.info-col{display:flex;flex-direction:column;gap:18px}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px}
+.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.ficha-desc{font-size:14px;color:var(--muted);line-height:1.7;white-space:pre-line}
+.apps-tags{display:flex;flex-wrap:wrap;gap:6px}
+.app-tag{font-size:12px;font-weight:500;background:var(--tag-bg);color:var(--tag);border-radius:5px;padding:5px 11px}
+.incluye-list{list-style:none}
+.incluye-list li{display:flex;gap:9px;font-size:13.5px;color:var(--muted);padding:5px 0;line-height:1.5}
+.incluye-list li::before{content:"✓";color:#059669;font-weight:800;flex-shrink:0}
+
+/* CTA */
+.cta-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px}
+.cta-price{font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.cta-price b{display:block;font-size:19px;color:var(--navy);font-weight:800;letter-spacing:-.01em;text-transform:none}
+.cta-buttons{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.btn-wa-big{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--accent);color:white;border:none;border-radius:9px;padding:14px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;transition:var(--tr)}
+.btn-wa-big:hover{background:#b8511a}
+.btn-call{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--bg);color:var(--navy);border:1.5px solid var(--border);border-radius:9px;padding:13px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--tr)}
+.btn-call:hover{border-color:var(--navy);background:#EEF2FF}
+.cta-note{font-size:11.5px;color:var(--faint);margin-top:12px;line-height:1.5;text-align:center}
+
+/* ── SPECS ── */
+.specs-section{max-width:1200px;margin:0 auto 34px;padding:0 24px}
+.specs-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px}
+.specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.spec-row{display:contents}
+.spec-row>span{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border)}
+.spec-row:last-child>span{border-bottom:none}
+.spec-row>span:first-child{background:var(--bg);color:var(--muted);font-weight:500;border-right:1px solid var(--border)}
+.spec-row>span:last-child{color:var(--text);font-weight:600}
+
+/* ── OTROS EQUIPOS ── */
+.related-section{max-width:1200px;margin:0 auto 40px;padding:0 24px}
+.related-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.related-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;text-decoration:none;transition:var(--tr);display:flex;flex-direction:column}
+.related-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.10);border-color:#C7D2FE;transform:translateY(-2px)}
+.related-img{height:120px;background:#F8F9FB;border-bottom:1px solid var(--border);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.related-img img{width:100%;height:100%;object-fit:cover}
+.related-body{padding:11px 13px}
+.related-name{font-size:13px;font-weight:700;color:var(--text);line-height:1.3}
+.related-cat{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── FRANJA CONFIANZA ── */
+.trust{background:var(--navy);color:#fff;padding:30px 24px;margin-top:8px}
+.trust-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;text-align:center}
+.trust b{display:block;color:var(--accent);font-size:14px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.trust p{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.55}
+
+/* ── FOOTER ── */
+footer{background:var(--navy-dk);color:rgba(255,255,255,.5);font-size:12.5px;text-align:center;padding:26px 24px;line-height:1.7}
+footer strong{color:rgba(255,255,255,.9)}
+footer a{color:rgba(255,255,255,.65);text-decoration:none}
+footer a:hover{color:white}
+.footer-div{margin:0 8px;opacity:.3}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .ficha-layout{grid-template-columns:1fr}
+  .gallery-card{position:static}
+  .gallery-main{height:300px}
+  .specs-grid{grid-template-columns:1fr}
+  .spec-row>span:first-child{border-right:none;border-bottom:1px solid var(--border)}
+}
+@media(max-width:768px){
+  .header-inner{flex-wrap:wrap;padding:10px 12px;gap:8px}
+  .logo-img{height:32px}
+  .logo-label .sub{display:none}
+  .btn-phone{display:none}
+  .btn-wa{font-size:12px;padding:8px 12px}
+  #ficha-hero{padding:22px 14px 26px}
+  .ficha-layout{margin:16px auto;padding:0 12px;gap:14px}
+  .specs-section,.related-section{padding:0 12px}
+  .gallery-main{height:230px}
+  .info-card,.cta-card,.specs-card{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ════ TOPBAR ════ -->
+<div id="topbar">
+  <span>Entrega en toda Venezuela &nbsp;·&nbsp; Fabricante directo — sin intermediarios</span>
+  &nbsp;·&nbsp;
+  <a href="tel:+584144614433">+58 414-461-4433</a>
+  &nbsp;/&nbsp;
+  <a href="tel:+584149451507">+58 414-945-1507</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:ndiaz@mdivica.com">ndiaz@mdivica.com</a>
+</div>
+
+<!-- ════ HEADER ════ -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo-wrap">
+      <img src="https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png" alt="DIVICA" class="logo-img" onerror="this.style.display='none'">
+      <div class="logo-label">
+        <span class="brand">DIVICA</span>
+        <span class="sub">Equipment Store</span>
+      </div>
+    </a>
+    <div class="header-actions">
+      <a href="tel:+584144614433" class="btn-phone">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        <span>0414-461-4433</span>
+      </a>
+      <a id="headerWa" href="#" class="btn-wa" target="_blank">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Cotizar por WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ════ HERO ════ -->
+<section id="ficha-hero">
+  <img id="fichaHeroImg" src="" alt="">
+  <div id="fichaHeroBg"></div>
+  <div class="hero-inner">
+    <div class="crumb"><a href="index.html">← Catálogo de equipos</a> &nbsp;/&nbsp; <span id="crumbCat"></span></div>
+    <span class="ficha-eyebrow" id="fEyebrow"></span>
+    <h1 class="ficha-title" id="fTitle"></h1>
+    <p class="ficha-sub" id="fSub"></p>
+    <div class="ficha-sku" id="fSku"></div>
+  </div>
+</section>
+
+<!-- ════ LAYOUT ════ -->
+<div class="ficha-layout">
+  <div class="gallery-card">
+    <div class="gallery-main" id="galleryMain"></div>
+    <div class="gallery-thumbs" id="galleryThumbs"></div>
+  </div>
+
+  <div class="info-col">
+    <div class="info-card">
+      <div class="section-title">Descripción</div>
+      <p class="ficha-desc" id="fDesc"></p>
+    </div>
+    <div class="info-card" id="appsCard">
+      <div class="section-title">Aplicaciones</div>
+      <div class="apps-tags" id="fApps"></div>
+    </div>
+    <div class="info-card" id="incluyeCard">
+      <div class="section-title">Incluye</div>
+      <ul class="incluye-list" id="fIncluye"></ul>
+    </div>
+    <div class="cta-card">
+      <div class="cta-price">Precio<b>A solicitud — cotización sin compromiso</b></div>
+      <div class="cta-buttons">
+        <a class="btn-wa-big" id="fWa" href="#" target="_blank">
+          <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Solicitar cotización
+        </a>
+        <a class="btn-call" href="tel:+584144614433">📞 Llamar: 0414-461-4433</a>
+      </div>
+      <p class="cta-note">Atención técnica directa con el fabricante. Fabricación a la medida disponible.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SPECS ════ -->
+<div class="specs-section">
+  <div class="specs-card">
+    <div class="section-title">Especificaciones Técnicas</div>
+    <div class="specs-grid" id="fSpecs"></div>
+  </div>
+</div>
+
+<!-- ════ OTROS EQUIPOS ════ -->
+<div class="related-section">
+  <div class="related-title">Otros equipos DIVICA</div>
+  <div class="related-grid" id="relatedGrid"></div>
+</div>
+
+<!-- ════ CONFIANZA ════ -->
+<section class="trust">
+  <div class="trust-inner">
+    <div><b>21+ años</b><p>Diseñando y fabricando equipos en Venezuela.</p></div>
+    <div><b>Fabricante directo</b><p>Planta propia en Ejido, Mérida. Sin intermediarios.</p></div>
+    <div><b>Repuestos originales</b><p>Partes y componentes con soporte en campo.</p></div>
+    <div><b>Garantía de fábrica</b><p>Manual técnico y asistencia nacional e internacional.</p></div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <strong>Multiservicios DIVICA, C.A.</strong>
+  &nbsp;|&nbsp; RIF J-31713732-9<br>
+  <span>Av. Centenario, Sector San Onofre, Galpón #1, Ejido, Mérida, Venezuela</span><br>
+  <a href="tel:+584144614433">+58 414-461-4433</a><span class="footer-div">|</span>
+  <a href="tel:+584149451507">+58 414-945-1507</a><span class="footer-div">|</span>
+  <a href="mailto:ndiaz@mdivica.com">ndiaz@mdivica.com</a><span class="footer-div">|</span>
+  <a href="https://www.mdivica.com" target="_blank">www.mdivica.com</a>
+</footer>
+
+<script>
+const SS = "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/";
+
+const FICHAS = {
+  "tanque-vacuum": {
+    eyebrow: "Línea Insignia — Tanques Vacuum",
+    cat: "Tanques Vacuum",
+    sku: "DVE-MDV-160",
+    title: "Tanque Vacuum MDV-DV — 160 y 230 Barriles",
+    sub: "El equipo de referencia para recolección, transporte y descarga de líquidos, lodos y residuos industriales en Venezuela.",
+    imgs: [
+      SS+"46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG",
+      SS+"d2826108-00d8-4a2e-a7b4-a044ef69c185/Tanque+vacuum",
+      SS+"45566980-2c5f-4253-b22d-1835f377a4d1/0CDCE629-66D6-4406-8F00-53A9242E0D58.PNG",
+      SS+"25eec41c-797f-4f54-b5ae-8d00dc5f30ab/Tanque+vacuum",
+      SS+"957a1f06-8009-45fc-983a-cb466a37bd68/tanque+vacuum"
+    ],
+    desc: "El Tanque Vacuum DIVICA es el equipo de referencia para operaciones de recolección, transporte y descarga de líquidos, lodos y residuos industriales en Venezuela. Diseñado y fabricado con ingeniería venezolana, el modelo MDV-DV cuenta con un conjunto motor diésel de 4 cilindros con 90 HP de potencia acoplado a bomba de vacío JUROP o Battioni Pagani, y capacidad de 160 barriles (25.440 litros).\n\nNuestros tanques vacuum son utilizados por empresas de la industria petrolera venezolana, operadores de gestión ambiental y empresas de saneamiento industrial a lo largo de todo el territorio nacional.\n\nCon más de 21 años fabricando equipos en Venezuela, DIVICA garantiza calidad en materiales (acero ASTM A-36), precisión en soldadura certificada y soporte técnico post-venta en campo.",
+    apps: ["Recolección de crudo derramado","Limpieza de pozos petroleros","Transporte de lodos y residuos","Saneamiento ambiental","Recuperación de derrames en campo"],
+    incluye: ["Manual técnico de operación y mantenimiento","Garantía de fabricación 6 meses","Suministro de repuestos y partes originales","Asistencia técnica a nivel nacional e internacional","Opcional: capacitación del operador on-site"],
+    specs: [
+      ["Capacidad","160 bbl (25.440 L) · disponible 230 bbl"],
+      ["Bomba de vacío","JUROP o Battioni Pagani — 425 CFM"],
+      ["Vacío máximo","28 inHg"],
+      ["Presión máx. de trabajo","15 PSI"],
+      ["Motor","Diésel 4 cilindros — 90 HP"],
+      ["Ejes","2 ejes con ballestas tipo R20"],
+      ["Válvulas carga/descarga","4 pulgadas"],
+      ["Filtros","Primario y secundario tipo ciclón"],
+      ["Material del tanque","Acero ASTM A-36"],
+      ["Peso en tara","8.800 kg"],
+      ["Dimensiones","11 m largo × 2,40 m ancho × 3,50 m alto"],
+      ["Garantía","6 meses"]
+    ],
+    waMsg: "Hola DIVICA, quiero cotizar el Tanque Vacuum MDV-DV 160 BLS. Ref: DVE-MDV-160"
+  },
+
+  "frac-tank": {
+    eyebrow: "Frac Tanks y Almacenamiento",
+    cat: "Frac Tanks",
+    sku: "DVE-MDFT-500",
+    title: "Frac Tank MDFT-DFT — 500 Barriles",
+    sub: "Tanque de almacenamiento portátil sobre tren de rodaje, fabricado en Venezuela para la industria petrolera nacional.",
+    imgs: [
+      SS+"d3e976e0-6bc6-45ff-bf9b-97556bed6fb1/8a5043c8-b273-47f9-892a-fbbd9f204c82.png",
+      SS+"5916749d-9169-44ef-98b3-2ac22fa4dc06/FRAC+TANK",
+      SS+"e5ec02a8-78f8-4ba5-9daa-06a9e8ba705a/FRAC+TANK+VENEZUELA",
+      SS+"eea3976e-367f-4c1c-a73b-a2a62f2a40ae/FRAC+TANK+VENEZUELA",
+      SS+"a3783b2c-bbb1-4562-814e-5dc1e88e6083/FRAC+TANK+VENEZUELA"
+    ],
+    desc: "Nuestro modelo estándar tiene capacidad de 500 barriles y está diseñado para el almacenamiento seguro de combustibles, agua, ácidos, geles y fluidos de perforación en operaciones de campo en la industria petrolera.\n\nFabricados en acero al carbono certificado con recubrimiento anticorrosivo de alta duración, los Frac Tanks DIVICA se destacan por su resistencia en condiciones extremas de campo. Su diseño sobre tren de rodaje permite fácil movilización con cualquier camión chuto.\n\nIncluye sistema de descarga con manifold múltiple en 6 pulgadas y tres salidas con válvulas de 4 pulgadas, puerto de carga en 4 pulgadas y drenaje en la parte trasera más baja del equipo.\n\nFabricación a medida disponible para requerimientos especiales de su operación. Entrega en todo Venezuela desde nuestra planta en Ejido, Mérida.",
+    apps: ["Fluidos de perforación y completación","Contención de combustibles en campo","Agua industrial y ácidos","Soporte a operaciones de workover y pulling"],
+    incluye: ["Dos bocas de visita de 21\" para inspección y limpieza","Medidor de nivel","Tren de rodaje para movilización","Recubrimiento anticorrosivo de alta resistencia","Opcional: válvula arrestallama 3\"×6\" y válvula ventosa 8\""],
+    specs: [
+      ["Capacidad","500 bbl (79.490 L) · disponible 250 bbl"],
+      ["Material","Acero al carbono certificado ASTM A-36"],
+      ["Descarga","Manifold 6\" con 3 salidas y válvulas 4\""],
+      ["Carga","Puerto de 4\""],
+      ["Drenaje","Parte trasera más baja del equipo"],
+      ["Bocas de visita","2 × 21\""],
+      ["Instrumentación","Medidor de nivel incluido"],
+      ["Movilización","Tren de rodaje — cualquier camión chuto"],
+      ["Recubrimiento","Anticorrosivo de alta resistencia"]
+    ],
+    waMsg: "Hola DIVICA, quiero cotizar el Frac Tank MDFT-DFT 500 BLS. Ref: DVE-MDFT-500"
+  },
+
+  "low-boy": {
+    eyebrow: "Carga Pesada",
+    cat: "Low Boys",
+    sku: "DVE-LBD-120",
+    title: "Low Boy MDVL-LBD para Carga Extrapesada",
+    sub: "Semirremolques especializados para maquinaria pesada, equipos industriales y cargas sobredimensionadas — de 30 a 120 toneladas.",
+    imgs: [
+      SS+"a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png",
+      SS+"cdf5e17e-f85e-4ea8-b863-8a9c9819920f/LOW+BOY+VENEZUELA",
+      SS+"7f22433c-17ba-48ad-8630-c30f88b3827c/LOW+BOY+VENEZUELA",
+      SS+"2b31dd1f-7e5f-4281-8913-4b43d04a89f8/LOW+BOY+VENEZUELA",
+      SS+"b8492083-0b2a-4645-be8a-d22181bfe4ed/LOW+BOY+VENEZUELA"
+    ],
+    desc: "Nuestros semirremolques Low Boy son equipos especializados para el transporte de maquinaria pesada, equipos industriales y cargas voluminosas en Venezuela.\n\nCon capacidades de carga desde 30 hasta 120 toneladas, estos remolques son la solución ideal para el traslado de excavadoras, grúas, transformadores, taladros petroleros de perforación o mantenimiento y cualquier carga sobredimensionada.\n\nFabricados en acero de alta resistencia, los Low Boys DIVICA se diseñan y configuran a la medida de cada cliente y tipo de carga. Cada unidad cumple con los estándares de seguridad vial venezolana para transporte especial.\n\nDiseño y fabricación a medida — consulta con nuestro equipo de ingeniería. Entrega en todo el territorio venezolano.",
+    apps: ["Maquinaria de construcción (excavadoras, bulldozers, grúas)","Equipos petroleros: BOP, separadores, unidades de bombeo","Mudanza de taladros cabilleros y de perforación","Transformadores eléctricos","Estructuras metálicas y módulos prefabricados"],
+    incluye: ["Configuración de ejes según tipo de carga","Rampa de acceso hidráulica o mecánica (según modelo)","Sistema eléctrico completo con luces de posición","Personalización de ancho, largo y ejes a la medida"],
+    specs: [
+      ["Capacidad de carga","30, 60, 80, 100 y 120 toneladas"],
+      ["Configuraciones","2, 3, 4 y más ejes según carga"],
+      ["Tipos","Cuna y plano"],
+      ["Rampa de acceso","Hidráulica o mecánica"],
+      ["Material","Acero de alta resistencia estructural con vigas robustas"],
+      ["Iluminación","Sistema eléctrico completo"],
+      ["Normativa","Seguridad vial venezolana para transporte especial"]
+    ],
+    waMsg: "Hola DIVICA, quiero cotizar un Low Boy MDVL-LBD. Ref: DVE-LBD-120"
+  },
+
+  "plataforma": {
+    eyebrow: "Carga Pesada",
+    cat: "Plataformas",
+    sku: "DVE-PLT-035",
+    title: "Plataforma de Carga Pesada — 2 y 3 Ejes",
+    sub: "Semirremolque versátil para transporte de carga pesada convencional, contenedores o materiales industriales — hasta 35 toneladas.",
+    imgs: [
+      SS+"b9813fe8-def7-419d-8f0c-92750a3a3d03/IMG_3021.JPEG",
+      SS+"646ec4a4-47fe-4cf2-866f-1dd09f0a7c98/3cb9fd99-aef2-4865-87ff-5d8d9e6147bd.JPEG",
+      SS+"588897c9-6832-438f-aa16-8f6e8c6b761c/bateas+3+ejes.JPEG",
+      SS+"b1463cdb-1f0c-41ef-82da-097e279648cb/20140910_134654.JPEG"
+    ],
+    desc: "Semirremolque de 2 y 3 ejes diseñado para el transporte de carga pesada convencional, contenedores o materiales industriales con capacidad de hasta 35 toneladas.\n\nFabricada en acero de alta resistencia con piso antideslizante, ofrece versatilidad de cargas gracias a su estructura reforzada para trabajos exigentes.\n\nCuenta con puntos de anclaje estratégicos, sistema de luces LED, frenos neumáticos y suspensión tipo Reyco de alto rendimiento según normas nacionales.\n\nUn equipo robusto para el transporte en todos los sectores productivos del país.",
+    apps: ["Carga pesada convencional","Transporte de contenedores","Materiales industriales","Construcción y manufactura","Logística"],
+    incluye: ["Piso antideslizante en acero de alta resistencia","Puntos de anclaje estratégicos","Sistema de luces LED","Frenos neumáticos según normas nacionales","Suspensión tipo Reyco de alto rendimiento"],
+    specs: [
+      ["Capacidad","Hasta 35 toneladas"],
+      ["Ejes","2 y 3 ejes"],
+      ["Material","Acero de alta resistencia"],
+      ["Piso","Antideslizante"],
+      ["Suspensión","Tipo Reyco de alto rendimiento"],
+      ["Frenos","Neumáticos"],
+      ["Iluminación","Sistema de luces LED"]
+    ],
+    waMsg: "Hola DIVICA, quiero cotizar una Plataforma de Carga Pesada 2/3 ejes. Ref: DVE-PLT-035"
+  },
+
+  "cisterna-granel": {
+    eyebrow: "Cisternas",
+    cat: "Cisternas",
+    sku: "DVE-MDVDT-01",
+    title: "Cisterna para Producto a Granel MDV-DT",
+    sub: "Cisterna neumática para el transporte de cemento, cal, harina y materiales pulverizados.",
+    imgs: [
+      SS+"7bd278ec-d13c-48d4-924a-b457a1770919/IMG_1750.JPEG",
+      SS+"e56c9d9d-7986-4c22-bbfb-10a32dcd3d4c/00252506-c579-46e1-a723-e3551bbb8832.JPEG",
+      SS+"9950c63e-390f-4291-b544-8c6cfc1a054d/20130806_085826.JPEG",
+      SS+"d4bbbf6f-d239-452d-9337-5d091750c2f4/20140312_173649.JPEG"
+    ],
+    desc: "Nuestra cisterna está diseñada para el transporte de productos pulverizados como cemento, cal, harina o materiales similares.\n\nConstruida en acero al carbono, su diseño optimiza la descarga del producto gracias a tres conos con una inclinación de 45 grados. Cada cono cuenta con un sistema de aireadores que se activan al realizar la presurización del equipo.\n\nTrabaja con sistema de blower o compresor neumático para la descarga, con válvula de alivio para garantizar un flujo eficiente y controlado.\n\nUna solución eficiente y segura para el transporte de materiales a granel en las industrias de construcción y alimentos.",
+    apps: ["Cemento y cal","Harina y alimentos","Materiales de construcción","Transporte a granel"],
+    incluye: ["Tres conos a 45° con sistema de aireadores","Válvula de alivio","Compatible con blower o compresor neumático"],
+    specs: [
+      ["Producto","Cemento, cal, harina y pulverizados"],
+      ["Material","Acero al carbono"],
+      ["Diseño","3 conos con inclinación de 45°"],
+      ["Descarga","Aireadores por cono, activados al presurizar"],
+      ["Presurización","Blower o compresor neumático"],
+      ["Seguridad","Válvula de alivio"]
+    ],
+    waMsg: "Hola DIVICA, quiero cotizar la Cisterna a Granel MDV-DT. Ref: DVE-MDVDT-01"
+  }
+};
+
+/* Tarjetas de "otros equipos" (enlazan a las demás fichas) */
+const RELATED = [
+  { id:"tanque-vacuum",  name:"Tanque Vacuum MDV-DV",       cat:"Tanques Vacuum", img: SS+"46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG" },
+  { id:"frac-tank",      name:"Frac Tank MDFT-DFT 500 BLS", cat:"Frac Tanks",     img: SS+"d3e976e0-6bc6-45ff-bf9b-97556bed6fb1/8a5043c8-b273-47f9-892a-fbbd9f204c82.png" },
+  { id:"low-boy",        name:"Low Boy MDVL-LBD",           cat:"Carga Pesada",   img: SS+"a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png" },
+  { id:"plataforma",     name:"Plataforma 2 y 3 Ejes",      cat:"Carga Pesada",   img: SS+"b9813fe8-def7-419d-8f0c-92750a3a3d03/IMG_3021.JPEG" },
+  { id:"cisterna-granel",name:"Cisterna a Granel MDV-DT",   cat:"Cisternas",      img: SS+"7bd278ec-d13c-48d4-924a-b457a1770919/IMG_1750.JPEG" }
+];
+
+/* ═══════ RENDER ═══════ */
+function getId(){
+  const m = location.search.match(/[?&]id=([^&]+)/);
+  return m ? decodeURIComponent(m[1]) : "tanque-vacuum";
+}
+const id = getId();
+const F = FICHAS[id] || FICHAS["tanque-vacuum"];
+
+document.title = F.title + " | Fabricante DIVICA Venezuela";
+document.getElementById("crumbCat").textContent = F.cat;
+document.getElementById("fEyebrow").textContent = F.eyebrow;
+document.getElementById("fTitle").textContent = F.title;
+document.getElementById("fSub").textContent = F.sub;
+document.getElementById("fSku").textContent = "REF: " + F.sku;
+document.getElementById("fDesc").textContent = F.desc;
+document.getElementById("fichaHeroImg").src = F.imgs[0] || "";
+
+const wa = "https://wa.me/584144614433?text=" + encodeURIComponent(F.waMsg);
+document.getElementById("fWa").href = wa;
+document.getElementById("headerWa").href = wa;
+
+/* Galería */
+const main = document.getElementById("galleryMain");
+const thumbs = document.getElementById("galleryThumbs");
+if(F.imgs.length){
+  main.innerHTML = '<img id="gMainImg" src="'+F.imgs[0]+'" alt="'+F.title.replace(/"/g,"&quot;")+' — fabricante DIVICA Venezuela">';
+  if(F.imgs.length>1){
+    thumbs.innerHTML = F.imgs.map((src,i)=>
+      '<div class="gallery-thumb'+(i===0?" active":"")+'" onclick="swapImg(this,\''+src+'\')"><img src="'+src+'" alt=""></div>'
+    ).join("");
+  }
+} else {
+  main.textContent = "🚛";
+}
+function swapImg(el,src){
+  document.getElementById("gMainImg").src = src;
+  document.querySelectorAll(".gallery-thumb").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+}
+
+/* Aplicaciones / Incluye */
+document.getElementById("fApps").innerHTML = (F.apps||[]).map(a=>'<span class="app-tag">'+a+'</span>').join("");
+if(!(F.apps||[]).length) document.getElementById("appsCard").style.display="none";
+document.getElementById("fIncluye").innerHTML = (F.incluye||[]).map(x=>'<li>'+x+'</li>').join("");
+if(!(F.incluye||[]).length) document.getElementById("incluyeCard").style.display="none";
+
+/* Specs */
+document.getElementById("fSpecs").innerHTML = (F.specs||[]).map(s=>
+  '<div class="spec-row"><span>'+s[0]+'</span><span>'+s[1]+'</span></div>'
+).join("");
+
+/* Otros equipos */
+document.getElementById("relatedGrid").innerHTML = RELATED.filter(r=>r.id!==id).map(r=>
+  '<a class="related-card" href="ficha.html?id='+r.id+'">'+
+    '<div class="related-img"><img loading="lazy" src="'+r.img+'" alt="'+r.name+'"></div>'+
+    '<div class="related-body"><div class="related-name">'+r.name+'</div><div class="related-cat">'+r.cat+'</div></div>'+
+  '</a>'
+).join("");
+
+/* JSON-LD Product */
+const ld = document.createElement("script");
+ld.type = "application/ld+json";
+ld.textContent = JSON.stringify({
+  "@context":"https://schema.org",
+  "@type":"Product",
+  "name": F.title,
+  "sku": F.sku,
+  "image": F.imgs,
+  "description": F.sub,
+  "brand": {"@type":"Brand","name":"DIVICA"},
+  "manufacturer": {"@type":"Organization","name":"Multiservicios DIVICA, C.A."}
+});
+document.head.appendChild(ld);
+</script>
+</body>
+</html>

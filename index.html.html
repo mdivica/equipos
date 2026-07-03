@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ══════════════════════════════════════════════════════════════
+  DIVICA EQUIPMENT STORE — Catálogo de Remolques y Semirremolques
+
+  CÓMO PUBLICAR:
+  1. Sube ESTE archivo a GitHub renombrado como "index.html"
+     (repo nuevo, ej. "equipos" → quedará en mdivica.github.io/equipos/)
+  2. En Squarespace pega el bloque "squarespace-bloque-equipos.html"
+     y ajusta la URL del iframe a tu URL de GitHub Pages.
+
+  MODO EDICIÓN:
+  - Abre la página con ?edit al final (ej. mdivica.github.io/equipos/?edit)
+    o presiona Ctrl+Shift+E → aparece el botón "Editar catálogo".
+  - Puedes: agregar/editar/eliminar equipos, subir imágenes (URL o desde
+    tu PC), editar categorías y el banner.
+  - Los cambios se guardan en TU navegador (localStorage).
+  - "💾 Guardar y publicar" descarga un index.html actualizado:
+    súbelo a GitHub reemplazando el anterior y queda publicado.
+══════════════════════════════════════════════════════════════ -->
+<title>DIVICA Equipment Store — Remolques y Semirremolques</title>
+<meta name="description" content="Catálogo oficial de equipos DIVICA: tanques vacuum, frac tanks, low boys, cisternas y plataformas fabricados en Venezuela. Fabricante directo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F5F6F8;
+  --surface: #FFFFFF;
+  --border:  #E4E6EA;
+  --text:    #111827;
+  --muted:   #6B7280;
+  --faint:   #9CA3AF;
+  --navy:    #1B2F4E;
+  --navy-dk: #111f34;
+  --accent:  #D05F1B;
+  --accent-bg:#FEF3EC;
+  --tag-bg:  #EEF2FF;
+  --tag:     #3730A3;
+  --r: 10px;
+  --tr: 0.16s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+
+/* ── EDIT MODE BANNER ── */
+#editBar{
+  display:none;position:sticky;top:0;z-index:999;
+  background:#4F46E5;color:white;padding:10px 20px;
+  align-items:center;gap:12px;flex-wrap:wrap;
+  box-shadow:0 2px 12px rgba(79,70,229,0.4);
+}
+#editBar.active{display:flex}
+#editBar .eb-label{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px}
+#editBar .eb-label span{background:rgba(255,255,255,0.2);border-radius:50px;padding:2px 10px;font-size:11px}
+#editBar .eb-actions{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.eb-btn{padding:7px 16px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:var(--tr)}
+.eb-save{background:white;color:#4F46E5}
+.eb-save:hover{background:#EEF2FF}
+.eb-reset{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3)}
+.eb-reset:hover{background:rgba(255,255,255,0.25)}
+.eb-exit{background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.3)}
+.eb-exit:hover{background:rgba(239,68,68,0.35);color:white}
+
+/* ── EDIT TOGGLE BUTTON (floating) ── */
+#editToggle{
+  position:fixed;bottom:28px;right:28px;z-index:998;
+  background:var(--navy);color:white;border:none;border-radius:50px;
+  padding:13px 20px;font-family:inherit;font-size:13px;font-weight:700;
+  cursor:pointer;box-shadow:0 4px 20px rgba(27,47,78,0.35);
+  display:none;align-items:center;gap:8px;transition:var(--tr);
+}
+#editToggle.visible{display:flex}
+#editToggle:hover{background:#243d63;transform:translateY(-2px)}
+#editToggle.editing{background:#4F46E5}
+#editToggle.editing:hover{background:#4338CA}
+
+/* ── EDIT HOVER HIGHLIGHT ── */
+body.edit-mode [data-editable]{cursor:pointer;border-radius:4px;transition:background 0.12s;outline:none}
+body.edit-mode [data-editable]:hover{background:rgba(99,102,241,0.10);outline:1.5px dashed #6366F1}
+
+/* ── EDIT OVERLAY EN TARJETAS ── */
+.card-edit-overlay{
+  display:none;position:absolute;inset:0;background:rgba(79,70,229,0.08);
+  border:2px dashed #6366F1;border-radius:var(--r);z-index:5;
+  flex-direction:column;align-items:center;justify-content:flex-start;
+  padding:10px;gap:6px
+}
+body.edit-mode .card-edit-overlay{display:flex}
+body.edit-mode .product-card{cursor:default}
+.card-edit-actions{display:flex;gap:6px}
+.card-edit-btn{
+  padding:6px 12px;border-radius:6px;font-size:11px;font-weight:700;border:none;cursor:pointer;
+  display:flex;align-items:center;gap:5px;transition:var(--tr)
+}
+.btn-edit-product{background:#4F46E5;color:white}
+.btn-edit-product:hover{background:#4338CA}
+.btn-delete-product{background:#EF4444;color:white}
+.btn-delete-product:hover{background:#DC2626}
+
+/* ── ADD PRODUCT CARD ── */
+#addProductCard{
+  display:none;background:none;border:2px dashed #C7D2FE;border-radius:var(--r);
+  min-height:260px;align-items:center;justify-content:center;flex-direction:column;
+  gap:10px;cursor:pointer;transition:var(--tr);color:#6366F1
+}
+#addProductCard:hover{background:#EEF2FF;border-color:#6366F1}
+#addProductCard .add-icon{font-size:32px;opacity:.6}
+#addProductCard .add-label{font-size:13px;font-weight:700}
+body.edit-mode #addProductCard{display:flex}
+
+/* ── BOTONES DE EDICIÓN (banner / categorías) ── */
+.banner-edit-btn{
+  display:none;position:absolute;top:14px;right:14px;z-index:10;
+  background:white;color:#4F46E5;border:none;border-radius:7px;
+  padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;
+  align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.15)
+}
+body.edit-mode .banner-edit-btn{display:flex}
+.sidebar-edit-cats{
+  display:none;background:var(--bg);border:1px solid var(--border);color:var(--muted);
+  border-radius:5px;padding:3px 9px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit
+}
+body.edit-mode .sidebar-edit-cats{display:block}
+
+/* ── EDITOR MODAL ── */
+.editor-overlay{
+  display:none;position:fixed;inset:0;background:rgba(10,15,30,.75);z-index:600;
+  align-items:flex-start;justify-content:center;padding:20px;backdrop-filter:blur(4px);overflow-y:auto
+}
+.editor-overlay.open{display:flex}
+.editor-box{
+  background:var(--surface);border-radius:14px;max-width:680px;width:100%;
+  box-shadow:0 32px 80px rgba(0,0,0,.35);animation:slideUp 0.22s cubic-bezier(0.34,1.2,0.64,1);
+  margin:auto
+}
+.editor-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px;border-bottom:1px solid var(--border);
+}
+.editor-title{font-size:17px;font-weight:800;color:var(--text)}
+.editor-close{
+  width:32px;height:32px;border-radius:50%;background:var(--bg);border:1px solid var(--border);
+  cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--muted)
+}
+.editor-body{padding:24px}
+.form-row{margin-bottom:18px}
+.form-row label{display:block;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.form-row input,.form-row textarea,.form-row select{
+  width:100%;padding:10px 13px;background:var(--bg);border:1.5px solid var(--border);
+  border-radius:8px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:var(--tr)
+}
+.form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:#6366F1;background:white}
+.form-row textarea{resize:vertical;min-height:80px;line-height:1.5}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.imgs-editor-list{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.img-row{display:flex;gap:8px;align-items:center}
+.img-row .thumb-box{
+  width:60px;height:60px;flex-shrink:0;border:1.5px solid var(--border);
+  border-radius:6px;overflow:hidden;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;font-size:22px
+}
+.img-row .thumb-box img{width:100%;height:100%;object-fit:contain;padding:3px;box-sizing:border-box}
+.img-row input{flex:1;font-family:inherit;font-size:12px}
+.img-row .del-img-btn{
+  background:none;border:1px solid var(--border);border-radius:5px;
+  color:var(--muted);cursor:pointer;padding:5px 9px;font-size:13px;flex-shrink:0
+}
+.img-row .del-img-btn:hover{color:#dc2626;border-color:#dc2626}
+.add-img-btn{
+  width:100%;background:var(--bg);border:1.5px dashed var(--border);
+  border-radius:7px;padding:8px;font-family:inherit;font-size:13px;
+  color:var(--muted);cursor:pointer;transition:var(--tr)
+}
+.add-img-btn:hover{border-color:var(--navy);color:var(--navy)}
+.upload-img-btn{
+  width:100%;background:#EEF2FF;border:1.5px dashed #6366F1;
+  border-radius:7px;padding:8px;font-family:inherit;font-size:13px;
+  color:#4F46E5;font-weight:600;cursor:pointer;transition:var(--tr);margin-top:6px
+}
+.upload-img-btn:hover{background:#E0E7FF}
+.specs-editor{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:6px}
+.spec-edit-row{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border)}
+.spec-edit-row:last-child{border-bottom:none}
+.spec-edit-row input{
+  flex:1;padding:9px 12px;border:none;border-radius:0;background:transparent;
+  font-family:inherit;font-size:13px;color:var(--text);outline:none
+}
+.spec-edit-row input:first-child{border-right:1px solid var(--border);background:var(--bg);color:var(--muted);font-weight:500}
+.spec-edit-row .del-spec{
+  padding:0 10px;background:none;border:none;cursor:pointer;color:var(--faint);
+  font-size:16px;transition:var(--tr);flex-shrink:0
+}
+.spec-edit-row .del-spec:hover{color:#EF4444}
+.add-spec-btn{
+  width:100%;padding:9px;background:var(--bg);border:none;border-top:1px solid var(--border);
+  font-family:inherit;font-size:12px;font-weight:600;color:#6366F1;cursor:pointer;transition:var(--tr)
+}
+.add-spec-btn:hover{background:#EEF2FF}
+.tags-input-wrap{
+  display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;
+  border:1.5px solid var(--border);border-radius:8px;cursor:text;min-height:42px;
+  background:var(--bg);align-items:center
+}
+.tags-input-wrap:focus-within{border-color:#6366F1;background:white}
+.tag-pill-edit{
+  background:var(--tag-bg);color:var(--tag);border-radius:4px;
+  padding:3px 8px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px
+}
+.tag-pill-edit button{background:none;border:none;cursor:pointer;color:var(--tag);font-size:13px;line-height:1;padding:0 2px}
+.tags-input-wrap input{
+  border:none;background:transparent;outline:none;font-family:inherit;
+  font-size:13px;flex:1;min-width:80px;padding:2px 4px
+}
+.badge-select{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.badge-opt{
+  padding:5px 14px;border-radius:50px;border:1.5px solid var(--border);
+  font-size:12px;font-weight:600;cursor:pointer;transition:var(--tr);color:var(--muted)
+}
+.badge-opt.selected{border-color:#6366F1;background:#EEF2FF;color:#4F46E5}
+.editor-footer{display:flex;gap:10px;padding:16px 24px;border-top:1px solid var(--border)}
+.btn-save-product{
+  flex:2;background:#4F46E5;color:white;border:none;border-radius:8px;
+  padding:12px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:var(--tr)
+}
+.btn-save-product:hover{background:#4338CA}
+.btn-cancel-editor{
+  flex:1;background:var(--bg);color:var(--muted);border:1.5px solid var(--border);
+  border-radius:8px;padding:12px;font-family:inherit;font-size:14px;font-weight:600;
+  cursor:pointer;transition:var(--tr)
+}
+.btn-cancel-editor:hover{border-color:var(--navy);color:var(--navy)}
+.banner-editor-box{max-width:560px}
+.color-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.color-swatch{width:32px;height:32px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:var(--tr)}
+.color-swatch.selected,.color-swatch:hover{border-color:#4F46E5;transform:scale(1.1)}
+.cats-editor-box{max-width:540px}
+.cat-edit-row{display:flex;flex-direction:column;gap:7px;padding:12px 0;border-bottom:1px solid var(--border)}
+.cat-edit-row:last-child{border-bottom:none}
+.cat-edit-top{display:flex;align-items:center;gap:8px}
+.cat-edit-icon{width:44px;padding:7px 6px;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;text-align:center;outline:none}
+.cat-edit-icon:focus{border-color:var(--navy)}
+.cat-edit-name{
+  flex:1;padding:7px 11px;border:1.5px solid var(--border);border-radius:6px;
+  font-family:inherit;font-size:13px;color:var(--text);outline:none;font-weight:600
+}
+.cat-edit-name:focus{border-color:var(--navy)}
+.cat-edit-desc{
+  width:100%;padding:7px 11px;border:1.5px solid var(--border);border-radius:6px;
+  font-family:inherit;font-size:12.5px;color:var(--text);outline:none;
+  resize:vertical;min-height:54px;box-sizing:border-box;line-height:1.5
+}
+.cat-edit-desc:focus{border-color:var(--navy)}
+.btn-del-cat{background:none;border:none;cursor:pointer;color:var(--faint);font-size:18px;transition:var(--tr)}
+.btn-del-cat:hover{color:#EF4444}
+.btn-add-cat{
+  width:100%;margin-top:12px;padding:9px;background:var(--bg);border:1.5px dashed var(--border);
+  border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;color:#6366F1;
+  cursor:pointer;transition:var(--tr)
+}
+.btn-add-cat:hover{background:#EEF2FF;border-color:#6366F1}
+@media(max-width:600px){.form-row-2{grid-template-columns:1fr}.editor-footer{flex-direction:column}}
+
+/* ── TOPBAR ── */
+#topbar{
+  background:var(--navy-dk);color:rgba(255,255,255,.7);
+  font-size:12px;text-align:center;padding:7px 16px;
+}
+#topbar a{color:rgba(255,255,255,.9);text-decoration:none;font-weight:500}
+
+/* ── HEADER ── */
+header{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:200;box-shadow:0 1px 8px rgba(0,0,0,.07);
+}
+.header-inner{
+  max-width:1340px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:16px;
+}
+.logo-wrap{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+.logo-img{height:40px;width:auto}
+.logo-label{display:flex;flex-direction:column;line-height:1.2}
+.logo-label .brand{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.logo-label .sub{font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.search-wrap{flex:1;max-width:560px;position:relative}
+.search-wrap input{
+  width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;
+  padding:10px 14px 10px 42px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:var(--tr)
+}
+.search-wrap input:focus{border-color:var(--navy);background:white}
+.search-wrap input::placeholder{color:var(--faint)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--faint);pointer-events:none}
+.header-actions{display:flex;gap:10px;margin-left:auto;flex-shrink:0}
+.btn-wa{
+  display:flex;align-items:center;gap:8px;background:var(--accent);color:white;
+  border:none;border-radius:7px;padding:10px 18px;font-family:inherit;
+  font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--tr);white-space:nowrap
+}
+.btn-wa:hover{background:#b8511a}
+.btn-phone{
+  display:flex;align-items:center;gap:7px;background:none;border:1.5px solid var(--border);
+  border-radius:7px;padding:9px 14px;font-family:inherit;font-size:13px;font-weight:500;
+  color:var(--text);text-decoration:none;transition:var(--tr);white-space:nowrap
+}
+.btn-phone:hover{border-color:var(--navy);color:var(--navy)}
+
+/* ── HERO BANNER ── */
+#heroBanner{
+  background:var(--navy);padding:40px 24px;text-align:center;
+  position:relative;overflow:hidden;
+}
+#heroBannerBg{
+  position:absolute;inset:0;z-index:0;
+  background:linear-gradient(135deg,rgba(17,31,52,.95) 0%,rgba(27,47,78,.8) 100%);
+}
+#heroBannerBg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35}
+.hero-content{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.hero-eyebrow{
+  display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-bg);padding:4px 12px;border-radius:50px;margin-bottom:14px
+}
+.hero-title{font-size:clamp(22px,4vw,34px);font-weight:800;color:white;line-height:1.15;letter-spacing:-.02em;margin-bottom:10px}
+.hero-subtitle{font-size:15px;color:rgba(255,255,255,.6);max-width:500px;margin:0 auto 22px;line-height:1.6}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:white;
+  border:none;border-radius:8px;padding:12px 24px;font-family:inherit;
+  font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;transition:var(--tr)
+}
+.hero-cta:hover{background:#b8511a;transform:translateY(-1px)}
+
+/* ── LAYOUT ── */
+.page-layout{
+  max-width:1340px;margin:28px auto;padding:0 24px;
+  display:grid;grid-template-columns:240px 1fr;gap:28px;align-items:start
+}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;position:sticky;top:80px
+}
+.sidebar-header{
+  padding:16px 18px 10px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border)
+}
+.sidebar-header-label{
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text)
+}
+.cat-list{list-style:none;padding:6px 0 10px}
+.cat-item button{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:8px 18px;background:none;border:none;border-left:2px solid transparent;font-family:inherit;
+  font-size:13px;font-weight:400;color:var(--muted);cursor:pointer;
+  text-align:left;transition:var(--tr);gap:8px
+}
+.cat-item button:hover{color:var(--text);border-left-color:var(--border)}
+.cat-item button.active{color:var(--text);font-weight:600;border-left-color:var(--accent)}
+.cat-count{margin-left:auto;font-size:11px;color:var(--faint);font-weight:400}
+.sidebar-contact{padding:14px 18px;background:var(--bg);border-top:1px solid var(--border)}
+.sidebar-contact-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.sidebar-contact a{
+  display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--navy);
+  text-decoration:none;font-weight:500;margin-bottom:6px;transition:var(--tr)
+}
+.sidebar-contact a:hover{color:var(--accent)}
+
+/* ── TOOLBAR ── */
+.toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;flex-wrap:wrap;gap:10px
+}
+.toolbar-left{display:flex;flex-direction:column}
+.toolbar-title{font-size:18px;font-weight:700;color:var(--text)}
+.toolbar-count{font-size:12px;color:var(--muted);margin-top:1px}
+.toolbar-cat-desc{
+  font-size:13px;color:var(--muted);line-height:1.5;
+  margin-top:6px;max-width:640px;display:none
+}
+.toolbar-cat-desc.visible{display:block}
+.sort-wrap select{
+  background:var(--surface);border:1px solid var(--border);border-radius:7px;
+  padding:8px 12px;font-family:inherit;font-size:13px;color:var(--text);outline:none;cursor:pointer
+}
+
+/* ── GRID ── */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:18px}
+
+/* ── PRODUCT CARD ── */
+.product-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  overflow:hidden;cursor:pointer;transition:box-shadow var(--tr),border-color var(--tr),transform var(--tr);
+  display:flex;flex-direction:column;position:relative
+}
+.product-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.10),0 16px 32px rgba(0,0,0,.08);border-color:#C7D2FE;transform:translateY(-2px)}
+.card-img{
+  height:230px;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;background:#F8F9FB;border-bottom:1px solid var(--border)
+}
+.card-img img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 0.3s ease}
+.product-card:hover .card-img img{transform:scale(1.04)}
+.card-img .img-placeholder{font-size:52px;opacity:.35;user-select:none}
+.card-badge-row{position:absolute;top:10px;left:10px;display:flex;gap:5px}
+.badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:4px}
+.badge-new{background:#059669;color:white}
+.badge-hot{background:var(--accent);color:white}
+.card-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:6px}
+.card-sku{font-size:10.5px;color:var(--faint);font-weight:500;letter-spacing:.04em}
+.card-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.35}
+.card-subtitle{font-size:12px;color:var(--muted);font-weight:400;line-height:1.4}
+.compat-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.compat-pill{font-size:10.5px;font-weight:500;color:var(--tag);background:var(--tag-bg);border-radius:4px;padding:2px 7px}
+.card-footer{padding:12px 16px 14px;border-top:1px solid var(--border);display:flex;gap:8px}
+.btn-specs{
+  flex:1;background:none;border:1.5px solid var(--border);border-radius:7px;
+  padding:8px;font-family:inherit;font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;transition:var(--tr)
+}
+.btn-specs:hover{border-color:var(--navy);background:#EEF2FF}
+.btn-quote-card{
+  flex:1.4;display:flex;align-items:center;justify-content:center;gap:6px;
+  background:var(--navy);color:white;border:none;border-radius:7px;
+  padding:8px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;
+  text-decoration:none;transition:var(--tr)
+}
+.btn-quote-card:hover{background:var(--navy-dk)}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted);display:none;grid-column:1/-1}
+.empty-state.show{display:block}
+.empty-icon{font-size:40px;margin-bottom:10px}
+
+/* ── DETAIL MODAL (standalone, se usa cuando NO está embebido en iframe) ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(10,15,30,.65);z-index:500;
+  align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)
+}
+.modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--surface);border-radius:14px;max-width:740px;width:100%;
+  max-height:92vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.30);
+  animation:slideUp 0.22s cubic-bezier(0.34,1.2,0.64,1)
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;padding:24px 26px 0;gap:16px}
+.modal-meta{flex:1}
+.modal-sku{font-size:11px;color:var(--faint);font-weight:500;margin-bottom:4px;letter-spacing:.04em}
+.modal-name{font-size:22px;font-weight:800;color:var(--text);line-height:1.2;letter-spacing:-.02em}
+.modal-close{
+  width:34px;height:34px;border-radius:50%;background:var(--bg);border:1px solid var(--border);
+  cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);flex-shrink:0;transition:var(--tr)
+}
+.modal-close:hover{background:var(--border);color:var(--text)}
+.modal-img-area{
+  background:#F8F9FB;border-top:1px solid var(--border);
+  margin:20px 0 0;overflow:hidden
+}
+.gallery-main{
+  height:420px;display:flex;align-items:center;justify-content:center;
+  font-size:100px;border-bottom:1px solid var(--border);overflow:hidden
+}
+.gallery-main img{
+  width:100%;height:100%;object-fit:contain;object-position:center;
+  padding:20px;box-sizing:border-box
+}
+.gallery-thumbs{
+  display:flex;gap:8px;padding:12px 16px;overflow-x:auto;
+  scrollbar-width:thin;background:#fff;border-bottom:1px solid var(--border)
+}
+.gallery-thumbs:empty{display:none}
+.gallery-thumb{
+  width:72px;height:72px;flex-shrink:0;border-radius:6px;overflow:hidden;
+  border:2px solid var(--border);cursor:pointer;background:#F8F9FB;
+  display:flex;align-items:center;justify-content:center;transition:var(--tr)
+}
+.gallery-thumb:hover{border-color:var(--navy)}
+.gallery-thumb.active{border-color:var(--accent)}
+.gallery-thumb img{width:100%;height:100%;object-fit:contain;padding:4px;box-sizing:border-box}
+.modal-body{padding:22px 26px 26px}
+.modal-desc{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:20px;white-space:pre-line}
+.modal-section-title{
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--faint);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)
+}
+.specs-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:22px;
+  border:1px solid var(--border);border-radius:8px;overflow:hidden
+}
+.spec-row{display:contents}
+.spec-row>span{padding:9px 14px;font-size:13px;border-bottom:1px solid var(--border)}
+.spec-row:last-child>span{border-bottom:none}
+.spec-row>span:first-child{background:var(--bg);color:var(--muted);font-weight:500;border-right:1px solid var(--border)}
+.spec-row>span:last-child{color:var(--text);font-weight:600}
+.compat-section{margin-bottom:20px}
+.modal-compat-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.modal-compat-tag{font-size:12px;font-weight:500;background:var(--tag-bg);color:var(--tag);border-radius:5px;padding:4px 10px}
+.modal-actions{display:flex;gap:12px;padding-top:18px;border-top:1px solid var(--border)}
+.btn-wa-modal{
+  flex:2;display:flex;align-items:center;justify-content:center;gap:9px;
+  background:var(--accent);color:white;border:none;border-radius:9px;padding:14px;
+  font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;transition:var(--tr)
+}
+.btn-wa-modal:hover{background:#b8511a}
+.btn-manual-modal{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
+  background:var(--bg);color:var(--navy);border:1.5px solid var(--border);border-radius:9px;padding:14px;
+  font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--tr)
+}
+.btn-manual-modal:hover{border-color:var(--navy);background:#EEF2FF}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--navy-dk);color:rgba(255,255,255,.5);font-size:12.5px;
+  text-align:center;padding:28px 24px;line-height:1.7;margin-top:48px
+}
+footer strong{color:rgba(255,255,255,.9)}
+footer a{color:rgba(255,255,255,.65);text-decoration:none}
+footer a:hover{color:white}
+.footer-div{margin:0 8px;opacity:.3}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .page-layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .cat-list{display:flex;flex-wrap:wrap;gap:4px;padding:10px}
+  .cat-item{flex:none}
+  .cat-item button{border:1px solid var(--border);border-radius:50px;border-left:2px solid transparent;padding:6px 14px;font-size:12px}
+}
+@media(max-width:600px){
+  .header-inner{flex-wrap:wrap}
+  .products-grid{grid-template-columns:1fr 1fr}
+  .specs-grid{grid-template-columns:1fr}
+  .modal-actions{flex-direction:column}
+}
+@media(max-width:400px){.products-grid{grid-template-columns:1fr}}
+
+/* ═══════ MOBILE ═══════ */
+@media(max-width:768px){
+  .header-inner{flex-wrap:wrap;padding:10px 12px;gap:8px}
+  .logo-img{height:32px}
+  .logo-label .sub{display:none}
+  .search-wrap{order:3;flex:1 1 100%;max-width:100%}
+  .search-wrap input{font-size:16px;padding:10px 12px 10px 40px}
+  .btn-phone{display:none}
+  .btn-wa{font-size:12px;padding:8px 12px}
+  #heroBanner{padding:24px 14px}
+  .hero-title{font-size:clamp(18px,5vw,26px)}
+  .page-layout{grid-template-columns:1fr;gap:14px;margin:14px auto;padding:0 10px}
+  .sidebar{position:static;border-radius:10px}
+  .cat-list{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:8px 10px 12px;scrollbar-width:none}
+  .cat-list::-webkit-scrollbar{display:none}
+  .cat-item{flex:none}
+  .cat-item button{white-space:nowrap;border:1.5px solid var(--border);border-radius:50px;border-left:1.5px solid var(--border);padding:7px 13px;font-size:12.5px}
+  .cat-item button.active{background:var(--navy);color:white;border-color:var(--navy)}
+  .sidebar-contact{display:none}
+  .products-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card-img{height:150px}
+  .card-body{padding:10px 10px 6px;gap:4px}
+  .card-title{font-size:12.5px}
+  .card-subtitle{font-size:11px}
+  .card-footer{padding:8px 10px 10px;flex-direction:column;gap:5px}
+  .btn-specs,.btn-quote-card{width:100%;padding:10px;font-size:12px;min-height:42px}
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal-box{border-radius:16px 16px 0 0;max-width:100%;width:100%;max-height:90vh}
+  .modal-header{padding:16px 16px 0}
+  .modal-name{font-size:17px}
+  .gallery-main{height:210px}
+  .modal-body{padding:14px 16px 18px}
+  .specs-grid{grid-template-columns:1fr}
+  .spec-row>span:first-child{border-right:none;border-bottom:1px solid var(--border)}
+  .modal-actions{flex-direction:column;gap:8px;padding-top:12px}
+  .btn-wa-modal,.btn-manual-modal{width:100%;padding:14px;font-size:14px;min-height:48px}
+}
+@media(max-width:400px){
+  .products-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .card-img{height:140px}
+  .page-layout{padding:0 8px}
+}
+</style>
+</head>
+<body>
+
+<!-- ════ EDIT MODE BAR ════ -->
+<div id="editBar">
+  <div class="eb-label">✏️ Modo Edición <span>ACTIVO</span></div>
+  <div class="eb-actions">
+    <button class="eb-btn eb-save" onclick="saveData()">💾 Guardar y publicar</button>
+    <button class="eb-btn eb-reset" onclick="confirmReset()">↺ Resetear todo</button>
+    <button class="eb-btn eb-exit" onclick="toggleEditMode()">✕ Salir de edición</button>
+  </div>
+</div>
+
+<!-- ════ TOPBAR ════ -->
+<div id="topbar">
+  <span>Entrega en toda Venezuela &nbsp;·&nbsp; Fabricante directo — sin intermediarios</span>
+  &nbsp;·&nbsp;
+  <a href="tel:+584144614433">+58 414-461-4433</a>
+  &nbsp;/&nbsp;
+  <a href="tel:+584149451507">+58 414-945-1507</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:ndiaz@mdivica.com">ndiaz@mdivica.com</a>
+  &nbsp;/&nbsp;
+  <a href="mailto:mdivica@hotmail.com">mdivica@hotmail.com</a>
+</div>
+
+<!-- ════ HEADER ════ -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo-wrap">
+      <img src="https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png"
+           alt="DIVICA" class="logo-img" onerror="this.style.display='none'">
+      <div class="logo-label">
+        <span class="brand">DIVICA</span>
+        <span class="sub">Equipment Store</span>
+      </div>
+    </a>
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Buscar equipo, modelo, capacidad..." oninput="applyFilters()">
+    </div>
+    <div class="header-actions">
+      <a href="tel:+584144614433" class="btn-phone">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        <span>0414-461-4433</span>
+      </a>
+      <a href="https://wa.me/584144614433?text=Hola%2C+vi+el+cat%C3%A1logo+de+equipos+DIVICA+y+necesito+cotizar." class="btn-wa" target="_blank">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Cotizar por WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ════ HERO BANNER ════ -->
+<section id="heroBanner">
+  <div id="heroBannerBg">
+    <img id="bannerBgImg" src="" alt="" style="display:none">
+  </div>
+  <div id="heroBannerColorBg" style="position:absolute;inset:0;z-index:-1;background:#1B2F4E"></div>
+  <button class="banner-edit-btn" onclick="openBannerEditor()">✏️ Editar Banner</button>
+  <div class="hero-content">
+    <span class="hero-eyebrow" id="heroEyebrow"></span>
+    <h1 class="hero-title" id="heroTitle"></h1>
+    <p class="hero-subtitle" id="heroSub"></p>
+    <a href="#products-section" class="hero-cta">Ver catálogo de equipos ↓</a>
+  </div>
+</section>
+
+<!-- ════ PAGE LAYOUT ════ -->
+<div class="page-layout" id="products-section">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-header-label">Categorías</span>
+      <button class="sidebar-edit-cats" onclick="openCatsEditor()">Editar</button>
+    </div>
+    <ul class="cat-list" id="catList"></ul>
+    <div class="sidebar-contact">
+      <div class="sidebar-contact-title">¿Necesitas ayuda?</div>
+      <a href="tel:+584144614433">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        +58 414-461-4433
+      </a>
+      <a href="tel:+584149451507">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        +58 414-945-1507
+      </a>
+      <a href="mailto:ndiaz@mdivica.com">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        ndiaz@mdivica.com
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <span class="toolbar-title" id="toolbarTitle">Todos los equipos</span>
+        <span class="toolbar-count" id="toolbarCount"></span>
+        <span class="toolbar-cat-desc" id="toolbarCatDesc"></span>
+      </div>
+      <div class="sort-wrap">
+        <select id="sortSelect" onchange="applyFilters()">
+          <option value="default">Predeterminado</option>
+          <option value="az">Nombre A → Z</option>
+          <option value="za">Nombre Z → A</option>
+          <option value="cat">Por categoría</option>
+        </select>
+      </div>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+    <div id="addProductCard" onclick="openProductEditor(null)" style="margin-top:18px">
+      <span class="add-icon">＋</span>
+      <span class="add-label">Agregar equipo</span>
+    </div>
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🔍</div>
+      <strong>Sin resultados para "<span id="emptyTerm"></span>"</strong><br>
+      Intenta con otro término — también fabricamos equipos a la medida.
+    </div>
+  </main>
+</div>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <strong>Multiservicios DIVICA, C.A.</strong>
+  &nbsp;|&nbsp; RIF J-31713732-9<br>
+  <span>Av. Centenario, Sector San Onofre, Galpón #1, Ejido, Mérida, Venezuela</span><br>
+  <a href="tel:+584144614433">+58 414-461-4433</a><span class="footer-div">|</span>
+  <a href="tel:+584149451507">+58 414-945-1507</a><span class="footer-div">|</span>
+  <a href="mailto:ndiaz@mdivica.com">ndiaz@mdivica.com</a><span class="footer-div">|</span>
+  <a href="https://www.mdivica.com" target="_blank">www.mdivica.com</a>
+</footer>
+
+<!-- ════ DETAIL MODAL (standalone) ════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-meta">
+        <div class="modal-sku" id="mSku"></div>
+        <div class="modal-name" id="mName"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-img-area" id="mImgArea"></div>
+    <div class="modal-body">
+      <p class="modal-desc" id="mDesc"></p>
+      <div id="mCompatSection" style="display:none;margin-bottom:20px">
+        <div class="modal-section-title">Aplicaciones</div>
+        <div class="modal-compat-tags" id="mCompatTags"></div>
+      </div>
+      <div class="modal-section-title">Especificaciones Técnicas</div>
+      <div class="specs-grid" id="mSpecsGrid"></div>
+      <div class="modal-actions" id="mActions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ FLOATING EDIT BUTTON ════ -->
+<button id="editToggle" onclick="toggleEditMode()">
+  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+    <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+  </svg>
+  <span>Editar catálogo</span>
+</button>
+
+<!-- ════ PRODUCT EDITOR MODAL ════ -->
+<div class="editor-overlay" id="editorOverlay" onclick="if(event.target===this)closeProductEditor()">
+  <div class="editor-box">
+    <div class="editor-header">
+      <div class="editor-title" id="editorTitle">Agregar equipo</div>
+      <button class="editor-close" onclick="closeProductEditor()">✕</button>
+    </div>
+    <div class="editor-body">
+      <div class="form-row-2">
+        <div class="form-row">
+          <label>Nombre del equipo</label>
+          <input type="text" id="f_name" placeholder="Tanque Vacuum MDV-DV">
+        </div>
+        <div class="form-row">
+          <label>Referencia / SKU</label>
+          <input type="text" id="f_sku" placeholder="DVE-MDV-160">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Subtítulo (descripción corta)</label>
+        <input type="text" id="f_subtitle" placeholder="Semirremolque 160 y 230 BLS">
+      </div>
+      <div class="form-row">
+        <label>Descripción completa</label>
+        <textarea id="f_desc" placeholder="Descripción detallada del equipo..."></textarea>
+      </div>
+      <div class="form-row-2">
+        <div class="form-row">
+          <label>Categoría</label>
+          <select id="f_cat"></select>
+        </div>
+        <div class="form-row">
+          <label>Badge / etiqueta</label>
+          <div class="badge-select">
+            <div class="badge-opt selected" data-val="" onclick="selectBadge(this)">Ninguna</div>
+            <div class="badge-opt" data-val="new" onclick="selectBadge(this)" style="color:#059669;border-color:#059669">Nuevo</div>
+            <div class="badge-opt" data-val="hot" onclick="selectBadge(this)" style="color:var(--accent);border-color:var(--accent)">Más solicitado</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Imágenes del equipo (pega una URL por imagen)</label>
+        <div class="imgs-editor-list" id="imgsEditorList"></div>
+        <button class="add-img-btn" onclick="addImgField()">+ Agregar otra imagen (URL)</button>
+        <button class="upload-img-btn" onclick="document.getElementById('f_imgFile').click()">📁 Subir imagen desde mi computadora</button>
+        <input type="file" id="f_imgFile" accept="image/*" style="display:none" onchange="uploadLocalImg(this)">
+      </div>
+      <div class="form-row">
+        <label>Emoji de respaldo (si no hay imagen)</label>
+        <input type="text" id="f_icon" placeholder="🚛" style="width:80px">
+      </div>
+      <div class="form-row">
+        <label>Aplicaciones (presiona Enter para agregar)</label>
+        <div class="tags-input-wrap" id="compatTagsWrap" onclick="this.querySelector('input').focus()">
+          <input type="text" id="compatInput" placeholder="Escribe y presiona Enter..." onkeydown="handleCompatKey(event)">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Especificaciones técnicas</label>
+        <div class="specs-editor" id="specsEditor"></div>
+      </div>
+      <div class="form-row">
+        <label>URL de ficha en la web (opcional)</label>
+        <input type="text" id="f_manual" placeholder="https://www.mdivica.com/tanque-vacuum">
+      </div>
+      <div class="form-row">
+        <label>Mensaje de WhatsApp para este equipo</label>
+        <input type="text" id="f_waMsg" placeholder="Hola DIVICA, quiero cotizar...">
+      </div>
+    </div>
+    <div class="editor-footer">
+      <button class="btn-cancel-editor" onclick="closeProductEditor()">Cancelar</button>
+      <button class="btn-save-product" onclick="saveProduct()">✓ Guardar equipo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ BANNER EDITOR MODAL ════ -->
+<div class="editor-overlay" id="bannerEditorOverlay" onclick="if(event.target===this)closeBannerEditor()">
+  <div class="editor-box banner-editor-box">
+    <div class="editor-header">
+      <div class="editor-title">✏️ Editar Banner</div>
+      <button class="editor-close" onclick="closeBannerEditor()">✕</button>
+    </div>
+    <div class="editor-body">
+      <div class="form-row">
+        <label>Etiqueta superior (eyebrow)</label>
+        <input type="text" id="be_eyebrow" placeholder="Catálogo Oficial de Equipos">
+      </div>
+      <div class="form-row">
+        <label>Título principal</label>
+        <textarea id="be_title" style="min-height:60px" placeholder="Remolques y Semirremolques Fabricados por DIVICA"></textarea>
+      </div>
+      <div class="form-row">
+        <label>Subtítulo</label>
+        <textarea id="be_subtitle" placeholder="Texto descriptivo del banner..."></textarea>
+      </div>
+      <div class="form-row">
+        <label>URL de imagen de fondo (opcional)</label>
+        <input type="text" id="be_img" placeholder="https://... (deja vacío para usar color sólido)">
+      </div>
+      <div class="form-row">
+        <label>Color de fondo del banner</label>
+        <div class="color-row">
+          <div class="color-swatch selected" style="background:#1B2F4E" data-color="#1B2F4E" onclick="selectBannerColor(this)" title="Navy DIVICA"></div>
+          <div class="color-swatch" style="background:#111827" data-color="#111827" onclick="selectBannerColor(this)" title="Negro"></div>
+          <div class="color-swatch" style="background:#1e3a5f" data-color="#1e3a5f" onclick="selectBannerColor(this)" title="Navy claro"></div>
+          <div class="color-swatch" style="background:#7C3AED" data-color="#7C3AED" onclick="selectBannerColor(this)" title="Morado"></div>
+          <div class="color-swatch" style="background:#059669" data-color="#059669" onclick="selectBannerColor(this)" title="Verde"></div>
+          <div class="color-swatch" style="background:#D05F1B" data-color="#D05F1B" onclick="selectBannerColor(this)" title="Naranja DIVICA"></div>
+          <input type="color" id="be_colorCustom" value="#1B2F4E" onchange="customBannerColor(this)" title="Color personalizado" style="width:32px;height:32px;border-radius:6px;border:2px solid var(--border);cursor:pointer;padding:2px">
+        </div>
+      </div>
+    </div>
+    <div class="editor-footer">
+      <button class="btn-cancel-editor" onclick="closeBannerEditor()">Cancelar</button>
+      <button class="btn-save-product" onclick="saveBanner()">✓ Aplicar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ CATEGORIES EDITOR MODAL ════ -->
+<div class="editor-overlay" id="catsEditorOverlay" onclick="if(event.target===this)closeCatsEditor()">
+  <div class="editor-box cats-editor-box">
+    <div class="editor-header">
+      <div class="editor-title">✏️ Editar Categorías</div>
+      <button class="editor-close" onclick="closeCatsEditor()">✕</button>
+    </div>
+    <div class="editor-body">
+      <div id="catsEditorList"></div>
+      <button class="btn-add-cat" onclick="addCatRow()">＋ Agregar categoría</button>
+    </div>
+    <div class="editor-footer">
+      <button class="btn-cancel-editor" onclick="closeCatsEditor()">Cancelar</button>
+      <button class="btn-save-product" onclick="saveCats()">✓ Guardar categorías</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SS = "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/";
+
+const DEFAULT_DATA =
+/*__DVDATA_START__*/
+{
+"banner": {
+  "eyebrow": "Catálogo Oficial de Equipos",
+  "title": "Remolques y Semirremolques<br>Fabricados por DIVICA",
+  "sub": "Tanques vacuum, frac tanks, low boys, cisternas y plataformas con ingeniería 100% venezolana. Fabricante directo — sin intermediarios.",
+  "img": "",
+  "color": "#1B2F4E"
+},
+"cats": [
+  { id:"vacuum",   label:"Tanques Vacuum",              icon:"🛢️", desc:"Semirremolques y unidades sobre camión para succión, transporte y descarga de líquidos, lodos y residuos industriales. La línea insignia de DIVICA." },
+  { id:"almacen",  label:"Frac Tanks y Almacenamiento", icon:"⛽", desc:"Tanques portátiles sobre tren de rodaje y estacionarios para almacenamiento de fluidos, combustibles, ácidos y agua industrial en campo." },
+  { id:"carga",    label:"Carga Pesada",                icon:"🏗️", desc:"Low boys, plataformas y volquetas para el transporte de maquinaria, contenedores y materiales en los sectores construcción, minería y petróleo." },
+  { id:"cisterna", label:"Cisternas",                   icon:"🚛", desc:"Cisternas neumáticas para producto a granel y cisternas para combustibles, fabricadas bajo normas de seguridad nacionales." },
+  { id:"ambiental",label:"Ambiental y Alcantarillado",  icon:"🌊", desc:"Equipos combinados de vacío + agua a alta presión para limpieza y mantenimiento de redes de alcantarillado y servicios ambientales." },
+  { id:"medida",   label:"Equipos a la Medida",         icon:"⚙️", desc:"Ingeniería y fabricación de unidades especiales para la industria petrolera: flush by, separadores, combinados de decoking y más." },
+],
+"products": [
+  {
+    id:1, cat:"vacuum", sku:"DVE-MDV-160", badge:"hot", icon:"🛢️",
+    imgs:[
+      SS+"46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG",
+      SS+"d2826108-00d8-4a2e-a7b4-a044ef69c185/Tanque+vacuum",
+      SS+"45566980-2c5f-4253-b22d-1835f377a4d1/0CDCE629-66D6-4406-8F00-53A9242E0D58.PNG",
+      SS+"25eec41c-797f-4f54-b5ae-8d00dc5f30ab/Tanque+vacuum",
+      SS+"957a1f06-8009-45fc-983a-cb466a37bd68/tanque+vacuum"
+    ],
+    name:"Tanque Vacuum MDV-DV",
+    subtitle:"Semirremolque 160 y 230 BLS",
+    desc:"El equipo de referencia para recolección, transporte y descarga de líquidos, lodos y residuos industriales en Venezuela. Conjunto motor diésel 4 cilindros 90 HP acoplado a bomba de vacío JUROP o Battioni Pagani. Incluye manual técnico de operación y mantenimiento, suministro de repuestos originales y asistencia técnica nacional e internacional.",
+    compat:["Industria petrolera","Gestión ambiental","Saneamiento industrial","Recuperación de derrames"],
+    specs:[
+      ["Capacidad","160 bbl (25.440 L) · disponible 230 bbl"],
+      ["Bomba de vacío","JUROP o Battioni Pagani — 425 CFM"],
+      ["Vacío máximo","28 inHg"],
+      ["Presión máx. de trabajo","15 PSI"],
+      ["Motor","Diésel 4 cilindros — 90 HP"],
+      ["Ejes","2 ejes con ballestas tipo R20"],
+      ["Válvulas carga/descarga","4 pulgadas"],
+      ["Filtros","Primario y secundario tipo ciclón"],
+      ["Material","Acero ASTM A-36"],
+      ["Peso en tara","8.800 kg"],
+      ["Dimensiones","11 m × 2,40 m × 3,50 m"],
+      ["Garantía","6 meses de fabricación"]
+    ],
+    manualUrl:"https://www.mdivica.com/tanque-vacuum",
+    waMsg:"Hola DIVICA, quiero cotizar el Tanque Vacuum MDV-DV 160 BLS. Ref: DVE-MDV-160"
+  },
+  {
+    id:2, cat:"vacuum", sku:"DVE-VFMD-100", badge:"new", icon:"⚡",
+    imgs:[ SS+"10f1ddb2-5b7e-40f1-9ce2-d687ffe6bdd1/BA4606D6-D617-4EDA-B380-70840D1BFB36.PNG" ],
+    name:"Alto Vacío VAC-FLOW MD",
+    subtitle:"Semirremolque de alto vacío 100 BLS — Modelo 2026",
+    desc:"Sistema de alto vacío tipo semirremolque impulsado por blower lobular helicoidal JUROP HELIX 1500 con motor diésel independiente. Succiona líquidos, lodos y sólidos pesados con máximo rendimiento. Incorpora válvula de 4 vías para alternar succión ↔ descarga por presión, e hidrojet auxiliar de alta presión para lavado y apoyo operativo.",
+    compat:["Refinerías","Plantas industriales","Servicios petroleros","Lodos y sólidos pesados"],
+    specs:[
+      ["Capacidad","100 bbl (≈ 15.900 L)"],
+      ["Blower","JUROP HELIX 1500 — tri-lobular helicoidal"],
+      ["Caudal","≈ 5.000 CFM libre / 4.800 CFM @ 27 inHg"],
+      ["Vacío máximo","27,8 inHg (93%)"],
+      ["Presión interna máx.","15 PSI"],
+      ["Motor","Diésel industrial 250–300 HP independiente"],
+      ["Succión","Doble circuito de 6\""],
+      ["Descarga","Neumática 8\" + válvula auxiliar 4\""],
+      ["Tapa trasera","Hidráulica de apertura total"],
+      ["Filtración","Doble ciclón + filtro final"],
+      ["Hidrojet auxiliar","Triplex ≈ 8.000 PSI · manguera 1/2\" × 100 ft"],
+      ["Tanque","ASTM A-36 · cabezales toriesféricos · rompeolas"],
+      ["Tren de rodaje","2 ejes reforzados · rines 22,5\" · frenos neumáticos"]
+    ],
+    manualUrl:"",
+    waMsg:"Hola DIVICA, quiero cotizar el Alto Vacío VAC-FLOW MD 100 BLS. Ref: DVE-VFMD-100"
+  },
+  {
+    id:3, cat:"vacuum", sku:"DVE-VSC-080", badge:"", icon:"🚚",
+    imgs:[ SS+"13e2fdbc-f9f3-4273-9069-6a4deda435ae/e814f69a-2f54-4612-bf28-f589269e3f46.png" ],
+    name:"Vacuum sobre Camión 60–80 BLS",
+    subtitle:"Unidad compacta montada sobre chasis",
+    desc:"Unidad de succión al vacío montada sobre camión, diseñada para operaciones exigentes en la industria petrolera, ambiental e industrial. Su formato compacto facilita la maniobrabilidad en espacios reducidos y accesos complejos, sin sacrificar potencia ni desempeño.",
+    compat:["Locaciones reducidas","Saneamiento urbano","Servicios petroleros","Residuos líquidos"],
+    specs:[
+      ["Capacidad","60 – 80 bbl según configuración"],
+      ["Montaje","Sobre chasis de camión"],
+      ["Bomba de vacío","JUROP o Battioni Pagani"],
+      ["Válvulas carga/descarga","4 pulgadas"],
+      ["Filtros","Primario y secundario tipo ciclón"],
+      ["Material","Acero ASTM A-36"],
+      ["Configuración","A la medida según chasis y operación"]
+    ],
+    manualUrl:"",
+    waMsg:"Hola DIVICA, quiero cotizar el Vacuum sobre Camión 60-80 BLS. Ref: DVE-VSC-080"
+  },
+  {
+    id:4, cat:"almacen", sku:"DVE-MDFT-500", badge:"", icon:"⛽",
+    imgs:[
+      SS+"d3e976e0-6bc6-45ff-bf9b-97556bed6fb1/8a5043c8-b273-47f9-892a-fbbd9f204c82.png",
+      SS+"5916749d-9169-44ef-98b3-2ac22fa4dc06/FRAC+TANK",
+      SS+"e5ec02a8-78f8-4ba5-9daa-06a9e8ba705a/FRAC+TANK+VENEZUELA",
+      SS+"eea3976e-367f-4c1c-a73b-a2a62f2a40ae/FRAC+TANK+VENEZUELA",
+      SS+"a3783b2c-bbb1-4562-814e-5dc1e88e6083/FRAC+TANK+VENEZUELA"
+    ],
+    name:"Frac Tank MDFT-DFT",
+    subtitle:"Tanque portátil 500 y 250 BLS",
+    desc:"Tanque de almacenamiento portátil sobre tren de rodaje para la industria petrolera. Almacenamiento seguro de combustibles, agua, ácidos, geles y fluidos de perforación en operaciones de campo. Su diseño permite fácil movilización con cualquier camión chuto.\n\nOPCIONAL: válvula de seguridad arrestallama 3\"×6\", válvula ventosa 8\" y requerimientos especiales de ingeniería.",
+    compat:["Fluidos de perforación","Combustibles en campo","Agua industrial y ácidos","Workover y pulling"],
+    specs:[
+      ["Capacidad","500 bbl (79.490 L) · disponible 250 bbl"],
+      ["Material","Acero al carbono certificado ASTM A-36"],
+      ["Descarga","Manifold 6\" con 3 salidas y válvulas 4\""],
+      ["Carga","Puerto de 4\" · drenaje trasero en punto más bajo"],
+      ["Bocas de visita","2 × 21\" para inspección y limpieza"],
+      ["Instrumentación","Medidor de nivel incluido"],
+      ["Movilización","Tren de rodaje para camión chuto"],
+      ["Recubrimiento","Anticorrosivo de alta resistencia"]
+    ],
+    manualUrl:"https://www.mdivica.com/frac-tank-500bls",
+    waMsg:"Hola DIVICA, quiero cotizar el Frac Tank MDFT-DFT 500 BLS. Ref: DVE-MDFT-500"
+  },
+  {
+    id:5, cat:"almacen", sku:"DVE-TES-001", badge:"", icon:"🏭",
+    imgs:[ SS+"2e7e0cef-9e94-44ac-821b-1f2763d0804b/da352f71-9fa7-475d-b288-41c079919524.png" ],
+    name:"Tanque Estacionario para Fluidos",
+    subtitle:"Almacenamiento temporal o permanente",
+    desc:"Solución segura para almacenamiento temporal o permanente de agua, químicos y fluidos industriales. Adaptable a plantas industriales, obras civiles y operaciones petroleras. Se fabrica a la capacidad y configuración que requiera tu operación.",
+    compat:["Plantas industriales","Obras civiles","Operaciones petroleras","Agua y químicos"],
+    specs:[
+      ["Capacidad","A requerimiento del cliente"],
+      ["Material","Acero al carbono ASTM A-36"],
+      ["Recubrimiento","Anticorrosivo según fluido a almacenar"],
+      ["Accesorios","Bocas de visita, venteo, válvulas y medición"],
+      ["Configuración","Diseño a la medida con ingeniería DIVICA"]
+    ],
+    manualUrl:"",
+    waMsg:"Hola DIVICA, quiero cotizar un Tanque Estacionario. Ref: DVE-TES-001"
+  },
+  {
+    id:6, cat:"carga", sku:"DVE-LBD-120", badge:"", icon:"🏗️",
+    imgs:[
+      SS+"a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png",
+      SS+"cdf5e17e-f85e-4ea8-b863-8a9c9819920f/LOW+BOY+VENEZUELA",
+      SS+"7f22433c-17ba-48ad-8630-c30f88b3827c/LOW+BOY+VENEZUELA",
+      SS+"2b31dd1f-7e5f-4281-8913-4b43d04a89f8/LOW+BOY+VENEZUELA",
+      SS+"b8492083-0b2a-4645-be8a-d22181bfe4ed/LOW+BOY+VENEZUELA"
+    ],
+    name:"Low Boy MDVL-LBD",
+    subtitle:"Carga extrapesada 30 a 120 toneladas",
+    desc:"Semirremolque especializado para el transporte de maquinaria pesada, equipos industriales y cargas sobredimensionadas. Se diseña y configura a la medida de cada cliente y tipo de carga. Cada unidad cumple con los estándares de seguridad vial venezolana para transporte especial.",
+    compat:["Excavadoras y grúas","Taladros petroleros","BOP y separadores","Transformadores","Estructuras metálicas"],
+    specs:[
+      ["Capacidad de carga","30, 60, 80, 100 y 120 toneladas"],
+      ["Configuraciones","2, 3, 4 y más ejes según carga"],
+      ["Rampa de acceso","Hidráulica o mecánica según modelo"],
+      ["Material","Acero de alta resistencia con vigas robustas"],
+      ["Iluminación","Sistema eléctrico completo con luces de posición"],
+      ["Personalización","Ancho, largo y ejes a la medida"]
+    ],
+    manualUrl:"https://www.mdivica.com/low-boy-cargapesada",
+    waMsg:"Hola DIVICA, quiero cotizar un Low Boy MDVL-LBD. Ref: DVE-LBD-120"
+  },
+  {
+    id:7, cat:"carga", sku:"DVE-PLT-035", badge:"", icon:"🛻",
+    imgs:[
+      SS+"b9813fe8-def7-419d-8f0c-92750a3a3d03/IMG_3021.JPEG",
+      SS+"646ec4a4-47fe-4cf2-866f-1dd09f0a7c98/3cb9fd99-aef2-4865-87ff-5d8d9e6147bd.JPEG",
+      SS+"588897c9-6832-438f-aa16-8f6e8c6b761c/bateas+3+ejes.JPEG",
+      SS+"b1463cdb-1f0c-41ef-82da-097e279648cb/20140910_134654.JPEG"
+    ],
+    name:"Plataforma de Carga Pesada",
+    subtitle:"Semirremolque 2 y 3 ejes — hasta 35 t",
+    desc:"Semirremolque versátil para transporte de carga pesada convencional, contenedores o materiales industriales. Fabricada en acero de alta resistencia con piso antideslizante y estructura reforzada para trabajos exigentes. Un equipo robusto para todos los sectores productivos del país.",
+    compat:["Contenedores","Materiales industriales","Construcción","Manufactura","Logística"],
+    specs:[
+      ["Capacidad","Hasta 35 toneladas"],
+      ["Ejes","2 y 3 ejes"],
+      ["Piso","Acero de alta resistencia antideslizante"],
+      ["Sujeción","Puntos de anclaje estratégicos"],
+      ["Suspensión","Tipo Reyco de alto rendimiento"],
+      ["Frenos","Neumáticos según normas nacionales"],
+      ["Iluminación","Sistema de luces LED"]
+    ],
+    manualUrl:"https://www.mdivica.com/remolque-plataforma",
+    waMsg:"Hola DIVICA, quiero cotizar una Plataforma de Carga Pesada. Ref: DVE-PLT-035"
+  },
+  {
+    id:8, cat:"carga", sku:"DVE-VLQ-001", badge:"", icon:"⛏️",
+    imgs:[ SS+"edfb3054-bbb4-4fe6-852a-137689e51ea5/4336563d-23e8-447f-bd4e-43ea9fe78222.png" ],
+    name:"Volqueta para Carga Pesada",
+    subtitle:"Materiales rocosos, áridos y construcción",
+    desc:"Equipo de alta capacidad para el traslado de materiales rocosos, áridos o de construcción. Construcción reforzada para entornos exigentes como minería, obras civiles e industria petrolera.",
+    compat:["Minería","Obras civiles","Áridos y rocas","Industria petrolera"],
+    specs:[
+      ["Tipo","Volqueta / batea de volteo reforzada"],
+      ["Material","Acero de alta resistencia estructural"],
+      ["Accionamiento","Sistema hidráulico de volteo"],
+      ["Capacidad","Según configuración del cliente"],
+      ["Aplicación","Entornos exigentes de minería y construcción"]
+    ],
+    manualUrl:"",
+    waMsg:"Hola DIVICA, quiero cotizar una Volqueta para Carga Pesada. Ref: DVE-VLQ-001"
+  },
+  {
+    id:9, cat:"cisterna", sku:"DVE-MDVDT-01", badge:"", icon:"🚛",
+    imgs:[
+      SS+"7bd278ec-d13c-48d4-924a-b457a1770919/IMG_1750.JPEG",
+      SS+"e56c9d9d-7986-4c22-bbfb-10a32dcd3d4c/00252506-c579-46e1-a723-e3551bbb8832.JPEG",
+      SS+"9950c63e-390f-4291-b544-8c6cfc1a054d/20130806_085826.JPEG",
+      SS+"d4bbbf6f-d239-452d-9337-5d091750c2f4/20140312_173649.JPEG"
+    ],
+    name:"Cisterna para Producto a Granel MDV-DT",
+    subtitle:"Cemento, cal, harina y pulverizados",
+    desc:"Cisterna neumática para el transporte de productos pulverizados. Su diseño con tres conos a 45° optimiza la descarga: cada cono cuenta con un sistema de aireadores que se activan al presurizar el equipo. Trabaja con blower o compresor neumático, con válvula de alivio para un flujo eficiente y controlado.",
+    compat:["Cemento y cal","Harina y alimentos","Materiales de construcción"],
+    specs:[
+      ["Producto","Cemento, cal, harina y pulverizados"],
+      ["Material","Acero al carbono"],
+      ["Diseño","3 conos con inclinación de 45°"],
+      ["Descarga","Aireadores por cono, activados al presurizar"],
+      ["Presurización","Blower o compresor neumático"],
+      ["Seguridad","Válvula de alivio"]
+    ],
+    manualUrl:"https://www.mdivica.com/cisterna-material-granel",
+    waMsg:"Hola DIVICA, quiero cotizar la Cisterna a Granel MDV-DT. Ref: DVE-MDVDT-01"
+  },
+  {
+    id:10, cat:"cisterna", sku:"DVE-CCB-001", badge:"", icon:"⛽",
+    imgs:[ SS+"d61ecc6b-3481-4774-b10e-a18473a2b082/1d90501c-1089-4207-bfe4-6e9031766eb2.png" ],
+    name:"Cisterna para Combustibles",
+    subtitle:"Transporte y almacenamiento de diésel / gasolina",
+    desc:"Tanque diseñado para el transporte y almacenamiento seguro de diésel o gasolina. Cumple con normas de seguridad para aplicaciones en energía, transporte y minería.",
+    compat:["Distribución de combustible","Abastecimiento en campo","Energía","Minería"],
+    specs:[
+      ["Producto","Diésel, gasolina y derivados"],
+      ["Material","Acero al carbono"],
+      ["Seguridad","Normas para transporte de combustibles"],
+      ["Compartimientos","Simple o múltiple según requerimiento"],
+      ["Capacidad","Según configuración del cliente"]
+    ],
+    manualUrl:"",
+    waMsg:"Hola DIVICA, quiero cotizar una Cisterna para Combustibles. Ref: DVE-CCB-001"
+  },
+  {
+    id:11, cat:"ambiental", sku:"DVE-DVMC-01", badge:"", icon:"🌊",
+    imgs:[ SS+"134d71b9-6d24-402a-af4d-49c152acc7f9/7D6DE5F3-C6B1-45C0-9A9E-AF9EDAB217C9.PNG" ],
+    name:"Equipo Mixto de Alcantarillado DVMC",
+    subtitle:"Vacío + agua a alta presión (combinado)",
+    desc:"Equipo diseñado para la limpieza y mantenimiento eficiente de redes de alcantarillado. Combina sistema de succión por vacío y agua a alta presión para remover lodos, sólidos y residuos con alto rendimiento. Ideal para aplicaciones municipales, industriales y petroleras en entornos exigentes.",
+    compat:["Redes de alcantarillado","Municipios","Plantas industriales","Operaciones petroleras"],
+    specs:[
+      ["Sistema de vacío","Soplador de lóbulos de alto caudal"],
+      ["Sistema hidrojet","Bomba de agua a alta presión con carrete"],
+      ["Modo dual","Válvula de 4 vías: succión ↔ presión"],
+      ["Tanque de residuos","Acero al carbono con descarga trasera"],
+      ["Tanque de agua","Integrado, según configuración"],
+      ["Versiones","Sobre camión o semirremolque · hasta 190 bbl"],
+      ["Norma disponible","ASME Sección VIII Div. 1"]
+    ],
+    manualUrl:"",
+    waMsg:"Hola DIVICA, quiero cotizar el Equipo Mixto de Alcantarillado DVMC. Ref: DVE-DVMC-01"
+  },
+  {
+    id:12, cat:"medida", sku:"DVE-CUSTOM", badge:"new", icon:"⚙️",
+    imgs:[ SS+"1b22a5fb-b9c5-4079-b806-5869854f5711/1161a2e6-4f71-4fe5-a4c9-4ff630623ee6.png" ],
+    name:"Soluciones a la Medida — Industria Petrolera",
+    subtitle:"Ingeniería, fabricación y puesta en marcha",
+    desc:"Fabricamos soluciones integrales para la industria petrolera, diseñadas para operar en entornos exigentes: tanques para equipos flush by, remolques para separadores de oil & gas, combinados vacío + hidrojet para servicio con coque, y unidades especiales de transporte y almacenamiento. Nuestro enfoque combina ingeniería, calidad de fabricación y desempeño comprobado en campo.",
+    compat:["Flush by","Separadores oil & gas","Decoking","Unidades especiales"],
+    specs:[
+      ["Alcance","Ingeniería, fabricación y puesta en marcha"],
+      ["Normas","ASME Secc. VIII Div. 1 · ASTM A-36 · alivios ASME"],
+      ["Paquete refinería","Forros AR400/AR450 · arrestallamas · puesta a tierra"],
+      ["Sistemas de vacío","Sopladores tri-lóbulo hasta ≈ 5.000 CFM"],
+      ["Alta presión","Bombas triplex hasta 8.000 PSI"],
+      ["Proceso","Levantamiento → propuesta técnica → fabricación"]
+    ],
+    manualUrl:"",
+    waMsg:"Hola DIVICA, necesito un equipo a la medida para mi operación. Ref: DVE-CUSTOM"
+  }
+]
+}
+/*__DVDATA_END__*/;
+
+/* ═══════ ESTADO (localStorage) ═══════ */
+const LS_KEY = "dvEqData";
+function loadData(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){ const d = JSON.parse(raw); if(d && d.products && d.cats && d.banner) return d; }
+  }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+let DATA = loadData();
+let CATEGORIES = DATA.cats;
+let PRODUCTS = DATA.products;
+function persist(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(DATA)); }catch(e){ alert("No se pudo guardar localmente: "+e.message); } }
+
+/* ═══════ APP ═══════ */
+let activeCat = "all";
+const IN_IFRAME = (window.self !== window.top);
+
+function catById(id){ return CATEGORIES.find(c=>c.id===id); }
+
+function renderCats(){
+  const counts = {};
+  PRODUCTS.forEach(p=>counts[p.cat]=(counts[p.cat]||0)+1);
+  let html = '<li class="cat-item"><button class="'+(activeCat==="all"?"active":"")+'" onclick="setCat(\'all\')">Todos los equipos<span class="cat-count">'+PRODUCTS.length+'</span></button></li>';
+  CATEGORIES.forEach(c=>{
+    html += '<li class="cat-item"><button class="'+(activeCat===c.id?"active":"")+'" onclick="setCat(\''+c.id+'\')">'+c.icon+' '+c.label+'<span class="cat-count">'+(counts[c.id]||0)+'</span></button></li>';
+  });
+  document.getElementById("catList").innerHTML = html;
+}
+
+function setCat(id){
+  activeCat = id;
+  renderCats();
+  applyFilters();
+}
+
+function applyFilters(){
+  const q = (document.getElementById("searchInput").value||"").toLowerCase().trim();
+  const sort = document.getElementById("sortSelect").value;
+  let list = PRODUCTS.filter(p=>{
+    const okCat = activeCat==="all" || p.cat===activeCat;
+    if(!okCat) return false;
+    if(!q) return true;
+    const cat = catById(p.cat);
+    const hay = [p.name,p.subtitle,p.sku,p.desc,(p.compat||[]).join(" "),cat?cat.label:""].join(" ").toLowerCase();
+    return hay.includes(q);
+  });
+  if(sort==="az") list.sort((a,b)=>a.name.localeCompare(b.name));
+  if(sort==="za") list.sort((a,b)=>b.name.localeCompare(a.name));
+  if(sort==="cat") list.sort((a,b)=>a.cat.localeCompare(b.cat));
+
+  const cat = catById(activeCat);
+  document.getElementById("toolbarTitle").textContent = activeCat==="all" ? "Todos los equipos" : cat.label;
+  document.getElementById("toolbarCount").textContent = list.length + (list.length===1?" equipo":" equipos");
+  const descEl = document.getElementById("toolbarCatDesc");
+  if(cat && cat.desc){ descEl.textContent = cat.desc; descEl.classList.add("visible"); }
+  else { descEl.classList.remove("visible"); }
+
+  renderGrid(list, q);
+}
+
+function badgeHtml(b){
+  if(b==="new") return '<span class="badge badge-new">Nuevo</span>';
+  if(b==="hot") return '<span class="badge badge-hot">Más solicitado</span>';
+  return "";
+}
+
+function renderGrid(list, q){
+  const grid = document.getElementById("productsGrid");
+  const empty = document.getElementById("emptyState");
+  grid.innerHTML = list.map(p=>{
+    const img = (p.imgs&&p.imgs[0])
+      ? '<img loading="lazy" src="'+p.imgs[0]+'" alt="'+p.name.replace(/"/g,"&quot;")+' — fabricante DIVICA Venezuela" onerror="this.outerHTML=\'<span class=img-placeholder>'+(p.icon||"📦")+'</span>\'">'
+      : '<span class="img-placeholder">'+(p.icon||"📦")+'</span>';
+    const pills = (p.compat||[]).slice(0,3).map(c=>'<span class="compat-pill">'+c+'</span>').join("");
+    return '<div class="product-card" onclick="openProduct('+p.id+')">'+
+      '<div class="card-edit-overlay"><div class="card-edit-actions">'+
+        '<button class="card-edit-btn btn-edit-product" onclick="event.stopPropagation();openProductEditor('+p.id+')">✏️ Editar</button>'+
+        '<button class="card-edit-btn btn-delete-product" onclick="event.stopPropagation();deleteProduct('+p.id+')">🗑 Eliminar</button>'+
+      '</div></div>'+
+      '<div class="card-img">'+img+
+        '<div class="card-badge-row">'+badgeHtml(p.badge)+'</div>'+
+      '</div>'+
+      '<div class="card-body">'+
+        '<span class="card-sku">REF: '+p.sku+'</span>'+
+        '<span class="card-title">'+p.name+'</span>'+
+        '<span class="card-subtitle">'+p.subtitle+'</span>'+
+        '<div class="compat-row">'+pills+'</div>'+
+      '</div>'+
+      '<div class="card-footer">'+
+        '<button class="btn-specs" onclick="event.stopPropagation();openProduct('+p.id+')">Especificaciones</button>'+
+        '<a class="btn-quote-card" onclick="event.stopPropagation()" target="_blank" href="https://wa.me/584144614433?text='+encodeURIComponent(p.waMsg)+'">'+
+        '<svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'+
+        'Cotizar</a>'+
+      '</div>'+
+    '</div>';
+  }).join("");
+  if(list.length===0){
+    document.getElementById("emptyTerm").textContent = q;
+    empty.classList.add("show");
+  } else {
+    empty.classList.remove("show");
+  }
+}
+
+/* ── Detalle: postMessage al padre (Squarespace) o modal propio ── */
+function openProduct(id){
+  if(document.body.classList.contains("edit-mode")) return;
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  if(IN_IFRAME){
+    window.parent.postMessage({type:"divicaProduct", product:{
+      sku:p.sku, name:p.name, desc:p.desc, imgs:p.imgs, img:(p.imgs&&p.imgs[0])||"",
+      icon:p.icon, compat:p.compat, specs:p.specs, waMsg:p.waMsg, manualUrl:p.manualUrl
+    }}, "*");
+    return;
+  }
+  openLocalModal(p);
+}
+
+function openLocalModal(p){
+  document.getElementById("mSku").textContent = "REF: "+p.sku;
+  document.getElementById("mName").textContent = p.name;
+  document.getElementById("mDesc").textContent = p.desc;
+
+  const imgs = p.imgs||[];
+  let imgHtml = '<div class="gallery-main" id="galleryMain">'+
+    (imgs.length?'<img id="galleryMainImg" src="'+imgs[0]+'">':'<span>'+(p.icon||"📦")+'</span>')+
+    '</div>';
+  if(imgs.length>1){
+    imgHtml += '<div class="gallery-thumbs">'+imgs.map((src,i)=>
+      '<div class="gallery-thumb'+(i===0?" active":"")+'" onclick="switchImg(this,\''+src+'\')"><img src="'+src+'"></div>'
+    ).join("")+'</div>';
+  }
+  document.getElementById("mImgArea").innerHTML = imgHtml;
+
+  const compatSec = document.getElementById("mCompatSection");
+  if(p.compat && p.compat.length){
+    document.getElementById("mCompatTags").innerHTML = p.compat.map(c=>'<span class="modal-compat-tag">'+c+'</span>').join("");
+    compatSec.style.display = "block";
+  } else compatSec.style.display = "none";
+
+  document.getElementById("mSpecsGrid").innerHTML = (p.specs||[]).map(s=>
+    '<div class="spec-row"><span>'+s[0]+'</span><span>'+s[1]+'</span></div>'
+  ).join("");
+
+  let actions = '<a class="btn-wa-modal" target="_blank" href="https://wa.me/584144614433?text='+encodeURIComponent(p.waMsg)+'">'+
+    '<svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'+
+    'Solicitar cotización</a>';
+  if(p.manualUrl){
+    actions += '<a class="btn-manual-modal" target="_blank" href="'+p.manualUrl+'">Ver ficha en la web</a>';
+  }
+  document.getElementById("mActions").innerHTML = actions;
+
+  document.getElementById("modalOverlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function switchImg(el,src){
+  document.getElementById("galleryMainImg").src = src;
+  document.querySelectorAll(".gallery-thumb").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+}
+
+function closeModal(){
+  document.getElementById("modalOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
+
+/* ═══════ BANNER ═══════ */
+function applyBanner(){
+  const b = DATA.banner || {};
+  document.getElementById("heroEyebrow").textContent = b.eyebrow || "";
+  document.getElementById("heroTitle").innerHTML = b.title || "";
+  document.getElementById("heroSub").textContent = b.sub || "";
+  const img = document.getElementById("bannerBgImg");
+  if(b.img){ img.src = b.img; img.style.display = "block"; }
+  else { img.removeAttribute("src"); img.style.display = "none"; }
+  document.getElementById("heroBannerColorBg").style.background = b.color || "#1B2F4E";
+  document.getElementById("heroBanner").style.background = b.color || "#1B2F4E";
+}
+
+/* ═══════ MODO EDICIÓN ═══════ */
+/* El botón "Editar catálogo" aparece si la URL lleva ?edit (ej. mdivica.github.io/equipos/?edit)
+   o al presionar Ctrl+Shift+E. Los cambios se guardan en este navegador (localStorage).
+   "Guardar y publicar" descarga el index.html actualizado para subirlo a GitHub. */
+function checkEditAccess(){
+  if(/[?#&]edit/.test(location.search + location.hash)){
+    document.getElementById("editToggle").classList.add("visible");
+  }
+}
+document.addEventListener("keydown", e=>{
+  if(e.ctrlKey && e.shiftKey && (e.key==="E"||e.key==="e")){
+    e.preventDefault();
+    document.getElementById("editToggle").classList.toggle("visible");
+  }
+});
+function toggleEditMode(){
+  const on = document.body.classList.toggle("edit-mode");
+  document.getElementById("editBar").classList.toggle("active", on);
+  document.getElementById("editToggle").classList.toggle("editing", on);
+  document.getElementById("editToggle").querySelector("span").textContent = on ? "Editando..." : "Editar catálogo";
+  if(on) document.getElementById("editToggle").classList.add("visible");
+}
+function confirmReset(){
+  if(confirm("¿Borrar TODOS los cambios y volver a la versión original publicada?")){
+    localStorage.removeItem(LS_KEY);
+    location.reload();
+  }
+}
+
+/* ── Guardar y publicar: descarga index.html con los datos actuales ── */
+function buildUpdatedHtml(src){
+  const json = JSON.stringify(DATA, null, 1);
+  const re = /\/\*__DVDATA_START__\*\/[\s\S]*?\/\*__DVDATA_END__\*\//;
+  if(!re.test(src)) return null;
+  return src.replace(re, function(){ return "/*__DVDATA_START__*/\n" + json + "\n/*__DVDATA_END__*/"; });
+}
+function downloadHtml(html){
+  const blob = new Blob([html], {type:"text/html;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "index.html";
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function saveData(){
+  persist();
+  fetch(location.href.split("?")[0].split("#")[0])
+    .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
+    .then(src=>{
+      const out = buildUpdatedHtml(src);
+      if(!out) throw new Error("No se encontraron los marcadores de datos");
+      downloadHtml(out);
+      alert("✅ Se descargó index.html con tus cambios.\n\nPara publicar:\n1. Ve a tu repositorio en GitHub\n2. Sube/reemplaza el archivo index.html\n3. En 1-2 minutos los cambios estarán en línea.\n\nMientras tanto, tus cambios ya quedaron guardados en este navegador.");
+    })
+    .catch(()=>{
+      let src = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      src = src.replace(' class="edit-mode"','').replace('id="editBar" class="active"','id="editBar"');
+      const out = buildUpdatedHtml(src);
+      if(out){ downloadHtml(out); alert("✅ Se descargó index.html con tus cambios (modo local).\nSúbelo a GitHub para publicarlos."); }
+      else alert("⚠️ Tus cambios quedaron guardados en este navegador, pero no se pudo generar el archivo. Abre la página desde GitHub Pages e intenta de nuevo.");
+    });
+}
+
+/* ═══════ EDITOR DE PRODUCTOS ═══════ */
+let edId = null, edImgs = [], edCompat = [], edSpecs = [], edBadge = "";
+
+function fillCatSelect(sel){
+  document.getElementById("f_cat").innerHTML = CATEGORIES.map(c=>
+    '<option value="'+c.id+'"'+(c.id===sel?" selected":"")+'>'+c.icon+' '+c.label+'</option>'
+  ).join("");
+}
+function openProductEditor(id){
+  edId = id;
+  const p = id!==null ? PRODUCTS.find(x=>x.id===id) : null;
+  document.getElementById("editorTitle").textContent = p ? "Editar equipo" : "Agregar equipo";
+  document.getElementById("f_name").value = p?p.name:"";
+  document.getElementById("f_sku").value = p?p.sku:"";
+  document.getElementById("f_subtitle").value = p?p.subtitle:"";
+  document.getElementById("f_desc").value = p?p.desc:"";
+  document.getElementById("f_icon").value = p?(p.icon||""):"";
+  document.getElementById("f_manual").value = p?(p.manualUrl||""):"";
+  document.getElementById("f_waMsg").value = p?(p.waMsg||""):"";
+  fillCatSelect(p?p.cat:(activeCat!=="all"?activeCat:CATEGORIES[0].id));
+  edBadge = p?(p.badge||""):"";
+  document.querySelectorAll(".badge-opt").forEach(b=>b.classList.toggle("selected", b.getAttribute("data-val")===edBadge));
+  edImgs = p?(p.imgs||[]).slice():[];
+  if(!edImgs.length) edImgs = [""];
+  renderImgFields();
+  edCompat = p?(p.compat||[]).slice():[];
+  renderCompatTags();
+  edSpecs = p?(p.specs||[]).map(s=>s.slice()):[["",""]];
+  renderSpecsEditor();
+  document.getElementById("editorOverlay").classList.add("open");
+}
+function closeProductEditor(){ document.getElementById("editorOverlay").classList.remove("open"); }
+function selectBadge(el){
+  edBadge = el.getAttribute("data-val");
+  document.querySelectorAll(".badge-opt").forEach(b=>b.classList.remove("selected"));
+  el.classList.add("selected");
+}
+function renderImgFields(){
+  document.getElementById("imgsEditorList").innerHTML = edImgs.map((src,i)=>
+    '<div class="img-row">'+
+      '<div class="thumb-box">'+(src?'<img src="'+src+'" onerror="this.style.display=\'none\'">':"🖼️")+'</div>'+
+      '<input type="text" value="'+src.replace(/"/g,"&quot;")+'" placeholder="https://... URL de la imagen" oninput="edImgs['+i+']=this.value">'+
+      '<button class="del-img-btn" onclick="edImgs.splice('+i+',1);renderImgFields()">✕</button>'+
+    '</div>'
+  ).join("");
+}
+function addImgField(){ edImgs.push(""); renderImgFields(); }
+function uploadLocalImg(input){
+  const f = input.files && input.files[0];
+  if(!f) return;
+  if(f.size > 400*1024 && !confirm("La imagen pesa "+Math.round(f.size/1024)+" KB. Las imágenes grandes hacen la página más lenta.\n\nRecomendado: usa imágenes de menos de 400 KB, o súbelas a Squarespace/GitHub y pega la URL.\n\n¿Insertar de todas formas?")){ input.value=""; return; }
+  const rd = new FileReader();
+  rd.onload = function(){
+    if(edImgs.length===1 && !edImgs[0]) edImgs[0] = rd.result;
+    else edImgs.push(rd.result);
+    renderImgFields();
+  };
+  rd.readAsDataURL(f);
+  input.value = "";
+}
+function renderCompatTags(){
+  const wrap = document.getElementById("compatTagsWrap");
+  wrap.querySelectorAll(".tag-pill-edit").forEach(t=>t.remove());
+  const input = document.getElementById("compatInput");
+  edCompat.forEach((c,i)=>{
+    const pill = document.createElement("span");
+    pill.className = "tag-pill-edit";
+    pill.innerHTML = c+'<button onclick="edCompat.splice('+i+',1);renderCompatTags()">✕</button>';
+    wrap.insertBefore(pill, input);
+  });
+}
+function handleCompatKey(e){
+  if(e.key==="Enter"){
+    e.preventDefault();
+    const v = e.target.value.trim();
+    if(v){ edCompat.push(v); e.target.value=""; renderCompatTags(); }
+  }
+}
+function renderSpecsEditor(){
+  document.getElementById("specsEditor").innerHTML = edSpecs.map((s,i)=>
+    '<div class="spec-edit-row">'+
+      '<input type="text" value="'+(s[0]||"").replace(/"/g,"&quot;")+'" placeholder="Especificación" oninput="edSpecs['+i+'][0]=this.value">'+
+      '<input type="text" value="'+(s[1]||"").replace(/"/g,"&quot;")+'" placeholder="Detalle" oninput="edSpecs['+i+'][1]=this.value">'+
+      '<button class="del-spec" onclick="edSpecs.splice('+i+',1);renderSpecsEditor()">✕</button>'+
+    '</div>'
+  ).join("") + '<button class="add-spec-btn" onclick="edSpecs.push([\'\',\'\']);renderSpecsEditor()">＋ Agregar especificación</button>';
+}
+function saveProduct(){
+  const name = document.getElementById("f_name").value.trim();
+  if(!name){ alert("El equipo necesita un nombre."); return; }
+  const obj = {
+    id: edId!==null ? edId : (PRODUCTS.reduce((m,p)=>Math.max(m,p.id),0)+1),
+    cat: document.getElementById("f_cat").value,
+    sku: document.getElementById("f_sku").value.trim(),
+    badge: edBadge,
+    icon: document.getElementById("f_icon").value.trim() || "🚛",
+    imgs: edImgs.map(s=>s.trim()).filter(Boolean),
+    name: name,
+    subtitle: document.getElementById("f_subtitle").value.trim(),
+    desc: document.getElementById("f_desc").value.trim(),
+    compat: edCompat.slice(),
+    specs: edSpecs.filter(s=>(s[0]||"").trim()||(s[1]||"").trim()),
+    manualUrl: document.getElementById("f_manual").value.trim(),
+    waMsg: document.getElementById("f_waMsg").value.trim() || ("Hola DIVICA, quiero cotizar: "+name)
+  };
+  if(edId!==null){
+    const i = PRODUCTS.findIndex(p=>p.id===edId);
+    if(i>-1) PRODUCTS[i] = obj;
+  } else {
+    PRODUCTS.push(obj);
+  }
+  persist();
+  renderCats(); applyFilters();
+  closeProductEditor();
+}
+function deleteProduct(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  if(!confirm('¿Eliminar "'+p.name+'" del catálogo?')) return;
+  PRODUCTS.splice(PRODUCTS.findIndex(x=>x.id===id),1);
+  persist();
+  renderCats(); applyFilters();
+}
+
+/* ═══════ EDITOR DE BANNER ═══════ */
+let edBannerColor = "#1B2F4E";
+function openBannerEditor(){
+  const b = DATA.banner;
+  document.getElementById("be_eyebrow").value = b.eyebrow||"";
+  document.getElementById("be_title").value = (b.title||"").replace(/<br\s*\/?>/gi,"\n");
+  document.getElementById("be_subtitle").value = b.sub||"";
+  document.getElementById("be_img").value = b.img||"";
+  edBannerColor = b.color||"#1B2F4E";
+  document.querySelectorAll(".color-swatch").forEach(s=>s.classList.toggle("selected", s.getAttribute("data-color")===edBannerColor));
+  document.getElementById("be_colorCustom").value = edBannerColor;
+  document.getElementById("bannerEditorOverlay").classList.add("open");
+}
+function closeBannerEditor(){ document.getElementById("bannerEditorOverlay").classList.remove("open"); }
+function selectBannerColor(el){
+  edBannerColor = el.getAttribute("data-color");
+  document.querySelectorAll(".color-swatch").forEach(s=>s.classList.remove("selected"));
+  el.classList.add("selected");
+  document.getElementById("be_colorCustom").value = edBannerColor;
+}
+function customBannerColor(input){
+  edBannerColor = input.value;
+  document.querySelectorAll(".color-swatch").forEach(s=>s.classList.remove("selected"));
+}
+function saveBanner(){
+  DATA.banner = {
+    eyebrow: document.getElementById("be_eyebrow").value.trim(),
+    title: document.getElementById("be_title").value.trim().replace(/\n/g,"<br>"),
+    sub: document.getElementById("be_subtitle").value.trim(),
+    img: document.getElementById("be_img").value.trim(),
+    color: edBannerColor
+  };
+  persist();
+  applyBanner();
+  closeBannerEditor();
+}
+
+/* ═══════ EDITOR DE CATEGORÍAS ═══════ */
+function openCatsEditor(){
+  document.getElementById("catsEditorList").innerHTML = CATEGORIES.map((c,i)=>
+    '<div class="cat-edit-row" data-id="'+c.id+'">'+
+      '<div class="cat-edit-top">'+
+        '<input class="cat-edit-icon" value="'+(c.icon||"")+'" maxlength="4">'+
+        '<input class="cat-edit-name" value="'+c.label.replace(/"/g,"&quot;")+'" placeholder="Nombre de la categoría">'+
+        '<button class="btn-del-cat" onclick="this.closest(\'.cat-edit-row\').remove()">🗑</button>'+
+      '</div>'+
+      '<textarea class="cat-edit-desc" placeholder="Descripción (se muestra al filtrar por esta categoría)">'+(c.desc||"")+'</textarea>'+
+    '</div>'
+  ).join("");
+  document.getElementById("catsEditorOverlay").classList.add("open");
+}
+function closeCatsEditor(){ document.getElementById("catsEditorOverlay").classList.remove("open"); }
+function addCatRow(){
+  const div = document.createElement("div");
+  div.className = "cat-edit-row";
+  div.setAttribute("data-id","");
+  div.innerHTML = '<div class="cat-edit-top">'+
+    '<input class="cat-edit-icon" value="📦" maxlength="4">'+
+    '<input class="cat-edit-name" value="" placeholder="Nombre de la categoría">'+
+    '<button class="btn-del-cat" onclick="this.closest(\'.cat-edit-row\').remove()">🗑</button>'+
+    '</div>'+
+    '<textarea class="cat-edit-desc" placeholder="Descripción (opcional)"></textarea>';
+  document.getElementById("catsEditorList").appendChild(div);
+}
+function slugify(s){
+  return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") || ("cat"+Date.now());
+}
+function saveCats(){
+  const rows = document.querySelectorAll("#catsEditorList .cat-edit-row");
+  const newCats = [];
+  rows.forEach(r=>{
+    const label = r.querySelector(".cat-edit-name").value.trim();
+    if(!label) return;
+    let id = r.getAttribute("data-id");
+    if(!id) id = slugify(label);
+    newCats.push({
+      id: id,
+      label: label,
+      icon: r.querySelector(".cat-edit-icon").value.trim() || "📦",
+      desc: r.querySelector(".cat-edit-desc").value.trim()
+    });
+  });
+  if(!newCats.length){ alert("Debe existir al menos una categoría."); return; }
+  DATA.cats = newCats;
+  CATEGORIES = DATA.cats;
+  const validIds = newCats.map(c=>c.id);
+  if(activeCat!=="all" && !validIds.includes(activeCat)) activeCat = "all";
+  persist();
+  renderCats(); applyFilters();
+  closeCatsEditor();
+}
+
+/* ═══════ INIT ═══════ */
+applyBanner();
+checkEditAccess();
+renderCats();
+applyFilters();
+</script>
+
+<!-- Datos estructurados SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Multiservicios DIVICA, C.A.",
+  "url": "https://www.mdivica.com",
+  "logo": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png",
+  "telephone": "+58-414-461-4433",
+  "email": "ndiaz@mdivica.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Centenario, Sector San Onofre, Galpón #1",
+    "addressLocality": "Ejido",
+    "addressRegion": "Mérida",
+    "postalCode": "5111",
+    "addressCountry": "VE"
+  },
+  "sameAs": [
+    "https://www.instagram.com/mdivica/",
+    "https://www.facebook.com/mdivica",
+    "https://www.linkedin.com/company/multiservicios-divica/"
+  ]
+}
+</script>
+
+</body>
+</html>

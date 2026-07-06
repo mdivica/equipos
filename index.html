@@ -170,6 +170,16 @@ body.edit-mode .sidebar-edit-cats{display:block}
   color:var(--muted);cursor:pointer;padding:5px 9px;font-size:13px;flex-shrink:0
 }
 .img-row .del-img-btn:hover{color:#dc2626;border-color:#dc2626}
+.cover-badge{
+  flex-shrink:0;background:#FEF3EC;color:#D05F1B;border:1px solid #D05F1B;
+  border-radius:5px;padding:5px 9px;font-size:11px;font-weight:700;white-space:nowrap
+}
+.cover-btn{
+  flex-shrink:0;background:none;border:1px solid var(--border);border-radius:5px;
+  color:var(--muted);cursor:pointer;padding:5px 9px;font-size:11px;font-weight:600;
+  font-family:inherit;white-space:nowrap;transition:var(--tr)
+}
+.cover-btn:hover{color:#D05F1B;border-color:#D05F1B;background:#FEF3EC}
 .add-img-btn{
   width:100%;background:var(--bg);border:1.5px dashed var(--border);
   border-radius:7px;padding:8px;font-family:inherit;font-size:13px;
@@ -780,22 +790,12 @@ footer a:hover{color:white}
         <label>Descripción completa</label>
         <textarea id="f_desc" placeholder="Descripción detallada del equipo..."></textarea>
       </div>
-      <div class="form-row-2">
-        <div class="form-row">
-          <label>Categoría</label>
-          <select id="f_cat"></select>
-        </div>
-        <div class="form-row">
-          <label>Badge / etiqueta</label>
-          <div class="badge-select">
-            <div class="badge-opt selected" data-val="" onclick="selectBadge(this)">Ninguna</div>
-            <div class="badge-opt" data-val="new" onclick="selectBadge(this)" style="color:#059669;border-color:#059669">Nuevo</div>
-            <div class="badge-opt" data-val="hot" onclick="selectBadge(this)" style="color:var(--accent);border-color:var(--accent)">Más solicitado</div>
-          </div>
-        </div>
+      <div class="form-row">
+        <label>Categoría</label>
+        <select id="f_cat"></select>
       </div>
       <div class="form-row">
-        <label>Imágenes del equipo (pega una URL por imagen)</label>
+        <label>Imágenes del equipo — la marcada con ★ es la portada de la tarjeta; usa "☆ Portada" para elegir otra</label>
         <div class="imgs-editor-list" id="imgsEditorList"></div>
         <button class="add-img-btn" onclick="addImgField()">+ Agregar otra imagen (URL)</button>
         <button class="upload-img-btn" onclick="document.getElementById('f_imgFile').click()">📁 Subir imagen desde mi computadora</button>
@@ -916,7 +916,7 @@ const DEFAULT_DATA =
 ],
 "products": [
   {
-    id:1, cat:"vacuum", sku:"DVE-MDV-160", badge:"hot", icon:"🛢️",
+    id:1, cat:"vacuum", sku:"DVE-MDV-160", badge:"", icon:"🛢️",
     imgs:[
       SS+"46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG",
       SS+"d2826108-00d8-4a2e-a7b4-a044ef69c185/Tanque+vacuum",
@@ -946,7 +946,7 @@ const DEFAULT_DATA =
     waMsg:"Hola DIVICA, quiero cotizar el Tanque Vacuum MDV-DV 160 BLS. Ref: DVE-MDV-160"
   },
   {
-    id:2, cat:"vacuum", sku:"DVE-VFMD-100", badge:"new", icon:"⚡",
+    id:2, cat:"vacuum", sku:"DVE-VFMD-100", badge:"", icon:"⚡",
     imgs:[ SS+"10f1ddb2-5b7e-40f1-9ce2-d687ffe6bdd1/BA4606D6-D617-4EDA-B380-70840D1BFB36.PNG" ],
     name:"Alto Vacío VAC-FLOW MD",
     subtitle:"Semirremolque de alto vacío 100 BLS — Modelo 2026",
@@ -1157,7 +1157,7 @@ const DEFAULT_DATA =
     waMsg:"Hola DIVICA, quiero cotizar el Equipo Mixto de Alcantarillado DVMC. Ref: DVE-DVMC-01"
   },
   {
-    id:12, cat:"medida", sku:"DVE-CUSTOM", badge:"new", icon:"⚙️",
+    id:12, cat:"medida", sku:"DVE-CUSTOM", badge:"", icon:"⚙️",
     imgs:[ SS+"1b22a5fb-b9c5-4079-b806-5869854f5711/1161a2e6-4f71-4fe5-a4c9-4ff630623ee6.png" ],
     name:"Soluciones a la Medida — Industria Petrolera",
     subtitle:"Ingeniería, fabricación y puesta en marcha",
@@ -1258,9 +1258,7 @@ function renderGrid(list, q){
         '<button class="card-edit-btn btn-edit-product" onclick="event.stopPropagation();openProductEditor('+p.id+')">✏️ Editar</button>'+
         '<button class="card-edit-btn btn-delete-product" onclick="event.stopPropagation();deleteProduct('+p.id+')">🗑 Eliminar</button>'+
       '</div></div>'+
-      '<div class="card-img">'+img+
-        '<div class="card-badge-row">'+badgeHtml(p.badge)+'</div>'+
-      '</div>'+
+      '<div class="card-img">'+img+'</div>'+
       '<div class="card-body">'+
         '<span class="card-sku">REF: '+p.sku+'</span>'+
         '<span class="card-title">'+p.name+'</span>'+
@@ -1504,9 +1502,17 @@ function renderImgFields(){
     '<div class="img-row">'+
       '<div class="thumb-box">'+(src?'<img src="'+src+'" onerror="this.style.display=\'none\'">':"🖼️")+'</div>'+
       '<input type="text" value="'+src.replace(/"/g,"&quot;")+'" placeholder="https://... URL de la imagen" oninput="edImgs['+i+']=this.value">'+
+      (i===0
+        ? '<span class="cover-badge">★ Portada</span>'
+        : '<button class="cover-btn" title="Usar esta imagen como portada de la tarjeta" onclick="setCover('+i+')">☆ Portada</button>')+
       '<button class="del-img-btn" onclick="edImgs.splice('+i+',1);renderImgFields()">✕</button>'+
     '</div>'
   ).join("");
+}
+function setCover(i){
+  const s = edImgs.splice(i,1)[0];
+  edImgs.unshift(s);
+  renderImgFields();
 }
 function addImgField(){ edImgs.push(""); renderImgFields(); }
 function uploadLocalImg(input){
@@ -1681,6 +1687,8 @@ function saveCats(){
 /* Auto-altura: avisa al padre (Squarespace) la altura real del contenido */
 function dvPostHeight(){
   if(window.self === window.top) return;
+  /* Medir el contenido real (body), NO la ventana: documentElement.scrollHeight
+     crece con el iframe y causaba un bucle infinito de altura */
   var h = Math.ceil(document.body.getBoundingClientRect().height) + 10;
   window.parent.postMessage({type:"divicaCatalogHeight", height:h}, "*");
 }

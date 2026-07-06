@@ -700,7 +700,7 @@ renderFicha();
 /* Auto-altura: avisa al padre (Squarespace) la altura real del contenido */
 function dvPostHeight(){
   if(window.self === window.top) return;
-  var h = document.documentElement.scrollHeight;
+  var h = Math.ceil(document.body.getBoundingClientRect().height) + 10;
   window.parent.postMessage({type:"divicaFichaHeight", height:h, id:id}, "*");
 }
 window.addEventListener("load", dvPostHeight);

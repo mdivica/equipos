@@ -113,6 +113,9 @@ header{background:var(--surface);border-bottom:1px solid var(--border);position:
 .custom-text a:hover{background:#b8511a}
 .custom-photo{min-height:280px}
 .custom-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.custom-band.rev{grid-template-columns:1fr 1.1fr}
+.custom-band.rev .custom-photo{order:-1}
+@media(max-width:860px){.custom-band.rev .custom-photo{order:0}}
 
 /* Servicios */
 .serv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
@@ -322,6 +325,20 @@ body.edit-mode .sec-edit-btn{display:flex}
   </div>
 </section>
 
+<!-- ════ SERVICIO ON-SITE ════ -->
+<section class="section">
+  <button class="sec-edit-btn" onclick="openEditor('onsite')">✏️ Editar on-site</button>
+  <div class="custom-band rev">
+    <div class="custom-photo"><img id="onsiteImg" src="" alt="Servicio de mantenimiento on-site DIVICA"></div>
+    <div class="custom-text">
+      <div class="section-label">Atención en campo</div>
+      <h2 id="onsiteTitle"></h2>
+      <p id="onsiteText"></p>
+      <a href="https://www.mdivica.com/partes-componentes" target="_top">Ver partes y componentes →</a>
+    </div>
+  </div>
+</section>
+
 <!-- ════ SERVICIOS ════ -->
 <section class="section">
   <button class="sec-edit-btn" onclick="openEditor('serv')">✏️ Editar servicios</button>
@@ -427,6 +444,15 @@ body.edit-mode .sec-edit-btn{display:flex}
           <button class="upload-img-btn" onclick="uploadTo('e_customImg')">📁 Subir foto desde mi computadora</button>
         </div>
       </div>
+      <div class="ed-group" data-ed="onsite">
+        <div class="ed-sec">🚨 Servicio on-site</div>
+        <div class="form-row"><label>Título</label><input type="text" id="e_onsiteTitle"></div>
+        <div class="form-row"><label>Texto</label><textarea id="e_onsiteText"></textarea></div>
+        <div class="form-row">
+          <label>Foto (URL)</label><input type="text" id="e_onsiteImg">
+          <button class="upload-img-btn" onclick="uploadTo('e_onsiteImg')">📁 Subir foto desde mi computadora</button>
+        </div>
+      </div>
       <div class="ed-group" data-ed="serv">
         <div class="ed-sec">🛠 Servicios</div>
         <div class="form-row"><label>Título de la sección</label><input type="text" id="e_servTitle"></div>
@@ -487,23 +513,28 @@ const DEFAULT_HOME =
  ],
  "prodTitle": "Equipos que impulsan tu operación",
  "prod": [
-  ["Tanque Vacuum MDV-DV","Recolección y transporte de líquidos, lodos y residuos industriales. Motor diésel acoplado a bomba de vacío JUROP o Battioni Pagani. 160 y 230 bls.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG?format=800w","https://www.mdivica.com/tanque-vacuum"],
-  ["Frac Tank 500 BLS","Tanque de almacenamiento sobre tren de rodaje para combustibles, agua, ácidos y fluidos de perforación. Hasta 500 barriles.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d3e976e0-6bc6-45ff-bf9b-97556bed6fb1/8a5043c8-b273-47f9-892a-fbbd9f204c82.png?format=800w","https://www.mdivica.com/frac-tank-500bls"],
-  ["Low Boy MDVL-LBD","Remolques de cama baja para maquinaria pesada y cargas voluminosas. De 30 a 120 toneladas con configuraciones a la medida.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png?format=800w","https://www.mdivica.com/low-boy-cargapesada"],
-  ["Plataforma 2 y 3 Ejes","Semirremolque de estructura robusta para material, equipos y carga pesada en general. Capacidad de hasta 35 toneladas.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/b9813fe8-def7-419d-8f0c-92750a3a3d03/IMG_3021.JPEG?format=800w","https://www.mdivica.com/remolque-plataforma"],
-  ["Cisterna para Granel","Transporte seguro y eficiente de productos secos a granel: cemento, químicos en polvo, materiales pulverizados y más.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/7bd278ec-d13c-48d4-924a-b457a1770919/IMG_1750.JPEG?format=800w","https://www.mdivica.com/cisterna-material-granel"],
-  ["Cisterna para Combustibles","Remolques especializados para el transporte seguro de combustibles líquidos, cumpliendo estándares de seguridad y calidad.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d61ecc6b-3481-4774-b10e-a18473a2b082/1d90501c-1089-4207-bfe4-6e9031766eb2.png?format=800w","https://www.mdivica.com/productos-divica"]
+  ["Tanque Vacuum — succión y descarga de fluidos","Equipo especializado para la recolección y transporte de líquidos, lodos y residuos industriales. Conjunto motor diésel acoplado a robusta bomba de vacío, para operaciones de alto rendimiento.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG?format=800w","https://www.mdivica.com/tanque-vacuum"],
+  ["Frac Tanks para la industria petrolera","Tanques de almacenamiento con tren de rodaje para combustibles, agua, ácidos, geles y otros fluidos de las operaciones de producción de petróleo. Hasta 500 barriles.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d3e976e0-6bc6-45ff-bf9b-97556bed6fb1/8a5043c8-b273-47f9-892a-fbbd9f204c82.png?format=800w","https://www.mdivica.com/frac-tank-500bls"],
+  ["Low Boy — carga sobredimensionada","Remolques de cama baja o plana para maquinaria pesada y cargas voluminosas con máxima estabilidad. De 30 a 120 toneladas con configuraciones a la medida.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png?format=800w","https://www.mdivica.com/low-boy-cargapesada"],
+  ["Cisterna para material a granel (polvo)","Transporte seguro y eficiente de productos secos a granel como cemento, químicos en polvo, materiales pulverizados, granos y más.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/7bd278ec-d13c-48d4-924a-b457a1770919/IMG_1750.JPEG?format=800w","https://www.mdivica.com/cisterna-material-granel"],
+  ["Plataforma para carga pesada — 2 y 3 ejes","Semirremolque de estructura robusta, ideal para transportar material, equipos y carga pesada en general. Capacidad de hasta 35 toneladas.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/b9813fe8-def7-419d-8f0c-92750a3a3d03/IMG_3021.JPEG?format=800w","https://www.mdivica.com/remolque-plataforma"],
+  ["Cisterna para combustibles","Remolques especializados para el transporte seguro de combustibles líquidos, cumpliendo con estándares de seguridad y calidad.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d61ecc6b-3481-4774-b10e-a18473a2b082/1d90501c-1089-4207-bfe4-6e9031766eb2.png?format=800w","https://www.mdivica.com/productos-divica"]
  ],
  "custom": {
   "title": "Diseño y fabricación de soluciones para la industria petrolera",
   "text": "Contamos con un equipo técnico de ingeniería listo para llevar a cabo cualquier requerimiento de la industria: tanques para equipos flush-by, remolques para equipos separadores, tanques mezcladores, tanques para calentamiento de crudo y más.",
   "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/2b0bf502-aba5-4091-bc6b-86531f366795/FLUSH+BY+TANK?format=1000w"
  },
+ "onsite": {
+  "title": "Mantenimiento, adiestramiento de personal y suministro de repuestos on-site",
+  "text": "Gracias a nuestra rápida atención, podemos asistir cualquier requerimiento a lo largo de todo el territorio nacional e internacional en tiempo récord.",
+  "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/e4ef758b-e771-42ba-be37-d34ab9f74993/C08AA5C8-DD9E-447D-8885-C19526BC9C62.PNG?format=1000w"
+ },
  "servTitle": "Acompañamos tu operación de principio a fin",
  "serv": [
   ["🏭","Diseño y fabricación","Con más de 20 años de experiencia, la clave está en la **calidad**, la **innovación** y la **adaptación**. Creamos soluciones que mejoran su productividad, reducen costos y maximizan el rendimiento.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/bfafc602-9497-4c2a-9c65-a667707f078a/IMG_8437.JPEG?format=800w"],
   ["⚙️","Partes y componentes","Todo lo necesario para mantener sus equipos en perfecto estado: **tren de rodaje, válvulas y bombas de vacío**, hasta **motores, compresores y piezas fabricadas en acero**.","https://images.squarespace-cdn.com/content/677fe2dd9524f212e1de1b20/f85906bb-1d72-4e08-91bc-434757344941/IMG_3630.JPEG?content-type=image%2Fjpeg"],
-  ["🔧","Mantenimiento integral","Asistencia técnica enfocada en prevenir fallos y reducir tiempos de inactividad. Atención **personalizada** en todo el territorio nacional e internacional, en tiempo récord.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/e4ef758b-e771-42ba-be37-d34ab9f74993/C08AA5C8-DD9E-447D-8885-C19526BC9C62.PNG?format=800w"]
+  ["🔧","Mantenimiento integral","Asistencia técnica enfocada en prevenir fallos y reducir tiempos de inactividad. Atención **personalizada** para que pueda concentrarse en el crecimiento de su negocio.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d2826108-00d8-4a2e-a7b4-a044ef69c185/Tanque+vacuum?format=800w"]
  ],
  "about": {
   "title": "Sobre nosotros",
@@ -532,7 +563,13 @@ const LSH_KEY = "dvHomeData";
 function loadHome(){
   try{
     const raw = localStorage.getItem(LSH_KEY);
-    if(raw){ const d = JSON.parse(raw); if(d && d.hero) return d; }
+    if(raw){
+      const d = JSON.parse(raw);
+      if(d && d.hero){
+        for(const k in DEFAULT_HOME){ if(!(k in d)) d[k] = JSON.parse(JSON.stringify(DEFAULT_HOME[k])); }
+        return d;
+      }
+    }
   }catch(e){}
   return JSON.parse(JSON.stringify(DEFAULT_HOME));
 }
@@ -621,6 +658,10 @@ function renderHome(){
   document.getElementById("customText").textContent = H.custom.text;
   document.getElementById("customImg").src = H.custom.img || "";
 
+  document.getElementById("onsiteTitle").textContent = H.onsite.title;
+  document.getElementById("onsiteText").textContent = H.onsite.text;
+  document.getElementById("onsiteImg").src = H.onsite.img || "";
+
   document.getElementById("servTitle").textContent = H.servTitle;
   document.getElementById("servGrid").innerHTML = (H.serv||[]).map(s=>
     '<div class="serv-card">'+
@@ -672,8 +713,9 @@ function confirmResetHome(){
 
 const ED_TITLES = {
   hero:"🎯 Editar banner", stats:"📊 Editar cifras", prod:"🚛 Editar productos",
-  custom:"⚙️ Editar soluciones a la medida", serv:"🛠 Editar servicios",
-  about:"🏢 Editar sobre nosotros", brands:"🏷 Editar marcas", cta:"📞 Editar llamado final"
+  custom:"⚙️ Editar soluciones a la medida", onsite:"🚨 Editar servicio on-site",
+  serv:"🛠 Editar servicios", about:"🏢 Editar sobre nosotros",
+  brands:"🏷 Editar marcas", cta:"📞 Editar llamado final"
 };
 
 /* ── Editor (por sección, o completo sin argumento) ── */
@@ -694,6 +736,9 @@ function openEditor(sec){
   document.getElementById("e_customTitle").value = H.custom.title;
   document.getElementById("e_customText").value = H.custom.text;
   document.getElementById("e_customImg").value = H.custom.img;
+  document.getElementById("e_onsiteTitle").value = H.onsite.title;
+  document.getElementById("e_onsiteText").value = H.onsite.text;
+  document.getElementById("e_onsiteImg").value = H.onsite.img;
   document.getElementById("e_servTitle").value = H.servTitle;
   document.getElementById("e_serv").value = (H.serv||[]).map(s=>s[0]+" | "+s[1]+" | "+s[2]+(s[3]?" | "+s[3]:"")).join("\n");
   document.getElementById("e_aboutTitle").value = H.about.title;
@@ -721,6 +766,11 @@ function saveEditor(){
     title: document.getElementById("e_customTitle").value.trim(),
     text: document.getElementById("e_customText").value.trim(),
     img: document.getElementById("e_customImg").value.trim()
+  };
+  HOME.onsite = {
+    title: document.getElementById("e_onsiteTitle").value.trim(),
+    text: document.getElementById("e_onsiteText").value.trim(),
+    img: document.getElementById("e_onsiteImg").value.trim()
   };
   HOME.servTitle = document.getElementById("e_servTitle").value.trim();
   HOME.serv = lines(document.getElementById("e_serv").value).map(l=>splitBar(l,4));

@@ -309,14 +309,20 @@ header{
 
 /* ── HERO BANNER ── */
 #heroBanner{
-  background:var(--navy);padding:40px 24px;text-align:center;
+  background:var(--navy);padding:72px 24px 80px;text-align:center;
   position:relative;overflow:hidden;
 }
-#heroBannerBg{
-  position:absolute;inset:0;z-index:0;
-  background:linear-gradient(135deg,rgba(17,31,52,.95) 0%,rgba(27,47,78,.8) 100%);
-}
-#heroBannerBg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35}
+#heroBannerBg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-slides{position:absolute;inset:0}
+.hero-slide{position:absolute;inset:0;transform:translateX(-100%);transition:transform 1.1s ease;will-change:transform}
+.hero-slide.active{transform:translateX(0)}
+.hero-slide.exit{transform:translateX(100%)}
+.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.hero-slide.active img{animation:heroZoom 7s ease-out forwards}
+@keyframes heroZoom{from{transform:scale(1)}to{transform:scale(1.07)}}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,14,24,.55) 0%,rgba(8,14,24,.28) 45%,rgba(8,14,24,.62) 100%)}
+.hero-title,.hero-subtitle{text-shadow:0 2px 14px rgba(0,0,0,.55)}
+@media(max-width:768px){#heroBanner{padding:40px 14px 46px}}
 .hero-content{position:relative;z-index:1;max-width:700px;margin:0 auto}
 .hero-eyebrow{
   display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
@@ -637,7 +643,8 @@ footer a:hover{color:white}
 <!-- ════ HERO BANNER ════ -->
 <section id="heroBanner">
   <div id="heroBannerBg">
-    <img id="bannerBgImg" src="" alt="" style="display:none">
+    <div class="hero-slides" id="heroSlides"></div>
+    <div class="hero-grad"></div>
   </div>
   <div id="heroBannerColorBg" style="position:absolute;inset:0;z-index:-1;background:#1B2F4E"></div>
   <button class="banner-edit-btn" onclick="openBannerEditor()">✏️ Editar Banner</button>
@@ -845,8 +852,8 @@ footer a:hover{color:white}
         <textarea id="be_subtitle" placeholder="Texto descriptivo del banner..."></textarea>
       </div>
       <div class="form-row">
-        <label>URL de imagen de fondo (opcional)</label>
-        <input type="text" id="be_img" placeholder="https://... (deja vacío para usar color sólido)">
+        <label>Fotos del slider (una URL por línea — deja VACÍO para rotar automáticamente entre todas las fotos de los equipos)</label>
+        <textarea id="be_imgs" style="min-height:100px" placeholder="Vacío = todas las fotos de los equipos, automáticamente"></textarea>
       </div>
       <div class="form-row">
         <label>Color de fondo del banner</label>
@@ -896,7 +903,7 @@ const DEFAULT_DATA =
   "eyebrow": "Catálogo Oficial de Equipos",
   "title": "Remolques y Semirremolques<br>Fabricados por DIVICA",
   "sub": "Tanques vacuum, frac tanks, low boys, cisternas y plataformas con ingeniería 100% venezolana. Fabricante directo — sin intermediarios.",
-  "img": "",
+  "imgs": [],
   "color": "#1B2F4E"
 },
 "cats": [
@@ -1341,15 +1348,54 @@ function closeModal(){
 }
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
 
-/* ═══════ BANNER ═══════ */
+/* ═══════ BANNER + SLIDER ═══════ */
+let slideTimer = null;
+function bannerImgs(b){
+  /* Si el banner tiene fotos propias, se usan esas.
+     Si está vacío, rota automáticamente entre TODAS las fotos de los equipos. */
+  if(b.imgs && b.imgs.filter(Boolean).length) return b.imgs.filter(Boolean);
+  if(b.img) return [b.img];
+  const all = [];
+  PRODUCTS.forEach(function(p){
+    (p.imgs||[]).forEach(function(src){
+      if(src && src.indexOf("data:")!==0 && all.indexOf(src)===-1) all.push(src);
+    });
+  });
+  return all;
+}
+function startSlider(imgs){
+  const wrap = document.getElementById("heroSlides");
+  if(slideTimer){ clearInterval(slideTimer); slideTimer = null; }
+  wrap.innerHTML = imgs.map(function(src,i){
+    var hi = (src.indexOf("squarespace-cdn.com")>-1 && src.indexOf("?")===-1) ? src+"?format=1500w" : src;
+    return '<div class="hero-slide'+(i===0?' active':'')+'"><img src="'+hi+'" alt=""></div>';
+  }).join("");
+  if(imgs.length < 2) return;
+  let cur = 0;
+  slideTimer = setInterval(function(){
+    const slides = wrap.children;
+    if(!slides.length) return;
+    const prev = slides[cur];
+    cur = (cur+1) % slides.length;
+    const next = slides[cur];
+    /* el actual sale hacia la derecha, el siguiente entra desde la izquierda */
+    prev.classList.remove("active");
+    prev.classList.add("exit");
+    next.classList.add("active");
+    setTimeout(function(){
+      prev.style.transition = "none";
+      prev.classList.remove("exit");
+      void prev.offsetHeight;
+      prev.style.transition = "";
+    }, 1300);
+  }, 3000);
+}
 function applyBanner(){
   const b = DATA.banner || {};
   document.getElementById("heroEyebrow").textContent = b.eyebrow || "";
   document.getElementById("heroTitle").innerHTML = b.title || "";
   document.getElementById("heroSub").textContent = b.sub || "";
-  const img = document.getElementById("bannerBgImg");
-  if(b.img){ img.src = b.img; img.style.display = "block"; }
-  else { img.removeAttribute("src"); img.style.display = "none"; }
+  startSlider(bannerImgs(b));
   document.getElementById("heroBannerColorBg").style.background = b.color || "#1B2F4E";
   document.getElementById("heroBanner").style.background = b.color || "#1B2F4E";
 }
@@ -1528,7 +1574,7 @@ function saveProduct(){
     PRODUCTS.push(obj);
   }
   persist();
-  renderCats(); applyFilters();
+  renderCats(); applyFilters(); applyBanner();
   closeProductEditor();
 }
 function deleteProduct(id){
@@ -1547,7 +1593,7 @@ function openBannerEditor(){
   document.getElementById("be_eyebrow").value = b.eyebrow||"";
   document.getElementById("be_title").value = (b.title||"").replace(/<br\s*\/?>/gi,"\n");
   document.getElementById("be_subtitle").value = b.sub||"";
-  document.getElementById("be_img").value = b.img||"";
+  document.getElementById("be_imgs").value = bannerImgs(b).join("\n");
   edBannerColor = b.color||"#1B2F4E";
   document.querySelectorAll(".color-swatch").forEach(s=>s.classList.toggle("selected", s.getAttribute("data-color")===edBannerColor));
   document.getElementById("be_colorCustom").value = edBannerColor;
@@ -1569,7 +1615,7 @@ function saveBanner(){
     eyebrow: document.getElementById("be_eyebrow").value.trim(),
     title: document.getElementById("be_title").value.trim().replace(/\n/g,"<br>"),
     sub: document.getElementById("be_subtitle").value.trim(),
-    img: document.getElementById("be_img").value.trim(),
+    imgs: document.getElementById("be_imgs").value.split("\n").map(s=>s.trim()).filter(Boolean),
     color: edBannerColor
   };
   persist();

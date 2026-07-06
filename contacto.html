@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ══════════════════════════════════════════════════════════════
+  DIVICA — CONTACTO (diseño Equipment Store)
+
+  CÓMO PUBLICAR:
+  1. Sube este archivo al repo "equipos" como "contacto.html"
+  2. En /contacto de Squarespace pega el bloque
+     "squarespace-bloque-contacto.html"
+
+  ⚠️ ACTIVACIÓN DEL FORMULARIO (una sola vez):
+  El formulario envía los mensajes a ndiaz@mdivica.com usando el
+  servicio gratuito FormSubmit. La PRIMERA vez que alguien envíe el
+  formulario, FormSubmit mandará un correo de activación a
+  ndiaz@mdivica.com — ábrelo y haz clic en "Activate". Desde ese
+  momento todos los mensajes llegan directo a la bandeja de entrada.
+  Si falla el envío, el formulario ofrece mandar el mensaje por
+  WhatsApp automáticamente.
+══════════════════════════════════════════════════════════════ -->
+<title>Contacto | Multiservicios DIVICA, C.A.</title>
+<meta name="description" content="Contáctanos para cotizar equipos, repuestos y servicio técnico. Mérida, Venezuela. +58 414-461-4433 · ndiaz@mdivica.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F5F6F8;
+  --surface: #FFFFFF;
+  --border:  #E4E6EA;
+  --text:    #111827;
+  --muted:   #6B7280;
+  --faint:   #9CA3AF;
+  --navy:    #1B2F4E;
+  --navy-dk: #111f34;
+  --accent:  #D05F1B;
+  --accent-bg:#FEF3EC;
+  --r: 10px;
+  --tr: 0.16s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+
+/* ── TOPBAR / HEADER ── */
+#topbar{background:var(--navy-dk);color:rgba(255,255,255,.7);font-size:12px;text-align:center;padding:7px 16px}
+#topbar a{color:rgba(255,255,255,.9);text-decoration:none;font-weight:500}
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 1px 8px rgba(0,0,0,.07)}
+.header-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:16px}
+.logo-wrap{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+.logo-img{height:40px;width:auto}
+.logo-label{display:flex;flex-direction:column;line-height:1.2}
+.logo-label .brand{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.logo-label .sub{font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.header-actions{display:flex;gap:10px;margin-left:auto;flex-shrink:0}
+.btn-wa{display:flex;align-items:center;gap:8px;background:var(--accent);color:white;border:none;border-radius:7px;padding:10px 18px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--tr);white-space:nowrap}
+.btn-wa:hover{background:#b8511a}
+.btn-phone{display:flex;align-items:center;gap:7px;background:none;border:1.5px solid var(--border);border-radius:7px;padding:9px 14px;font-family:inherit;font-size:13px;font-weight:500;color:var(--text);text-decoration:none;transition:var(--tr);white-space:nowrap}
+.btn-phone:hover{border-color:var(--navy);color:var(--navy)}
+
+/* ── HERO ── */
+#hero{background:var(--navy);padding:48px 24px 54px;text-align:center;position:relative;overflow:hidden}
+#heroBg{position:absolute;inset:0;z-index:0}
+#heroBg img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,14,24,.62) 0%,rgba(8,14,24,.4) 50%,rgba(8,14,24,.68) 100%)}
+.hero-content{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.hero-eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-bg);padding:4px 12px;border-radius:50px;margin-bottom:12px}
+.hero-title{font-size:clamp(24px,4vw,38px);font-weight:800;color:white;line-height:1.12;letter-spacing:-.02em;margin-bottom:10px;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+.hero-sub{font-size:15.5px;color:rgba(255,255,255,.75);max-width:560px;margin:0 auto;line-height:1.6;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+
+/* ── LAYOUT ── */
+.contact-layout{max-width:1200px;margin:34px auto 0;padding:0 24px;display:grid;grid-template-columns:1.25fr 1fr;gap:26px;align-items:start}
+
+/* Formulario */
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px}
+.form-card h2{font-size:20px;font-weight:800;color:var(--navy);margin-bottom:6px;letter-spacing:-.01em}
+.form-card .form-note{font-size:13px;color:var(--muted);margin-bottom:20px}
+.f-row{margin-bottom:15px}
+.f-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f-row label{display:block;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.f-row label em{color:var(--accent);font-style:normal}
+.f-row input,.f-row select,.f-row textarea{
+  width:100%;padding:11px 13px;background:var(--bg);border:1.5px solid var(--border);
+  border-radius:8px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:var(--tr)
+}
+.f-row input:focus,.f-row select:focus,.f-row textarea:focus{border-color:var(--navy);background:white}
+.f-row textarea{resize:vertical;min-height:110px;line-height:1.5}
+.btn-send{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:9px;
+  background:var(--accent);color:white;border:none;border-radius:9px;padding:15px;
+  font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:var(--tr)
+}
+.btn-send:hover{background:#b8511a}
+.btn-send:disabled{opacity:.6;cursor:wait}
+.form-ok{display:none;background:#ECFDF5;border:1.5px solid #059669;color:#065F46;border-radius:9px;padding:16px;font-size:14px;line-height:1.6;margin-top:14px}
+.form-ok.show{display:block}
+.form-err{display:none;background:#FEF2F2;border:1.5px solid #EF4444;color:#7F1D1D;border-radius:9px;padding:16px;font-size:14px;line-height:1.6;margin-top:14px}
+.form-err.show{display:block}
+.form-err a{display:inline-flex;align-items:center;gap:7px;background:#25D366;color:white;border-radius:7px;padding:10px 16px;font-weight:700;font-size:13px;text-decoration:none;margin-top:10px}
+
+/* Tarjetas de contacto */
+.info-col{display:flex;flex-direction:column;gap:14px}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;display:flex;gap:14px;align-items:flex-start;text-decoration:none;transition:var(--tr)}
+a.info-card:hover{border-color:#C7D2FE;box-shadow:0 6px 18px rgba(27,47,78,.10);transform:translateY(-2px)}
+.ic-icon{width:42px;height:42px;border-radius:10px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ic-body b{display:block;font-size:14.5px;color:var(--navy);font-weight:800;margin-bottom:2px}
+.ic-body span{font-size:13px;color:var(--muted);line-height:1.55;display:block}
+.wa-card{background:linear-gradient(135deg,#128C4B 0%,#25D366 130%);border:none}
+.wa-card .ic-icon{background:rgba(255,255,255,.18)}
+.wa-card .ic-body b{color:white}
+.wa-card .ic-body span{color:rgba(255,255,255,.85)}
+
+/* Mapa */
+.map-section{max-width:1200px;margin:34px auto 0;padding:0 24px}
+.map-card{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);box-shadow:0 10px 30px rgba(27,47,78,.10)}
+.map-card iframe{width:100%;height:380px;border:none;display:block}
+
+/* ── FOOTER ── */
+footer{background:var(--navy-dk);color:rgba(255,255,255,.5);font-size:12.5px;text-align:center;padding:26px 24px;line-height:1.7;margin-top:44px}
+footer strong{color:rgba(255,255,255,.9)}
+footer a{color:rgba(255,255,255,.65);text-decoration:none}
+footer a:hover{color:white}
+.footer-div{margin:0 8px;opacity:.3}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  .contact-layout{grid-template-columns:1fr}
+  .f-row-2{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .header-inner{flex-wrap:wrap;padding:10px 12px;gap:8px}
+  .logo-img{height:32px}
+  .logo-label .sub{display:none}
+  .btn-phone{display:none}
+  .btn-wa{font-size:12px;padding:8px 12px}
+  #hero{padding:34px 14px 40px}
+  .contact-layout,.map-section{padding:0 14px}
+  .form-card{padding:20px}
+  .map-card iframe{height:280px}
+}
+</style>
+</head>
+<body>
+
+<!-- ════ TOPBAR ════ -->
+<div id="topbar">
+  <span>Entrega en toda Venezuela &nbsp;·&nbsp; Fabricante directo — sin intermediarios</span>
+  &nbsp;·&nbsp;
+  <a href="tel:+584144614433">+58 414-461-4433</a>
+  &nbsp;/&nbsp;
+  <a href="tel:+584149451507">+58 414-945-1507</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:ndiaz@mdivica.com">ndiaz@mdivica.com</a>
+</div>
+
+<!-- ════ HEADER ════ -->
+<header>
+  <div class="header-inner">
+    <a href="https://www.mdivica.com" target="_top" class="logo-wrap">
+      <img src="https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png" alt="DIVICA" class="logo-img" onerror="this.style.display='none'">
+      <div class="logo-label">
+        <span class="brand">DIVICA</span>
+        <span class="sub">Contacto</span>
+      </div>
+    </a>
+    <div class="header-actions">
+      <a href="tel:+584144614433" class="btn-phone">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        <span>0414-461-4433</span>
+      </a>
+      <a href="https://wa.me/584144614433?text=Hola+DIVICA%2C+necesito+informaci%C3%B3n." class="btn-wa" target="_blank">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ════ HERO ════ -->
+<section id="hero">
+  <div id="heroBg">
+    <img src="https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/72b33ad6-4206-40ad-9dc0-76e2eba97588/c09197ab-f39d-4acf-b051-4ad740f31b1e.png?format=1500w" alt="">
+    <div class="hero-grad"></div>
+  </div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Atención directa con el fabricante</span>
+    <h1 class="hero-title">Contáctanos</h1>
+    <p class="hero-sub">Si tienes preguntas, necesitas más información sobre nuestros productos o servicios, o deseas trabajar con nosotros en tu próximo proyecto, escríbenos.</p>
+  </div>
+</section>
+
+<!-- ════ FORMULARIO + INFO ════ -->
+<div class="contact-layout">
+  <div class="form-card">
+    <h2>Envíanos un mensaje</h2>
+    <p class="form-note">Respondemos el mismo día. Los campos con <em>*</em> son obligatorios.</p>
+    <form id="contactForm">
+      <div class="f-row f-row-2">
+        <div>
+          <label>Nombre <em>*</em></label>
+          <input type="text" id="f_nombre" required placeholder="Tu nombre">
+        </div>
+        <div>
+          <label>Empresa</label>
+          <input type="text" id="f_empresa" placeholder="Nombre de tu empresa (opcional)">
+        </div>
+      </div>
+      <div class="f-row f-row-2">
+        <div>
+          <label>Teléfono / WhatsApp <em>*</em></label>
+          <input type="tel" id="f_telefono" required placeholder="+58 ...">
+        </div>
+        <div>
+          <label>Correo electrónico <em>*</em></label>
+          <input type="email" id="f_email" required placeholder="tucorreo@ejemplo.com">
+        </div>
+      </div>
+      <div class="f-row">
+        <label>¿Qué te interesa? <em>*</em></label>
+        <select id="f_tema" required>
+          <option value="">Selecciona una opción...</option>
+          <option>Tanque Vacuum</option>
+          <option>Frac Tank</option>
+          <option>Low Boy / Cama baja</option>
+          <option>Plataforma 2 y 3 ejes</option>
+          <option>Cisterna (granel o combustible)</option>
+          <option>Equipo a la medida</option>
+          <option>Partes y repuestos</option>
+          <option>Mantenimiento / servicio técnico</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="f-row">
+        <label>Mensaje <em>*</em></label>
+        <textarea id="f_mensaje" required placeholder="Cuéntanos qué necesitas: equipo, capacidad, ubicación del proyecto..."></textarea>
+      </div>
+      <input type="text" id="f_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <button type="submit" class="btn-send" id="btnSend">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        Enviar mensaje
+      </button>
+      <div class="form-ok" id="formOk">
+        ✅ <b>¡Mensaje enviado!</b> Te responderemos a la brevedad a tu correo o WhatsApp. Gracias por contactar a DIVICA.
+      </div>
+      <div class="form-err" id="formErr">
+        ⚠️ No se pudo enviar el mensaje por el formulario en este momento. Puedes enviarlo directo por WhatsApp con un clic:
+        <br>
+        <a id="waFallback" href="#" target="_blank">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Enviar por WhatsApp
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <div class="info-col">
+    <a class="info-card wa-card" href="https://wa.me/584144614433?text=Hola+DIVICA%2C+necesito+informaci%C3%B3n." target="_blank">
+      <div class="ic-icon">💬</div>
+      <div class="ic-body"><b>WhatsApp — respuesta inmediata</b><span>+58 414-461-4433 · Toca para escribirnos</span></div>
+    </a>
+    <a class="info-card" href="tel:+584144614433">
+      <div class="ic-icon">📞</div>
+      <div class="ic-body"><b>Teléfonos</b><span>+58 414-461-4433<br>+58 414-945-1507</span></div>
+    </a>
+    <a class="info-card" href="mailto:ndiaz@mdivica.com">
+      <div class="ic-icon">✉️</div>
+      <div class="ic-body"><b>Correo</b><span>ndiaz@mdivica.com</span></div>
+    </a>
+    <div class="info-card">
+      <div class="ic-icon">📍</div>
+      <div class="ic-body"><b>Planta y oficinas</b><span>Av. Centenario, Sector San Onofre, Galpón #1<br>Ejido 5111, Mérida, Venezuela</span></div>
+    </div>
+    <div class="info-card">
+      <div class="ic-icon">🕐</div>
+      <div class="ic-body"><b>Soporte técnico</b><span>Asistencia en campo a nivel nacional e internacional. Atención 24/7 para emergencias.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ MAPA ════ -->
+<div class="map-section">
+  <div class="map-card">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.234!2d-71.2679!3d8.5256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e64631762b6d5d7%3A0x973d79d0aa7df6c2!2sMultiservicios%20DIVICA%2C%20C.A!5e0!3m2!1ses!2sve!4v1" loading="lazy" title="Ubicación de Multiservicios DIVICA en Ejido, Mérida"></iframe>
+  </div>
+</div>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <strong>Multiservicios DIVICA, C.A.</strong>
+  &nbsp;|&nbsp; RIF J-31713732-9<br>
+  <span>Av. Centenario, Sector San Onofre, Galpón #1, Ejido, Mérida, Venezuela</span><br>
+  <a href="tel:+584144614433">+58 414-461-4433</a><span class="footer-div">|</span>
+  <a href="tel:+584149451507">+58 414-945-1507</a><span class="footer-div">|</span>
+  <a href="mailto:ndiaz@mdivica.com">ndiaz@mdivica.com</a><span class="footer-div">|</span>
+  <a href="https://www.mdivica.com" target="_top">www.mdivica.com</a>
+</footer>
+
+<script>
+/* ═══════ ENVÍO DEL FORMULARIO ═══════ */
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/ndiaz@mdivica.com";
+
+function buildMsg(){
+  return {
+    nombre: document.getElementById("f_nombre").value.trim(),
+    empresa: document.getElementById("f_empresa").value.trim(),
+    telefono: document.getElementById("f_telefono").value.trim(),
+    email: document.getElementById("f_email").value.trim(),
+    tema: document.getElementById("f_tema").value,
+    mensaje: document.getElementById("f_mensaje").value.trim()
+  };
+}
+
+document.getElementById("contactForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  if(document.getElementById("f_honey").value) return; /* bot */
+  const d = buildMsg();
+  const btn = document.getElementById("btnSend");
+  const ok = document.getElementById("formOk");
+  const err = document.getElementById("formErr");
+  ok.classList.remove("show"); err.classList.remove("show");
+  btn.disabled = true;
+
+  fetch(FORM_ENDPOINT, {
+    method: "POST",
+    headers: {"Content-Type":"application/json","Accept":"application/json"},
+    body: JSON.stringify({
+      _subject: "🔔 Nuevo contacto desde mdivica.com — " + d.tema,
+      _template: "table",
+      _captcha: "false",
+      "Nombre": d.nombre,
+      "Empresa": d.empresa || "—",
+      "Teléfono / WhatsApp": d.telefono,
+      "Correo": d.email,
+      "Interés": d.tema,
+      "Mensaje": d.mensaje
+    })
+  })
+  .then(r => r.json().then(j => ({ok: r.ok, j: j})))
+  .then(res => {
+    if(res.ok && (res.j.success === "true" || res.j.success === true)){
+      ok.classList.add("show");
+      document.getElementById("contactForm").reset();
+    } else { throw new Error("rechazado"); }
+  })
+  .catch(() => {
+    const txt = "Hola DIVICA, soy " + d.nombre + (d.empresa ? " de " + d.empresa : "") +
+      ". Interés: " + d.tema + ". " + d.mensaje +
+      " (Tel: " + d.telefono + " / Correo: " + d.email + ")";
+    document.getElementById("waFallback").href = "https://wa.me/584144614433?text=" + encodeURIComponent(txt);
+    err.classList.add("show");
+  })
+  .finally(() => { btn.disabled = false; dvPostHeight(); });
+});
+
+/* ═══════ AUTO-ALTURA ═══════ */
+function dvPostHeight(){
+  if(window.self === window.top) return;
+  var h = Math.ceil(document.body.getBoundingClientRect().height) + 10;
+  window.parent.postMessage({type:"divicaContactoHeight", height:h}, "*");
+}
+window.addEventListener("load", dvPostHeight);
+window.addEventListener("resize", dvPostHeight);
+setTimeout(dvPostHeight, 800);
+setTimeout(dvPostHeight, 2500);
+if(window.ResizeObserver){ new ResizeObserver(dvPostHeight).observe(document.body); }
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contacto | Multiservicios DIVICA, C.A.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Multiservicios DIVICA, C.A.",
+    "url": "https://www.mdivica.com",
+    "telephone": "+58-414-461-4433",
+    "email": "ndiaz@mdivica.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Centenario, Sector San Onofre, Galpón #1",
+      "addressLocality": "Ejido",
+      "addressRegion": "Mérida",
+      "postalCode": "5111",
+      "addressCountry": "VE"
+    },
+    "sameAs": [
+      "https://www.instagram.com/mdivica/",
+      "https://www.facebook.com/mdivica",
+      "https://www.linkedin.com/company/multiservicios-divica/"
+    ]
+  }
+}
+</script>
+</body>
+</html>

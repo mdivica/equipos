@@ -145,6 +145,82 @@ footer a{color:rgba(255,255,255,.65);text-decoration:none}
 footer a:hover{color:white}
 .footer-div{margin:0 8px;opacity:.3}
 
+/* ── MODO EDICIÓN ── */
+#editBar{
+  display:none;position:sticky;top:0;z-index:999;
+  background:#4F46E5;color:white;padding:10px 20px;
+  align-items:center;gap:12px;flex-wrap:wrap;
+  box-shadow:0 2px 12px rgba(79,70,229,0.4);
+}
+#editBar.active{display:flex}
+#editBar .eb-label{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px}
+#editBar .eb-label span{background:rgba(255,255,255,0.2);border-radius:50px;padding:2px 10px;font-size:11px}
+#editBar .eb-actions{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.eb-btn{padding:7px 16px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:var(--tr)}
+.eb-save{background:white;color:#4F46E5}
+.eb-save:hover{background:#EEF2FF}
+.eb-edit{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3)}
+.eb-edit:hover{background:rgba(255,255,255,0.25)}
+.eb-reset{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3)}
+.eb-reset:hover{background:rgba(255,255,255,0.25)}
+.eb-exit{background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.3)}
+.eb-exit:hover{background:rgba(239,68,68,0.35);color:white}
+#editToggle{
+  position:fixed;bottom:28px;right:28px;z-index:998;
+  background:var(--navy);color:white;border:none;border-radius:50px;
+  padding:13px 20px;font-family:inherit;font-size:13px;font-weight:700;
+  cursor:pointer;box-shadow:0 4px 20px rgba(27,47,78,0.35);
+  display:none;align-items:center;gap:8px;transition:var(--tr);
+}
+#editToggle.visible{display:flex}
+#editToggle:hover{background:#243d63;transform:translateY(-2px)}
+#editToggle.editing{background:#4F46E5}
+#editToggle.editing:hover{background:#4338CA}
+.editor-overlay{
+  display:none;position:fixed;inset:0;background:rgba(10,15,30,.75);z-index:600;
+  align-items:flex-start;justify-content:center;padding:20px;backdrop-filter:blur(4px);overflow-y:auto
+}
+.editor-overlay.open{display:flex}
+.editor-box{
+  background:var(--surface);border-radius:14px;max-width:700px;width:100%;
+  box-shadow:0 32px 80px rgba(0,0,0,.35);margin:auto
+}
+.editor-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border)}
+.editor-title{font-size:17px;font-weight:800;color:var(--text)}
+.editor-close{
+  width:32px;height:32px;border-radius:50%;background:var(--bg);border:1px solid var(--border);
+  cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--muted)
+}
+.editor-body{padding:24px}
+.form-row{margin-bottom:16px}
+.form-row label{display:block;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.form-row .hint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--faint)}
+.form-row input,.form-row textarea{
+  width:100%;padding:10px 13px;background:var(--bg);border:1.5px solid var(--border);
+  border-radius:8px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:var(--tr)
+}
+.form-row input:focus,.form-row textarea:focus{border-color:#6366F1;background:white}
+.form-row textarea{resize:vertical;min-height:70px;line-height:1.5}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.upload-img-btn{
+  width:100%;background:#EEF2FF;border:1.5px dashed #6366F1;
+  border-radius:7px;padding:8px;font-family:inherit;font-size:13px;
+  color:#4F46E5;font-weight:600;cursor:pointer;transition:var(--tr);margin-top:6px
+}
+.upload-img-btn:hover{background:#E0E7FF}
+.editor-footer{display:flex;gap:10px;padding:16px 24px;border-top:1px solid var(--border)}
+.btn-save-product{
+  flex:2;background:#4F46E5;color:white;border:none;border-radius:8px;
+  padding:12px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:var(--tr)
+}
+.btn-save-product:hover{background:#4338CA}
+.btn-cancel-editor{
+  flex:1;background:var(--bg);color:var(--muted);border:1.5px solid var(--border);
+  border-radius:8px;padding:12px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:var(--tr)
+}
+.btn-cancel-editor:hover{border-color:var(--navy);color:var(--navy)}
+@media(max-width:600px){.form-row-2{grid-template-columns:1fr}.editor-footer{flex-direction:column}}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .ficha-layout{grid-template-columns:1fr}
@@ -168,6 +244,17 @@ footer a:hover{color:white}
 </style>
 </head>
 <body>
+
+<!-- ════ EDIT MODE BAR ════ -->
+<div id="editBar">
+  <div class="eb-label">✏️ Editando ficha <span id="ebFichaName"></span></div>
+  <div class="eb-actions">
+    <button class="eb-btn eb-edit" onclick="openFichaEditor()">✏️ Editar contenido</button>
+    <button class="eb-btn eb-save" onclick="saveFichasData()">💾 Guardar y publicar</button>
+    <button class="eb-btn eb-reset" onclick="confirmResetFichas()">↺ Resetear</button>
+    <button class="eb-btn eb-exit" onclick="toggleEditMode()">✕ Salir</button>
+  </div>
+</div>
 
 <!-- ════ TOPBAR ════ -->
 <div id="topbar">
@@ -285,10 +372,81 @@ footer a:hover{color:white}
   <a href="https://www.mdivica.com" target="_blank">www.mdivica.com</a>
 </footer>
 
+<!-- ════ FLOATING EDIT BUTTON ════ -->
+<button id="editToggle" onclick="toggleEditMode()">
+  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+    <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+  </svg>
+  <span>Editar ficha</span>
+</button>
+
+<!-- ════ FICHA EDITOR MODAL ════ -->
+<div class="editor-overlay" id="fichaEditorOverlay" onclick="if(event.target===this)closeFichaEditor()">
+  <div class="editor-box">
+    <div class="editor-header">
+      <div class="editor-title">✏️ Editar ficha</div>
+      <button class="editor-close" onclick="closeFichaEditor()">✕</button>
+    </div>
+    <div class="editor-body">
+      <div class="form-row">
+        <label>Título</label>
+        <input type="text" id="fe_title">
+      </div>
+      <div class="form-row">
+        <label>Subtítulo</label>
+        <textarea id="fe_sub" style="min-height:52px"></textarea>
+      </div>
+      <div class="form-row-2">
+        <div class="form-row">
+          <label>Etiqueta superior (eyebrow)</label>
+          <input type="text" id="fe_eyebrow">
+        </div>
+        <div class="form-row">
+          <label>Referencia / SKU</label>
+          <input type="text" id="fe_sku">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Descripción <span class="hint">(deja una línea en blanco para separar párrafos)</span></label>
+        <textarea id="fe_desc" style="min-height:140px"></textarea>
+      </div>
+      <div class="form-row">
+        <label>Imágenes <span class="hint">(una URL por línea; la primera es la principal)</span></label>
+        <textarea id="fe_imgs" style="min-height:90px"></textarea>
+        <button class="upload-img-btn" onclick="document.getElementById('fe_imgFile').click()">📁 Subir imagen desde mi computadora</button>
+        <input type="file" id="fe_imgFile" accept="image/*" style="display:none" onchange="feUploadImg(this)">
+      </div>
+      <div class="form-row">
+        <label>Aplicaciones <span class="hint">(una por línea)</span></label>
+        <textarea id="fe_apps"></textarea>
+      </div>
+      <div class="form-row">
+        <label>Incluye <span class="hint">(una por línea)</span></label>
+        <textarea id="fe_incluye"></textarea>
+      </div>
+      <div class="form-row">
+        <label>Especificaciones <span class="hint">(una por línea, formato: Nombre | Valor)</span></label>
+        <textarea id="fe_specs" style="min-height:140px"></textarea>
+      </div>
+      <div class="form-row">
+        <label>Mensaje de WhatsApp</label>
+        <input type="text" id="fe_waMsg">
+      </div>
+    </div>
+    <div class="editor-footer">
+      <button class="btn-cancel-editor" onclick="closeFichaEditor()">Cancelar</button>
+      <button class="btn-save-product" onclick="saveFichaEdit()">✓ Aplicar cambios</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const SS = "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/";
 
-const FICHAS = {
+const DEFAULT_FICHAS =
+/*__DVFICHAS_START__*/
+{
   "tanque-vacuum": {
     eyebrow: "Línea Insignia — Tanques Vacuum",
     cat: "Tanques Vacuum",
@@ -432,7 +590,20 @@ const FICHAS = {
     ],
     waMsg: "Hola DIVICA, quiero cotizar la Cisterna a Granel MDV-DT. Ref: DVE-MDVDT-01"
   }
-};
+}
+/*__DVFICHAS_END__*/;
+
+/* ═══════ ESTADO (localStorage) ═══════ */
+const LSF_KEY = "dvFichasData";
+function loadFichas(){
+  try{
+    const raw = localStorage.getItem(LSF_KEY);
+    if(raw){ const d = JSON.parse(raw); if(d && typeof d === "object") return d; }
+  }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_FICHAS));
+}
+let FICHAS = loadFichas();
+function persistFichas(){ try{ localStorage.setItem(LSF_KEY, JSON.stringify(FICHAS)); }catch(e){ alert("No se pudo guardar localmente: "+e.message); } }
 
 /* Tarjetas de "otros equipos" (enlazan a las demás fichas) */
 const RELATED = [
@@ -449,6 +620,8 @@ function getId(){
   return m ? decodeURIComponent(m[1]) : "tanque-vacuum";
 }
 const id = getId();
+
+function renderFicha(){
 const F = FICHAS[id] || FICHAS["tanque-vacuum"];
 
 document.title = F.title + " | Fabricante DIVICA Venezuela";
@@ -477,11 +650,11 @@ if(F.imgs.length){
 } else {
   main.textContent = "🚛";
 }
-function swapImg(el,src){
+window.swapImg = function(el,src){
   document.getElementById("gMainImg").src = src;
   document.querySelectorAll(".gallery-thumb").forEach(t=>t.classList.remove("active"));
   el.classList.add("active");
-}
+};
 
 /* Aplicaciones / Incluye */
 document.getElementById("fApps").innerHTML = (F.apps||[]).map(a=>'<span class="app-tag">'+a+'</span>').join("");
@@ -502,9 +675,12 @@ document.getElementById("relatedGrid").innerHTML = RELATED.filter(r=>r.id!==id).
   '</a>'
 ).join("");
 
-/* JSON-LD Product */
+/* JSON-LD Product (se regenera al editar) */
+var oldLd = document.getElementById("fichaLd");
+if(oldLd) oldLd.remove();
 const ld = document.createElement("script");
 ld.type = "application/ld+json";
+ld.id = "fichaLd";
 ld.textContent = JSON.stringify({
   "@context":"https://schema.org",
   "@type":"Product",
@@ -516,6 +692,130 @@ ld.textContent = JSON.stringify({
   "manufacturer": {"@type":"Organization","name":"Multiservicios DIVICA, C.A."}
 });
 document.head.appendChild(ld);
+
+document.getElementById("ebFichaName").textContent = F.title;
+} /* fin renderFicha */
+renderFicha();
+
+/* Auto-altura: avisa al padre (Squarespace) la altura real del contenido */
+function dvPostHeight(){
+  if(window.self === window.top) return;
+  var h = document.documentElement.scrollHeight;
+  window.parent.postMessage({type:"divicaFichaHeight", height:h, id:id}, "*");
+}
+window.addEventListener("load", dvPostHeight);
+window.addEventListener("resize", dvPostHeight);
+setTimeout(dvPostHeight, 800);
+setTimeout(dvPostHeight, 2500);
+if(window.ResizeObserver){ new ResizeObserver(dvPostHeight).observe(document.body); }
+
+/* ═══════ MODO EDICIÓN ═══════ */
+/* El botón "Editar ficha" aparece con ?edit en la URL
+   (ej. ficha.html?id=tanque-vacuum&edit) o con Ctrl+Shift+E.
+   "Guardar y publicar" descarga ficha.html actualizado para subirlo a GitHub. */
+function checkEditAccess(){
+  if(/[?#&]edit/.test(location.search + location.hash)){
+    document.getElementById("editToggle").classList.add("visible");
+  }
+}
+document.addEventListener("keydown", function(e){
+  if(e.ctrlKey && e.shiftKey && (e.key==="E"||e.key==="e")){
+    e.preventDefault();
+    document.getElementById("editToggle").classList.toggle("visible");
+  }
+});
+function toggleEditMode(){
+  const on = document.body.classList.toggle("edit-mode");
+  document.getElementById("editBar").classList.toggle("active", on);
+  document.getElementById("editToggle").classList.toggle("editing", on);
+  document.getElementById("editToggle").querySelector("span").textContent = on ? "Editando..." : "Editar ficha";
+  if(on){ document.getElementById("editToggle").classList.add("visible"); openFichaEditor(); }
+}
+function confirmResetFichas(){
+  if(confirm("¿Borrar TODOS los cambios de las fichas y volver a la versión publicada?")){
+    localStorage.removeItem(LSF_KEY);
+    location.reload();
+  }
+}
+
+/* ── Editor ── */
+function openFichaEditor(){
+  const F = FICHAS[id];
+  if(!F) return;
+  document.getElementById("fe_title").value = F.title||"";
+  document.getElementById("fe_sub").value = F.sub||"";
+  document.getElementById("fe_eyebrow").value = F.eyebrow||"";
+  document.getElementById("fe_sku").value = F.sku||"";
+  document.getElementById("fe_desc").value = F.desc||"";
+  document.getElementById("fe_imgs").value = (F.imgs||[]).join("\n");
+  document.getElementById("fe_apps").value = (F.apps||[]).join("\n");
+  document.getElementById("fe_incluye").value = (F.incluye||[]).join("\n");
+  document.getElementById("fe_specs").value = (F.specs||[]).map(s=>s[0]+" | "+s[1]).join("\n");
+  document.getElementById("fe_waMsg").value = F.waMsg||"";
+  document.getElementById("fichaEditorOverlay").classList.add("open");
+}
+function closeFichaEditor(){ document.getElementById("fichaEditorOverlay").classList.remove("open"); }
+function feUploadImg(input){
+  const f = input.files && input.files[0];
+  if(!f) return;
+  if(f.size > 400*1024 && !confirm("La imagen pesa "+Math.round(f.size/1024)+" KB. Las imágenes grandes hacen la página más lenta.\n\nRecomendado: menos de 400 KB, o súbela a Squarespace/GitHub y pega la URL.\n\n¿Insertar de todas formas?")){ input.value=""; return; }
+  const rd = new FileReader();
+  rd.onload = function(){
+    const ta = document.getElementById("fe_imgs");
+    ta.value = (ta.value.trim() ? ta.value.trim()+"\n" : "") + rd.result;
+  };
+  rd.readAsDataURL(f);
+  input.value = "";
+}
+function saveFichaEdit(){
+  const F = FICHAS[id];
+  if(!F) return;
+  const lines = s => s.split("\n").map(x=>x.trim()).filter(Boolean);
+  F.title = document.getElementById("fe_title").value.trim();
+  F.sub = document.getElementById("fe_sub").value.trim();
+  F.eyebrow = document.getElementById("fe_eyebrow").value.trim();
+  F.sku = document.getElementById("fe_sku").value.trim();
+  F.desc = document.getElementById("fe_desc").value.trim();
+  F.imgs = lines(document.getElementById("fe_imgs").value);
+  F.apps = lines(document.getElementById("fe_apps").value);
+  F.incluye = lines(document.getElementById("fe_incluye").value);
+  F.specs = lines(document.getElementById("fe_specs").value).map(l=>{
+    const i = l.indexOf("|");
+    return i > -1 ? [l.slice(0,i).trim(), l.slice(i+1).trim()] : [l, ""];
+  });
+  F.waMsg = document.getElementById("fe_waMsg").value.trim() || ("Hola DIVICA, quiero cotizar: "+F.title);
+  persistFichas();
+  renderFicha();
+  closeFichaEditor();
+}
+
+/* ── Guardar y publicar ── */
+function buildUpdatedFichas(src){
+  const json = JSON.stringify(FICHAS, null, 1);
+  const re = /\/\*__DVFICHAS_START__\*\/[\s\S]*?\/\*__DVFICHAS_END__\*\//;
+  if(!re.test(src)) return null;
+  return src.replace(re, function(){ return "/*__DVFICHAS_START__*/\n" + json + "\n/*__DVFICHAS_END__*/"; });
+}
+function saveFichasData(){
+  persistFichas();
+  fetch(location.href.split("?")[0].split("#")[0])
+    .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
+    .then(src=>{
+      const out = buildUpdatedFichas(src);
+      if(!out) throw new Error("Sin marcadores");
+      const blob = new Blob([out], {type:"text/html;charset=utf-8"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "ficha.html";
+      document.body.appendChild(a); a.click(); a.remove();
+      alert("✅ Se descargó ficha.html con tus cambios.\n\nPara publicar:\n1. Ve al repo en GitHub\n2. Add file → Upload files → sube ficha.html (reemplaza el anterior)\n3. Commit changes. En 1-2 minutos estará en línea.");
+    })
+    .catch(()=>{
+      alert("⚠️ Tus cambios quedaron guardados en este navegador, pero no se pudo generar el archivo. Abre la ficha desde mdivica.github.io e intenta de nuevo.");
+    });
+}
+
+checkEditAccess();
 </script>
 </body>
 </html>

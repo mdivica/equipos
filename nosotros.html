@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ══════════════════════════════════════════════════════════════
+  DIVICA — QUIÉNES SOMOS (diseño Equipment Store, 100% editable)
+
+  CÓMO PUBLICAR:
+  1. Sube este archivo al repo "equipos" como "nosotros.html"
+  2. En /quienes-somos de Squarespace pega el bloque
+     "squarespace-bloque-nosotros.html"
+
+  MODO EDICIÓN:
+  - Abre con ?edit (mdivica.github.io/equipos/nosotros.html?edit)
+    o presiona Ctrl+Shift+E → botón "Editar página".
+  - Editable: banner, stats, textos, fotos, misión/visión, tarjetas,
+    beneficios, sectores, galería y CTA.
+  - "💾 Guardar y publicar" descarga nosotros.html actualizado
+    para subirlo a GitHub.
+══════════════════════════════════════════════════════════════ -->
+<title>Quiénes Somos | Multiservicios DIVICA, C.A.</title>
+<meta name="description" content="Más de 21 años diseñando y fabricando equipos para la industria petrolera, gestión ambiental y transporte de carga pesada en Venezuela. Fabricante directo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F5F6F8;
+  --surface: #FFFFFF;
+  --border:  #E4E6EA;
+  --text:    #111827;
+  --muted:   #6B7280;
+  --faint:   #9CA3AF;
+  --navy:    #1B2F4E;
+  --navy-dk: #111f34;
+  --accent:  #D05F1B;
+  --accent-bg:#FEF3EC;
+  --tag-bg:  #EEF2FF;
+  --tag:     #3730A3;
+  --r: 10px;
+  --tr: 0.16s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+
+/* ── TOPBAR / HEADER ── */
+#topbar{background:var(--navy-dk);color:rgba(255,255,255,.7);font-size:12px;text-align:center;padding:7px 16px}
+#topbar a{color:rgba(255,255,255,.9);text-decoration:none;font-weight:500}
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 1px 8px rgba(0,0,0,.07)}
+.header-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:16px}
+.logo-wrap{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+.logo-img{height:40px;width:auto}
+.logo-label{display:flex;flex-direction:column;line-height:1.2}
+.logo-label .brand{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.logo-label .sub{font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.header-actions{display:flex;gap:10px;margin-left:auto;flex-shrink:0}
+.btn-wa{display:flex;align-items:center;gap:8px;background:var(--accent);color:white;border:none;border-radius:7px;padding:10px 18px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--tr);white-space:nowrap}
+.btn-wa:hover{background:#b8511a}
+.btn-phone{display:flex;align-items:center;gap:7px;background:none;border:1.5px solid var(--border);border-radius:7px;padding:9px 14px;font-family:inherit;font-size:13px;font-weight:500;color:var(--text);text-decoration:none;transition:var(--tr);white-space:nowrap}
+.btn-phone:hover{border-color:var(--navy);color:var(--navy)}
+
+/* ── HERO ── */
+#hero{background:var(--navy);padding:70px 24px 78px;text-align:center;position:relative;overflow:hidden}
+#heroBg{position:absolute;inset:0;z-index:0}
+#heroBg img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,14,24,.6) 0%,rgba(8,14,24,.35) 45%,rgba(8,14,24,.68) 100%)}
+.hero-content{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.hero-eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-bg);padding:4px 12px;border-radius:50px;margin-bottom:14px}
+.hero-title{font-size:clamp(26px,4.5vw,42px);font-weight:800;color:white;line-height:1.12;letter-spacing:-.02em;margin-bottom:12px;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.75);max-width:620px;margin:0 auto;line-height:1.65;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+
+/* ── STATS ── */
+.stats{background:var(--navy-dk);padding:26px 24px}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;text-align:center}
+.stats b{display:block;font-size:30px;font-weight:800;color:var(--accent);letter-spacing:-.02em}
+.stats span{font-size:11.5px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+
+/* ── SECCIONES ── */
+.section{max-width:1200px;margin:0 auto;padding:44px 24px 0}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:8px}
+.section-title{font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-bottom:14px}
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:34px;align-items:center}
+.about-text p{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:14px}
+.about-text strong{color:var(--navy);font-weight:700}
+.about-photo{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);box-shadow:0 16px 40px rgba(27,47,78,.14)}
+.about-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+.mv-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px;position:relative;overflow:hidden}
+.mv-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.mv-card.vision::before{background:var(--navy)}
+.mv-card h3{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.mv-card p{font-size:14px;color:var(--muted);line-height:1.7}
+.mv-card strong{color:var(--navy)}
+.do-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.do-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:var(--tr)}
+.do-card:hover{box-shadow:0 8px 24px rgba(27,47,78,.12);transform:translateY(-3px);border-color:#C7D2FE}
+.do-icon{width:46px;height:46px;border-radius:10px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.do-card h3{font-size:15.5px;font-weight:700;color:var(--text);margin-bottom:7px}
+.do-card p{font-size:13.5px;color:var(--muted);line-height:1.6}
+.benefits{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.benefit{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--muted);line-height:1.55}
+.benefit::before{content:"✓";flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#ECFDF5;color:#059669;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:12px}
+.benefit b{color:var(--navy)}
+.sector-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.sector-card{position:relative;border-radius:var(--r);overflow:hidden;height:190px;border:1px solid var(--border)}
+.sector-card img{width:100%;height:100%;object-fit:cover}
+.sector-card .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,31,52,.15) 30%,rgba(17,31,52,.85) 100%)}
+.sector-card span{position:absolute;left:16px;bottom:14px;right:16px;color:white;font-weight:800;font-size:16px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.gal-grid img{width:100%;height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--border);transition:transform .25s ease}
+.gal-grid img:hover{transform:scale(1.03)}
+.cta-band{background:linear-gradient(135deg,var(--navy) 0%,#243d63 100%);border-radius:14px;max-width:1200px;margin:48px auto 0;padding:40px 30px;text-align:center;position:relative;overflow:hidden}
+.cta-band::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(208,95,27,.18)}
+.cta-band h2{font-size:clamp(20px,3vw,28px);font-weight:800;color:white;margin-bottom:8px;letter-spacing:-.02em}
+.cta-band p{font-size:14.5px;color:rgba(255,255,255,.65);margin-bottom:22px;max-width:520px;margin-left:auto;margin-right:auto}
+.cta-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.cta-wa{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:white;border-radius:9px;padding:13px 26px;font-weight:700;font-size:14.5px;text-decoration:none;transition:var(--tr)}
+.cta-wa:hover{background:#b8511a;transform:translateY(-1px)}
+.cta-cat{display:inline-flex;align-items:center;gap:8px;background:white;color:var(--navy);border-radius:9px;padding:13px 26px;font-weight:700;font-size:14.5px;text-decoration:none;transition:var(--tr)}
+.cta-cat:hover{transform:translateY(-1px)}
+
+/* ── FOOTER ── */
+footer{background:var(--navy-dk);color:rgba(255,255,255,.5);font-size:12.5px;text-align:center;padding:26px 24px;line-height:1.7;margin-top:48px}
+footer strong{color:rgba(255,255,255,.9)}
+footer a{color:rgba(255,255,255,.65);text-decoration:none}
+footer a:hover{color:white}
+.footer-div{margin:0 8px;opacity:.3}
+
+/* ── MODO EDICIÓN ── */
+#editBar{
+  display:none;position:sticky;top:0;z-index:999;
+  background:#4F46E5;color:white;padding:10px 20px;
+  align-items:center;gap:12px;flex-wrap:wrap;
+  box-shadow:0 2px 12px rgba(79,70,229,0.4);
+}
+#editBar.active{display:flex}
+#editBar .eb-label{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px}
+#editBar .eb-actions{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.eb-btn{padding:7px 16px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:var(--tr)}
+.eb-save{background:white;color:#4F46E5}
+.eb-save:hover{background:#EEF2FF}
+.eb-edit{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3)}
+.eb-edit:hover{background:rgba(255,255,255,0.25)}
+.eb-reset{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3)}
+.eb-reset:hover{background:rgba(255,255,255,0.25)}
+.eb-exit{background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.3)}
+.eb-exit:hover{background:rgba(239,68,68,0.35);color:white}
+#editToggle{
+  position:fixed;bottom:28px;right:28px;z-index:998;
+  background:var(--navy);color:white;border:none;border-radius:50px;
+  padding:13px 20px;font-family:inherit;font-size:13px;font-weight:700;
+  cursor:pointer;box-shadow:0 4px 20px rgba(27,47,78,0.35);
+  display:none;align-items:center;gap:8px;transition:var(--tr);
+}
+#editToggle.visible{display:flex}
+#editToggle:hover{background:#243d63;transform:translateY(-2px)}
+#editToggle.editing{background:#4F46E5}
+/* Botones de edición por sección */
+.sec-edit-btn{
+  display:none;position:absolute;top:12px;right:12px;z-index:20;
+  background:white;color:#4F46E5;border:none;border-radius:7px;
+  padding:7px 14px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;
+  align-items:center;gap:6px;box-shadow:0 2px 10px rgba(0,0,0,.2)
+}
+.sec-edit-btn:hover{background:#EEF2FF}
+body.edit-mode .sec-edit-btn{display:flex}
+.section{position:relative}
+.stats{position:relative}
+.ed-group.hidden{display:none}
+.editor-overlay{
+  display:none;position:fixed;inset:0;background:rgba(10,15,30,.75);z-index:600;
+  align-items:flex-start;justify-content:center;padding:20px;backdrop-filter:blur(4px);overflow-y:auto
+}
+.editor-overlay.open{display:flex}
+.editor-box{background:var(--surface);border-radius:14px;max-width:720px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,.35);margin:auto}
+.editor-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border)}
+.editor-title{font-size:17px;font-weight:800;color:var(--text)}
+.editor-close{width:32px;height:32px;border-radius:50%;background:var(--bg);border:1px solid var(--border);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.editor-body{padding:24px}
+.ed-sec{font-size:12px;font-weight:800;color:#4F46E5;text-transform:uppercase;letter-spacing:.1em;margin:22px 0 12px;padding-bottom:6px;border-bottom:2px solid #EEF2FF}
+.ed-sec:first-child{margin-top:0}
+.form-row{margin-bottom:14px}
+.form-row label{display:block;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.form-row .hint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--faint)}
+.form-row input,.form-row textarea{
+  width:100%;padding:10px 13px;background:var(--bg);border:1.5px solid var(--border);
+  border-radius:8px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:var(--tr)
+}
+.form-row input:focus,.form-row textarea:focus{border-color:#6366F1;background:white}
+.form-row textarea{resize:vertical;min-height:64px;line-height:1.5}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.upload-img-btn{
+  width:100%;background:#EEF2FF;border:1.5px dashed #6366F1;
+  border-radius:7px;padding:8px;font-family:inherit;font-size:13px;
+  color:#4F46E5;font-weight:600;cursor:pointer;transition:var(--tr);margin-top:6px
+}
+.upload-img-btn:hover{background:#E0E7FF}
+.editor-footer{display:flex;gap:10px;padding:16px 24px;border-top:1px solid var(--border)}
+.btn-save-ed{flex:2;background:#4F46E5;color:white;border:none;border-radius:8px;padding:12px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:var(--tr)}
+.btn-save-ed:hover{background:#4338CA}
+.btn-cancel-ed{flex:1;background:var(--bg);color:var(--muted);border:1.5px solid var(--border);border-radius:8px;padding:12px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:var(--tr)}
+.btn-cancel-ed:hover{border-color:var(--navy);color:var(--navy)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  .about-grid{grid-template-columns:1fr}
+  .mv-grid{grid-template-columns:1fr}
+  .form-row-2{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .header-inner{flex-wrap:wrap;padding:10px 12px;gap:8px}
+  .logo-img{height:32px}
+  .logo-label .sub{display:none}
+  .btn-phone{display:none}
+  .btn-wa{font-size:12px;padding:8px 12px}
+  #hero{padding:42px 14px 48px}
+  .section{padding:30px 14px 0}
+  .cta-band{margin:32px 14px 0;max-width:none}
+  .stats b{font-size:24px}
+  .editor-footer{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ════ EDIT MODE BAR ════ -->
+<div id="editBar">
+  <div class="eb-label">✏️ Editando: Quiénes Somos</div>
+  <div class="eb-actions">
+    <button class="eb-btn eb-edit" onclick="openEditor()">✏️ Editar todo</button>
+    <button class="eb-btn eb-save" onclick="saveNosData()">💾 Guardar y publicar</button>
+    <button class="eb-btn eb-reset" onclick="confirmResetNos()">↺ Resetear</button>
+    <button class="eb-btn eb-exit" onclick="toggleEditMode()">✕ Salir</button>
+  </div>
+</div>
+
+<!-- ════ TOPBAR ════ -->
+<div id="topbar">
+  <span>Entrega en toda Venezuela &nbsp;·&nbsp; Fabricante directo — sin intermediarios</span>
+  &nbsp;·&nbsp;
+  <a href="tel:+584144614433">+58 414-461-4433</a>
+  &nbsp;/&nbsp;
+  <a href="tel:+584149451507">+58 414-945-1507</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:ndiaz@mdivica.com">ndiaz@mdivica.com</a>
+</div>
+
+<!-- ════ HEADER ════ -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo-wrap">
+      <img src="https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png" alt="DIVICA" class="logo-img" onerror="this.style.display='none'">
+      <div class="logo-label">
+        <span class="brand">DIVICA</span>
+        <span class="sub">Quiénes Somos</span>
+      </div>
+    </a>
+    <div class="header-actions">
+      <a href="tel:+584144614433" class="btn-phone">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        <span>0414-461-4433</span>
+      </a>
+      <a href="https://wa.me/584144614433?text=Hola+DIVICA%2C+quiero+informaci%C3%B3n+sobre+sus+equipos+y+servicios." class="btn-wa" target="_blank">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Contáctanos
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ════ HERO ════ -->
+<section id="hero">
+  <button class="sec-edit-btn" onclick="openEditor('hero')">✏️ Editar banner</button>
+  <div id="heroBg">
+    <img id="heroImg" src="" alt="">
+    <div class="hero-grad"></div>
+  </div>
+  <div class="hero-content">
+    <span class="hero-eyebrow" id="heroEyebrow"></span>
+    <h1 class="hero-title" id="heroTitle"></h1>
+    <p class="hero-sub" id="heroSub"></p>
+  </div>
+</section>
+
+<!-- ════ STATS ════ -->
+<div class="stats"><button class="sec-edit-btn" onclick="openEditor('stats')">✏️ Editar cifras</button><div class="stats-inner" id="statsInner"></div></div>
+
+<!-- ════ QUIÉNES SOMOS ════ -->
+<section class="section">
+  <button class="sec-edit-btn" onclick="openEditor('about')">✏️ Editar quiénes somos</button>
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-label">Quiénes somos</div>
+      <h2 class="section-title" id="aboutTitle"></h2>
+      <div id="aboutText"></div>
+    </div>
+    <div class="about-photo"><img id="aboutImg" src="" alt="Equipos DIVICA fabricados en Venezuela"></div>
+  </div>
+</section>
+
+<!-- ════ MISIÓN / VISIÓN ════ -->
+<section class="section">
+  <button class="sec-edit-btn" onclick="openEditor('mv')">✏️ Editar misión/visión</button>
+  <div class="mv-grid">
+    <div class="mv-card"><h3>Nuestra Misión</h3><p id="misionText"></p></div>
+    <div class="mv-card vision"><h3>Nuestra Visión</h3><p id="visionText"></p></div>
+  </div>
+</section>
+
+<!-- ════ QUÉ HACEMOS ════ -->
+<section class="section">
+  <button class="sec-edit-btn" onclick="openEditor('hacemos')">✏️ Editar tarjetas</button>
+  <div class="section-label">Qué hacemos</div>
+  <h2 class="section-title" id="hacemosTitle"></h2>
+  <div class="do-grid" id="hacemosGrid"></div>
+</section>
+
+<!-- ════ BENEFICIOS ════ -->
+<section class="section">
+  <button class="sec-edit-btn" onclick="openEditor('benef')">✏️ Editar beneficios</button>
+  <div class="section-label">Por qué DIVICA</div>
+  <h2 class="section-title" id="benefTitle"></h2>
+  <div class="benefits" id="benefGrid"></div>
+</section>
+
+<!-- ════ SECTORES ════ -->
+<section class="section">
+  <button class="sec-edit-btn" onclick="openEditor('sect')">✏️ Editar sectores</button>
+  <div class="section-label">Sectores</div>
+  <h2 class="section-title" id="sectTitle"></h2>
+  <div class="sector-grid" id="sectGrid"></div>
+</section>
+
+<!-- ════ GALERÍA ════ -->
+<section class="section">
+  <button class="sec-edit-btn" onclick="openEditor('gal')">✏️ Editar galería</button>
+  <div class="section-label">Nuestro trabajo</div>
+  <h2 class="section-title" id="galTitle"></h2>
+  <div class="gal-grid" id="galGrid"></div>
+</section>
+
+<!-- ════ CTA ════ -->
+<div class="cta-band">
+  <button class="sec-edit-btn" onclick="openEditor('cta')">✏️ Editar CTA</button>
+  <h2 id="ctaTitle"></h2>
+  <p id="ctaSub"></p>
+  <div class="cta-buttons">
+    <a class="cta-wa" href="https://wa.me/584144614433?text=Hola+DIVICA%2C+quiero+conversar+sobre+un+proyecto." target="_blank">
+      <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Escríbenos por WhatsApp
+    </a>
+    <a class="cta-cat" href="index.html">Ver catálogo de equipos →</a>
+  </div>
+</div>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <strong>Multiservicios DIVICA, C.A.</strong>
+  &nbsp;|&nbsp; RIF J-31713732-9<br>
+  <span>Av. Centenario, Sector San Onofre, Galpón #1, Ejido, Mérida, Venezuela</span><br>
+  <a href="tel:+584144614433">+58 414-461-4433</a><span class="footer-div">|</span>
+  <a href="tel:+584149451507">+58 414-945-1507</a><span class="footer-div">|</span>
+  <a href="mailto:ndiaz@mdivica.com">ndiaz@mdivica.com</a><span class="footer-div">|</span>
+  <a href="https://www.mdivica.com" target="_blank">www.mdivica.com</a>
+</footer>
+
+<!-- ════ FLOATING EDIT BUTTON ════ -->
+<button id="editToggle" onclick="toggleEditMode()">
+  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+    <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+  </svg>
+  <span>Editar página</span>
+</button>
+
+<!-- ════ EDITOR ════ -->
+<div class="editor-overlay" id="editorOverlay" onclick="if(event.target===this)closeEditor()">
+  <div class="editor-box">
+    <div class="editor-header">
+      <div class="editor-title">✏️ Editar Quiénes Somos</div>
+      <button class="editor-close" onclick="closeEditor()">✕</button>
+    </div>
+    <div class="editor-body">
+      <div class="ed-group" data-ed="hero">
+        <div class="ed-sec">🎯 Banner principal</div>
+        <div class="form-row"><label>Etiqueta superior</label><input type="text" id="e_eyebrow"></div>
+        <div class="form-row"><label>Título <span class="hint">(salto de línea = nueva línea en el banner)</span></label><textarea id="e_title" style="min-height:56px"></textarea></div>
+        <div class="form-row"><label>Subtítulo</label><textarea id="e_sub"></textarea></div>
+        <div class="form-row">
+          <label>Foto de fondo (URL)</label><input type="text" id="e_heroImg">
+          <button class="upload-img-btn" onclick="uploadTo('e_heroImg')">📁 Subir foto desde mi computadora</button>
+        </div>
+      </div>
+
+      <div class="ed-group" data-ed="stats">
+        <div class="ed-sec">📊 Cifras (franja oscura)</div>
+        <div class="form-row"><label>Una por línea, formato: <span class="hint">Cifra | Texto (ej. 21+ | Años de experiencia)</span></label><textarea id="e_stats"></textarea></div>
+      </div>
+
+      <div class="ed-group" data-ed="about">
+        <div class="ed-sec">🏢 Quiénes somos</div>
+        <div class="form-row"><label>Título de la sección</label><input type="text" id="e_aboutTitle"></div>
+        <div class="form-row"><label>Texto <span class="hint">(línea en blanco = nuevo párrafo · **palabra** = negrita)</span></label><textarea id="e_aboutText" style="min-height:130px"></textarea></div>
+        <div class="form-row">
+          <label>Foto lateral (URL)</label><input type="text" id="e_aboutImg">
+          <button class="upload-img-btn" onclick="uploadTo('e_aboutImg')">📁 Subir foto desde mi computadora</button>
+        </div>
+      </div>
+
+      <div class="ed-group" data-ed="mv">
+        <div class="ed-sec">🧭 Misión y Visión</div>
+        <div class="form-row"><label>Misión <span class="hint">(**palabra** = negrita)</span></label><textarea id="e_mision"></textarea></div>
+        <div class="form-row"><label>Visión</label><textarea id="e_vision"></textarea></div>
+      </div>
+
+      <div class="ed-group" data-ed="hacemos">
+        <div class="ed-sec">🛠 Qué hacemos (tarjetas)</div>
+        <div class="form-row"><label>Una tarjeta por línea: <span class="hint">Emoji | Título | Descripción</span></label><textarea id="e_hacemos" style="min-height:90px"></textarea></div>
+      </div>
+
+      <div class="ed-group" data-ed="benef">
+        <div class="ed-sec">✅ Beneficios</div>
+        <div class="form-row"><label>Uno por línea: <span class="hint">Título — detalle (lo antes del — va en negrita)</span></label><textarea id="e_benef" style="min-height:90px"></textarea></div>
+      </div>
+
+      <div class="ed-group" data-ed="sect">
+        <div class="ed-sec">🏭 Sectores (tarjetas con foto)</div>
+        <div class="form-row"><label>Uno por línea: <span class="hint">Nombre | URL de la foto</span></label><textarea id="e_sect" style="min-height:80px"></textarea></div>
+      </div>
+
+      <div class="ed-group" data-ed="gal">
+        <div class="ed-sec">📷 Galería</div>
+        <div class="form-row">
+          <label>Fotos <span class="hint">(una URL por línea)</span></label><textarea id="e_gal" style="min-height:90px"></textarea>
+          <button class="upload-img-btn" onclick="uploadAppend('e_gal')">📁 Subir foto desde mi computadora</button>
+        </div>
+      </div>
+
+      <div class="ed-group" data-ed="cta">
+        <div class="ed-sec">📞 Llamado final (CTA)</div>
+        <div class="form-row"><label>Título</label><input type="text" id="e_ctaTitle"></div>
+        <div class="form-row"><label>Texto</label><textarea id="e_ctaSub"></textarea></div>
+      </div>
+
+      <input type="file" id="e_file" accept="image/*" style="display:none">
+    </div>
+    <div class="editor-footer">
+      <button class="btn-cancel-ed" onclick="closeEditor()">Cancelar</button>
+      <button class="btn-save-ed" onclick="saveEditor()">✓ Aplicar cambios</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DEFAULT_NOS =
+/*__DVNOS_START__*/
+{
+ "hero": {
+  "eyebrow": "Multiservicios DIVICA, C.A.",
+  "title": "Ingeniería que impulsa\nla industria venezolana",
+  "sub": "Combinamos innovación y experiencia para fortalecer sectores estratégicos de la economía: la industria petrolera, la gestión ambiental y el transporte de carga pesada y sobredimensionada.",
+  "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/7ba87aa7-c3a3-43d0-ba88-9a5044715975/DIVICA+3.jpg?format=1500w"
+ },
+ "stats": [
+  ["21+","Años de experiencia"],
+  ["3","Sectores estratégicos"],
+  ["100%","Ingeniería venezolana"],
+  ["24/7","Soporte técnico"]
+ ],
+ "about": {
+  "title": "Más de dos décadas construyendo soluciones",
+  "text": "En **DIVICA** combinamos innovación y experiencia para fortalecer sectores estratégicos de la economía, como la industria petrolera, la gestión ambiental y el transporte de carga pesada y sobredimensionada.\n\nDiseñamos y fabricamos **equipos industriales de vanguardia**, ofrecemos mantenimiento integral y suministramos componentes esenciales para optimizar las operaciones de nuestros clientes.\n\nEstas soluciones permiten alcanzar resultados sobresalientes y contribuyen al **desarrollo sostenible** de sus negocios. No solo fabricamos soluciones; construimos oportunidades para materializar grandes logros.",
+  "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/afa6a3c9-28e9-4731-8478-997e1976f608/B41A9D84-6BE8-45AD-AEE5-B3CA2200F170.PNG?format=1000w"
+ },
+ "mision": "Proporcionar soluciones técnicas de alta calidad que garantizan mayor **eficiencia, sostenibilidad y competitividad** a las operaciones de nuestros clientes, con más de 21 años activos en el mercado venezolano.",
+ "vision": "Convertirnos en un **aliado clave** para impulsar el éxito de nuestros clientes en un mercado en constante evolución. ¡Hagamos realidad tus proyectos!",
+ "hacemosTitle": "Un socio estratégico integral",
+ "hacemos": [
+  ["🏭","Diseño y fabricación","Equipos industriales de vanguardia: tanques vacuum, frac tanks, low boys, cisternas, plataformas y unidades a la medida, con ingeniería 100% venezolana."],
+  ["🔧","Mantenimiento integral","Mantenimiento preventivo y correctivo on-site, con soporte técnico en campo a nivel nacional e internacional."],
+  ["⚙️","Partes y componentes","Suministro de repuestos originales y componentes esenciales: bombas de vacío, válvulas, filtros, mangueras y más."]
+ ],
+ "benefTitle": "Resultados que hacen la diferencia",
+ "benef": [
+  "Mayor durabilidad de los equipos — materiales certificados y soldadura de precisión.",
+  "Reducción de tiempos de inactividad — repuestos originales y asistencia inmediata.",
+  "Mejora del rendimiento operativo — ingeniería adaptada a tu operación real.",
+  "Fabricante directo — sin intermediarios, con soporte postventa que hace la diferencia."
+ ],
+ "sectTitle": "Donde operamos",
+ "sect": [
+  ["Industria Petrolera","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/adec29ce-c19a-4cb0-a67b-28c3f8c32a52/Frac+tank+500+bls?format=800w"],
+  ["Gestión Ambiental","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG?format=800w"],
+  ["Carga Pesada y Sobredimensionada","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png?format=800w"]
+ ],
+ "galTitle": "Hecho en Venezuela",
+ "gal": [
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/7ba87aa7-c3a3-43d0-ba88-9a5044715975/DIVICA+3.jpg?format=800w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/afa6a3c9-28e9-4731-8478-997e1976f608/B41A9D84-6BE8-45AD-AEE5-B3CA2200F170.PNG?format=800w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/adec29ce-c19a-4cb0-a67b-28c3f8c32a52/Frac+tank+500+bls?format=800w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/6f62e1f2-eabd-46d4-97c7-b473ce8ff3d1/AAC1EED1-38DC-464B-8543-3BE078774F50.PNG?format=800w"
+ ],
+ "cta": {
+  "title": "¿Hablamos de tu proyecto?",
+  "sub": "Trabajar con DIVICA significa acceso a un socio estratégico comprometido con resultados. Atención técnica directa con el fabricante."
+ }
+}
+/*__DVNOS_END__*/;
+
+/* ═══════ ESTADO ═══════ */
+const LSN_KEY = "dvNosData";
+function loadNos(){
+  try{
+    const raw = localStorage.getItem(LSN_KEY);
+    if(raw){ const d = JSON.parse(raw); if(d && d.hero) return d; }
+  }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_NOS));
+}
+let NOS = loadNos();
+function persistNos(){ try{ localStorage.setItem(LSN_KEY, JSON.stringify(NOS)); }catch(e){ alert("No se pudo guardar: "+e.message); } }
+
+/* ═══════ RENDER ═══════ */
+function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function rich(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>"); }
+
+function renderNos(){
+  const N = NOS;
+  document.getElementById("heroEyebrow").textContent = N.hero.eyebrow;
+  document.getElementById("heroTitle").innerHTML = esc(N.hero.title).replace(/\n/g,"<br>");
+  document.getElementById("heroSub").textContent = N.hero.sub;
+  document.getElementById("heroImg").src = N.hero.img || "";
+
+  document.getElementById("statsInner").innerHTML = (N.stats||[]).map(s=>
+    "<div><b>"+esc(s[0])+"</b><span>"+esc(s[1])+"</span></div>"
+  ).join("");
+
+  document.getElementById("aboutTitle").textContent = N.about.title;
+  document.getElementById("aboutText").innerHTML = (N.about.text||"").split(/\n\s*\n/).map(p=>
+    "<p>"+rich(p.trim())+"</p>"
+  ).join("");
+  document.getElementById("aboutImg").src = N.about.img || "";
+
+  document.getElementById("misionText").innerHTML = rich(N.mision);
+  document.getElementById("visionText").innerHTML = rich(N.vision);
+
+  document.getElementById("hacemosTitle").textContent = N.hacemosTitle;
+  document.getElementById("hacemosGrid").innerHTML = (N.hacemos||[]).map(c=>
+    '<div class="do-card"><div class="do-icon">'+esc(c[0])+'</div><h3>'+esc(c[1])+'</h3><p>'+esc(c[2])+'</p></div>'
+  ).join("");
+
+  document.getElementById("benefTitle").textContent = N.benefTitle;
+  document.getElementById("benefGrid").innerHTML = (N.benef||[]).map(b=>{
+    const i = b.indexOf("—");
+    const html = i>-1 ? "<b>"+esc(b.slice(0,i).trim())+"</b> — "+esc(b.slice(i+1).trim()) : esc(b);
+    return '<div class="benefit"><span>'+html+'</span></div>';
+  }).join("");
+
+  document.getElementById("sectTitle").textContent = N.sectTitle;
+  document.getElementById("sectGrid").innerHTML = (N.sect||[]).map(s=>
+    '<div class="sector-card"><img src="'+s[1]+'" alt="'+esc(s[0])+'"><div class="veil"></div><span>'+esc(s[0])+'</span></div>'
+  ).join("");
+
+  document.getElementById("galTitle").textContent = N.galTitle;
+  document.getElementById("galGrid").innerHTML = (N.gal||[]).map(src=>
+    '<img src="'+src+'" alt="Trabajo DIVICA" loading="lazy">'
+  ).join("");
+
+  document.getElementById("ctaTitle").textContent = N.cta.title;
+  document.getElementById("ctaSub").textContent = N.cta.sub;
+}
+renderNos();
+
+/* ═══════ MODO EDICIÓN ═══════ */
+function checkEditAccess(){
+  if(/[?#&]edit/.test(location.search + location.hash)){
+    document.getElementById("editToggle").classList.add("visible");
+  }
+}
+document.addEventListener("keydown", function(e){
+  if(e.ctrlKey && e.shiftKey && (e.key==="E"||e.key==="e")){
+    e.preventDefault();
+    document.getElementById("editToggle").classList.toggle("visible");
+  }
+});
+function toggleEditMode(){
+  const on = document.body.classList.toggle("edit-mode");
+  document.getElementById("editBar").classList.toggle("active", on);
+  document.getElementById("editToggle").classList.toggle("editing", on);
+  document.getElementById("editToggle").querySelector("span").textContent = on ? "Editando..." : "Editar página";
+  if(on) document.getElementById("editToggle").classList.add("visible");
+}
+
+const ED_TITLES = {
+  hero:"🎯 Editar banner", stats:"📊 Editar cifras", about:"🏢 Editar quiénes somos",
+  mv:"🧭 Editar misión y visión", hacemos:"🛠 Editar tarjetas", benef:"✅ Editar beneficios",
+  sect:"🏭 Editar sectores", gal:"📷 Editar galería", cta:"📞 Editar llamado final"
+};
+function confirmResetNos(){
+  if(confirm("¿Borrar TODOS los cambios y volver a la versión publicada?")){
+    localStorage.removeItem(LSN_KEY);
+    location.reload();
+  }
+}
+
+/* ── Editor (por sección, o completo sin argumento) ── */
+function openEditor(sec){
+  const N = NOS;
+  document.querySelector(".editor-title").textContent = sec ? ED_TITLES[sec] : "✏️ Editar toda la página";
+  document.querySelectorAll(".ed-group").forEach(function(g){
+    g.classList.toggle("hidden", !!sec && g.getAttribute("data-ed") !== sec);
+  });
+  document.getElementById("e_eyebrow").value = N.hero.eyebrow;
+  document.getElementById("e_title").value = N.hero.title;
+  document.getElementById("e_sub").value = N.hero.sub;
+  document.getElementById("e_heroImg").value = N.hero.img;
+  document.getElementById("e_stats").value = (N.stats||[]).map(s=>s[0]+" | "+s[1]).join("\n");
+  document.getElementById("e_aboutTitle").value = N.about.title;
+  document.getElementById("e_aboutText").value = N.about.text;
+  document.getElementById("e_aboutImg").value = N.about.img;
+  document.getElementById("e_mision").value = N.mision;
+  document.getElementById("e_vision").value = N.vision;
+  document.getElementById("e_hacemos").value = (N.hacemos||[]).map(c=>c[0]+" | "+c[1]+" | "+c[2]).join("\n");
+  document.getElementById("e_benef").value = (N.benef||[]).join("\n");
+  document.getElementById("e_sect").value = (N.sect||[]).map(s=>s[0]+" | "+s[1]).join("\n");
+  document.getElementById("e_gal").value = (N.gal||[]).join("\n");
+  document.getElementById("e_ctaTitle").value = N.cta.title;
+  document.getElementById("e_ctaSub").value = N.cta.sub;
+  document.getElementById("editorOverlay").classList.add("open");
+}
+function closeEditor(){ document.getElementById("editorOverlay").classList.remove("open"); }
+
+function lines(s){ return s.split("\n").map(x=>x.trim()).filter(Boolean); }
+function splitBar(l, n){
+  const parts = l.split("|").map(x=>x.trim());
+  while(parts.length < n) parts.push("");
+  if(parts.length > n){ parts[n-1] = parts.slice(n-1).join(" | "); parts.length = n; }
+  return parts;
+}
+function saveEditor(){
+  NOS.hero = {
+    eyebrow: document.getElementById("e_eyebrow").value.trim(),
+    title: document.getElementById("e_title").value.trim(),
+    sub: document.getElementById("e_sub").value.trim(),
+    img: document.getElementById("e_heroImg").value.trim()
+  };
+  NOS.stats = lines(document.getElementById("e_stats").value).map(l=>splitBar(l,2));
+  NOS.about = {
+    title: document.getElementById("e_aboutTitle").value.trim(),
+    text: document.getElementById("e_aboutText").value.trim(),
+    img: document.getElementById("e_aboutImg").value.trim()
+  };
+  NOS.mision = document.getElementById("e_mision").value.trim();
+  NOS.vision = document.getElementById("e_vision").value.trim();
+  NOS.hacemos = lines(document.getElementById("e_hacemos").value).map(l=>splitBar(l,3));
+  NOS.benef = lines(document.getElementById("e_benef").value);
+  NOS.sect = lines(document.getElementById("e_sect").value).map(l=>splitBar(l,2));
+  NOS.gal = lines(document.getElementById("e_gal").value);
+  NOS.cta = {
+    title: document.getElementById("e_ctaTitle").value.trim(),
+    sub: document.getElementById("e_ctaSub").value.trim()
+  };
+  persistNos();
+  renderNos();
+  closeEditor();
+}
+
+/* ── Subida de imágenes (a un campo o agregando línea) ── */
+let uploadTarget = null, uploadMode = "set";
+function uploadTo(id){ uploadTarget = id; uploadMode = "set"; document.getElementById("e_file").click(); }
+function uploadAppend(id){ uploadTarget = id; uploadMode = "append"; document.getElementById("e_file").click(); }
+document.getElementById("e_file").addEventListener("change", function(){
+  const f = this.files && this.files[0];
+  if(!f || !uploadTarget) return;
+  if(f.size > 400*1024 && !confirm("La imagen pesa "+Math.round(f.size/1024)+" KB. Las imágenes grandes hacen la página más lenta.\n\nRecomendado: menos de 400 KB, o súbela a Squarespace/GitHub y pega la URL.\n\n¿Insertar de todas formas?")){ this.value=""; return; }
+  const rd = new FileReader();
+  rd.onload = function(){
+    const el = document.getElementById(uploadTarget);
+    if(uploadMode === "append"){
+      el.value = (el.value.trim() ? el.value.trim()+"\n" : "") + rd.result;
+    } else {
+      el.value = rd.result;
+    }
+  };
+  rd.readAsDataURL(f);
+  this.value = "";
+});
+
+/* ── Guardar y publicar ── */
+function buildUpdatedNos(src){
+  const json = JSON.stringify(NOS, null, 1);
+  const re = /\/\*__DVNOS_START__\*\/[\s\S]*?\/\*__DVNOS_END__\*\//;
+  if(!re.test(src)) return null;
+  return src.replace(re, function(){ return "/*__DVNOS_START__*/\n" + json + "\n/*__DVNOS_END__*/"; });
+}
+function saveNosData(){
+  persistNos();
+  fetch(location.href.split("?")[0].split("#")[0])
+    .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
+    .then(src=>{
+      const out = buildUpdatedNos(src);
+      if(!out) throw new Error("Sin marcadores");
+      const blob = new Blob([out], {type:"text/html;charset=utf-8"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "nosotros.html";
+      document.body.appendChild(a); a.click(); a.remove();
+      alert("✅ Se descargó nosotros.html con tus cambios.\n\nPara publicar:\n1. Ve al repo en GitHub\n2. Add file → Upload files → sube nosotros.html (reemplaza el anterior)\n3. Commit changes. En 1-2 minutos estará en línea.");
+    })
+    .catch(()=>{
+      alert("⚠️ Tus cambios quedaron guardados en este navegador, pero no se pudo generar el archivo. Abre la página desde mdivica.github.io e intenta de nuevo.");
+    });
+}
+checkEditAccess();
+
+/* ═══════ AUTO-ALTURA ═══════ */
+function dvPostHeight(){
+  if(window.self === window.top) return;
+  var h = Math.ceil(document.body.getBoundingClientRect().height) + 10;
+  window.parent.postMessage({type:"divicaNosotrosHeight", height:h}, "*");
+}
+window.addEventListener("load", dvPostHeight);
+window.addEventListener("resize", dvPostHeight);
+setTimeout(dvPostHeight, 800);
+setTimeout(dvPostHeight, 2500);
+if(window.ResizeObserver){ new ResizeObserver(dvPostHeight).observe(document.body); }
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "Quiénes Somos | Multiservicios DIVICA, C.A.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Multiservicios DIVICA, C.A.",
+    "url": "https://www.mdivica.com",
+    "logo": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png",
+    "foundingDate": "2004",
+    "telephone": "+58-414-461-4433",
+    "email": "ndiaz@mdivica.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Centenario, Sector San Onofre, Galpón #1",
+      "addressLocality": "Ejido",
+      "addressRegion": "Mérida",
+      "postalCode": "5111",
+      "addressCountry": "VE"
+    },
+    "sameAs": [
+      "https://www.instagram.com/mdivica/",
+      "https://www.facebook.com/mdivica",
+      "https://www.linkedin.com/company/multiservicios-divica/"
+    ]
+  }
+}
+</script>
+</body>
+</html>

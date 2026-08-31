@@ -202,6 +202,41 @@ body.edit-mode .sec-edit-btn{display:flex}
 .form-row textarea{resize:vertical;min-height:64px;line-height:1.5}
 .upload-img-btn{width:100%;background:#EEF2FF;border:1.5px dashed #6366F1;border-radius:7px;padding:8px;font-family:inherit;font-size:13px;color:#4F46E5;font-weight:600;cursor:pointer;transition:var(--tr);margin-top:6px}
 .upload-img-btn:hover{background:#E0E7FF}
+/* Filas editables con miniatura */
+.rep-list{display:flex;flex-direction:column;gap:12px;margin-bottom:10px}
+.rep-row{display:flex;gap:12px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px}
+.rep-thumb{width:96px;flex-shrink:0;display:flex;flex-direction:column;gap:6px}
+.rep-thumb .box{width:96px;height:72px;border-radius:7px;border:1.5px solid var(--border);background:white;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--faint)}
+.rep-thumb .box img{width:100%;height:100%;object-fit:cover}
+.rep-thumb button{width:100%;background:#EEF2FF;border:1.5px dashed #6366F1;border-radius:6px;padding:5px;font-family:inherit;font-size:11px;color:#4F46E5;font-weight:700;cursor:pointer}
+.rep-thumb button:hover{background:#E0E7FF}
+.rep-fields{flex:1;display:flex;flex-direction:column;gap:7px;min-width:0}
+.rep-fields input,.rep-fields textarea{width:100%;padding:8px 11px;background:white;border:1.5px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;color:var(--text);outline:none}
+.rep-fields input:focus,.rep-fields textarea:focus{border-color:#6366F1}
+.rep-fields textarea{resize:vertical;min-height:52px;line-height:1.45}
+.rep-fields .mini{font-size:11px;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.rep-top{display:flex;gap:7px;align-items:center}
+.rep-top input.emoji{width:56px;text-align:center;flex-shrink:0}
+.rep-del{background:none;border:1.5px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;padding:6px 10px;font-size:13px;flex-shrink:0;font-family:inherit}
+.rep-del:hover{color:#dc2626;border-color:#dc2626}
+.btn-add-rep{width:100%;background:var(--bg);border:1.5px dashed var(--border);border-radius:8px;padding:10px;font-family:inherit;font-size:13px;font-weight:700;color:#6366F1;cursor:pointer;transition:var(--tr)}
+.btn-add-rep:hover{background:#EEF2FF;border-color:#6366F1}
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:10px}
+.brand-cell{background:var(--bg);border:1.5px solid var(--border);border-radius:9px;padding:9px;display:flex;flex-direction:column;gap:6px}
+.brand-cell .box{height:52px;background:white;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.brand-cell .box img{max-width:92%;max-height:82%;object-fit:contain}
+.brand-cell input{width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;font-family:inherit;font-size:10.5px;outline:none}
+.brand-cell .acts{display:flex;gap:5px}
+.brand-cell .acts button{flex:1;border-radius:5px;padding:4px;font-size:10.5px;font-weight:700;cursor:pointer;font-family:inherit;border:1.5px dashed #6366F1;background:#EEF2FF;color:#4F46E5}
+.brand-cell .acts button.del{border:1.5px solid var(--border);background:none;color:var(--muted);flex:0 0 34px}
+.brand-cell .acts button.del:hover{color:#dc2626;border-color:#dc2626}
+.prev-box{width:100%;height:110px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--faint);margin-top:6px}
+.prev-box img{width:100%;height:100%;object-fit:cover}
+.prev-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.prev-list .pv{position:relative;width:88px;height:60px;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;background:var(--bg)}
+.prev-list .pv img{width:100%;height:100%;object-fit:cover}
+.prev-list .pv button{position:absolute;top:2px;right:2px;width:19px;height:19px;border-radius:50%;border:none;background:rgba(17,24,39,.72);color:white;font-size:11px;cursor:pointer;line-height:1;padding:0}
+.prev-list .pv button:hover{background:#dc2626}
 .editor-footer{display:flex;gap:10px;padding:16px 24px;border-top:1px solid var(--border)}
 .btn-save-ed{flex:2;background:#4F46E5;color:white;border:none;border-radius:8px;padding:12px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:var(--tr)}
 .btn-save-ed:hover{background:#4338CA}
@@ -258,7 +293,7 @@ body.edit-mode .sec-edit-btn{display:flex}
 <header>
   <div class="header-inner">
     <a href="https://www.mdivica.com" target="_top" class="logo-wrap">
-      <img src="https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png" alt="DIVICA" class="logo-img" onerror="this.style.display='none'">
+      <img src="https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png?format=300w" alt="DIVICA" class="logo-img" onerror="this.style.display='none'">
       <div class="logo-label">
         <span class="brand">DIVICA</span>
         <span class="sub">Multiservicios Divica, C.A.</span>
@@ -321,7 +356,7 @@ body.edit-mode .sec-edit-btn{display:flex}
       <p id="customText"></p>
       <a href="https://wa.me/584144614433?text=Hola+DIVICA%2C+necesito+un+equipo+a+la+medida." target="_blank">Cuéntanos tu proyecto →</a>
     </div>
-    <div class="custom-photo"><img id="customImg" src="" alt="Soluciones a la medida DIVICA"></div>
+    <div class="custom-photo"><img id="customImg" src="" alt="Soluciones a la medida DIVICA" loading="lazy" decoding="async"></div>
   </div>
 </section>
 
@@ -329,7 +364,7 @@ body.edit-mode .sec-edit-btn{display:flex}
 <section class="section">
   <button class="sec-edit-btn" onclick="openEditor('onsite')">✏️ Editar on-site</button>
   <div class="custom-band rev">
-    <div class="custom-photo"><img id="onsiteImg" src="" alt="Servicio de mantenimiento on-site DIVICA"></div>
+    <div class="custom-photo"><img id="onsiteImg" src="" alt="Servicio de mantenimiento on-site DIVICA" loading="lazy" decoding="async"></div>
     <div class="custom-text">
       <div class="section-label">Atención en campo</div>
       <h2 id="onsiteTitle"></h2>
@@ -357,7 +392,7 @@ body.edit-mode .sec-edit-btn{display:flex}
       <div id="aboutText"></div>
       <a class="about-btn" href="https://www.mdivica.com/quienes-somos" target="_top">Conócenos →</a>
     </div>
-    <div class="about-photo"><img id="aboutImg" src="" alt="Multiservicios DIVICA"></div>
+    <div class="about-photo"><img id="aboutImg" src="" alt="Multiservicios DIVICA" loading="lazy" decoding="async"></div>
   </div>
 </section>
 
@@ -422,8 +457,9 @@ body.edit-mode .sec-edit-btn{display:flex}
           <input type="text" id="e_heroVideo" placeholder="video-hero.mp4">
         </div>
         <div class="form-row">
-          <label>Fotos del slider <span class="hint">(una URL por línea; se usan si no hay video o si el video falla)</span></label><textarea id="e_heroImgs" style="min-height:90px"></textarea>
+          <label>Fotos del slider <span class="hint">(una URL por línea; se usan si no hay video o si el video falla)</span></label><textarea id="e_heroImgs" style="min-height:90px" oninput="previewList('e_heroImgs','heroPrev')"></textarea>
           <button class="upload-img-btn" onclick="uploadAppend('e_heroImgs')">📁 Subir foto desde mi computadora</button>
+          <div class="prev-list" id="heroPrev"></div>
         </div>
       </div>
       <div class="ed-group" data-ed="stats">
@@ -433,15 +469,20 @@ body.edit-mode .sec-edit-btn{display:flex}
       <div class="ed-group" data-ed="prod">
         <div class="ed-sec">🚛 Productos destacados</div>
         <div class="form-row"><label>Título de la sección</label><input type="text" id="e_prodTitle"></div>
-        <div class="form-row"><label>Uno por línea: <span class="hint">Nombre | Descripción | URL foto | URL página</span></label><textarea id="e_prod" style="min-height:150px"></textarea></div>
+        <div class="form-row">
+          <label>Equipos <span class="hint">— haz clic en 📁 para cambiar la foto de cada uno</span></label>
+          <div class="rep-list" id="prodList"></div>
+          <button class="btn-add-rep" onclick="addProd()">＋ Agregar equipo</button>
+        </div>
       </div>
       <div class="ed-group" data-ed="custom">
         <div class="ed-sec">⚙️ Soluciones a la medida</div>
         <div class="form-row"><label>Título</label><input type="text" id="e_customTitle"></div>
         <div class="form-row"><label>Texto</label><textarea id="e_customText" style="min-height:90px"></textarea></div>
         <div class="form-row">
-          <label>Foto (URL)</label><input type="text" id="e_customImg">
+          <label>Foto (URL)</label><input type="text" id="e_customImg" oninput="previewOne('e_customImg','customPrev')">
           <button class="upload-img-btn" onclick="uploadTo('e_customImg')">📁 Subir foto desde mi computadora</button>
+          <div class="prev-box" id="customPrev"></div>
         </div>
       </div>
       <div class="ed-group" data-ed="onsite">
@@ -449,27 +490,37 @@ body.edit-mode .sec-edit-btn{display:flex}
         <div class="form-row"><label>Título</label><input type="text" id="e_onsiteTitle"></div>
         <div class="form-row"><label>Texto</label><textarea id="e_onsiteText"></textarea></div>
         <div class="form-row">
-          <label>Foto (URL)</label><input type="text" id="e_onsiteImg">
+          <label>Foto (URL)</label><input type="text" id="e_onsiteImg" oninput="previewOne('e_onsiteImg','onsitePrev')">
           <button class="upload-img-btn" onclick="uploadTo('e_onsiteImg')">📁 Subir foto desde mi computadora</button>
+          <div class="prev-box" id="onsitePrev"></div>
         </div>
       </div>
       <div class="ed-group" data-ed="serv">
         <div class="ed-sec">🛠 Servicios</div>
         <div class="form-row"><label>Título de la sección</label><input type="text" id="e_servTitle"></div>
-        <div class="form-row"><label>Uno por línea: <span class="hint">Emoji | Título | Descripción | URL foto (opcional; **palabra** = negrita)</span></label><textarea id="e_serv" style="min-height:110px"></textarea></div>
+        <div class="form-row">
+          <label>Servicios <span class="hint">— **palabra** = negrita · 📁 para cambiar la foto</span></label>
+          <div class="rep-list" id="servList"></div>
+          <button class="btn-add-rep" onclick="addServ()">＋ Agregar servicio</button>
+        </div>
       </div>
       <div class="ed-group" data-ed="about">
         <div class="ed-sec">🏢 Sobre nosotros</div>
         <div class="form-row"><label>Título</label><input type="text" id="e_aboutTitle"></div>
         <div class="form-row"><label>Texto <span class="hint">(línea en blanco = párrafo · **palabra** = negrita)</span></label><textarea id="e_aboutText" style="min-height:120px"></textarea></div>
         <div class="form-row">
-          <label>Foto (URL)</label><input type="text" id="e_aboutImg">
+          <label>Foto (URL)</label><input type="text" id="e_aboutImg" oninput="previewOne('e_aboutImg','aboutPrev')">
           <button class="upload-img-btn" onclick="uploadTo('e_aboutImg')">📁 Subir foto desde mi computadora</button>
+          <div class="prev-box" id="aboutPrev"></div>
         </div>
       </div>
       <div class="ed-group" data-ed="brands">
         <div class="ed-sec">🏷 Marcas (logos)</div>
-        <div class="form-row"><label>Una URL de logo por línea</label><textarea id="e_brands" style="min-height:110px"></textarea></div>
+        <div class="form-row">
+          <label>Logos <span class="hint">— 📁 para subir uno desde tu computadora</span></label>
+          <div class="brand-grid" id="brandList"></div>
+          <button class="btn-add-rep" onclick="addBrand()">＋ Agregar logo</button>
+        </div>
       </div>
       <div class="ed-group" data-ed="cta">
         <div class="ed-sec">📞 Llamado final</div>
@@ -497,12 +548,12 @@ const DEFAULT_HOME =
   "sub": "Tanques vacuum, frac tanks, low boys, cisternas y plataformas diseñados y fabricados en Venezuela. Ingeniería, calidad y soporte postventa que hacen la diferencia.",
   "video": "video-hero.mp4",
   "imgs": [
-   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/14e068e9-2e73-4913-b87c-6d4befab50b1/IMG_3619222.JPEG?format=1500w",
-   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG?format=1500w",
-   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d3e976e0-6bc6-45ff-bf9b-97556bed6fb1/8a5043c8-b273-47f9-892a-fbbd9f204c82.png?format=1500w",
-   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png?format=1500w",
-   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/b9813fe8-def7-419d-8f0c-92750a3a3d03/IMG_3021.JPEG?format=1500w",
-   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/76a6f77d-3290-4739-8abb-76fed505ae45/74485230-E292-4C19-B3E3-2DE14E3DFB75.PNG?format=1500w"
+   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/14e068e9-2e73-4913-b87c-6d4befab50b1/IMG_3619222.JPEG?format=1200w",
+   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG?format=1200w",
+   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d3e976e0-6bc6-45ff-bf9b-97556bed6fb1/8a5043c8-b273-47f9-892a-fbbd9f204c82.png?format=1200w",
+   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png?format=1200w",
+   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/b9813fe8-def7-419d-8f0c-92750a3a3d03/IMG_3021.JPEG?format=1200w",
+   "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/76a6f77d-3290-4739-8abb-76fed505ae45/74485230-E292-4C19-B3E3-2DE14E3DFB75.PNG?format=1200w"
   ]
  },
  "stats": [
@@ -513,43 +564,43 @@ const DEFAULT_HOME =
  ],
  "prodTitle": "Equipos que impulsan tu operación",
  "prod": [
-  ["Tanque Vacuum — succión y descarga de fluidos","Equipo especializado para la recolección y transporte de líquidos, lodos y residuos industriales. Conjunto motor diésel acoplado a robusta bomba de vacío, para operaciones de alto rendimiento.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG?format=800w","https://www.mdivica.com/tanque-vacuum"],
-  ["Frac Tanks para la industria petrolera","Tanques de almacenamiento con tren de rodaje para combustibles, agua, ácidos, geles y otros fluidos de las operaciones de producción de petróleo. Hasta 500 barriles.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d3e976e0-6bc6-45ff-bf9b-97556bed6fb1/8a5043c8-b273-47f9-892a-fbbd9f204c82.png?format=800w","https://www.mdivica.com/frac-tank-500bls"],
-  ["Low Boy — carga sobredimensionada","Remolques de cama baja o plana para maquinaria pesada y cargas voluminosas con máxima estabilidad. De 30 a 120 toneladas con configuraciones a la medida.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png?format=800w","https://www.mdivica.com/low-boy-cargapesada"],
-  ["Cisterna para material a granel (polvo)","Transporte seguro y eficiente de productos secos a granel como cemento, químicos en polvo, materiales pulverizados, granos y más.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/7bd278ec-d13c-48d4-924a-b457a1770919/IMG_1750.JPEG?format=800w","https://www.mdivica.com/cisterna-material-granel"],
-  ["Plataforma para carga pesada — 2 y 3 ejes","Semirremolque de estructura robusta, ideal para transportar material, equipos y carga pesada en general. Capacidad de hasta 35 toneladas.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/b9813fe8-def7-419d-8f0c-92750a3a3d03/IMG_3021.JPEG?format=800w","https://www.mdivica.com/remolque-plataforma"],
-  ["Cisterna para combustibles","Remolques especializados para el transporte seguro de combustibles líquidos, cumpliendo con estándares de seguridad y calidad.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d61ecc6b-3481-4774-b10e-a18473a2b082/1d90501c-1089-4207-bfe4-6e9031766eb2.png?format=800w","https://www.mdivica.com/productos-divica"]
+  ["Tanque Vacuum — succión y descarga de fluidos","Equipo especializado para la recolección y transporte de líquidos, lodos y residuos industriales. Conjunto motor diésel acoplado a robusta bomba de vacío, para operaciones de alto rendimiento.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/46d1fd30-dcfc-4b3d-a531-4e3c63e4bae8/1E6C0EE8-1D35-46EF-8B75-154926F331E5.PNG?format=500w","https://www.mdivica.com/tanque-vacuum"],
+  ["Frac Tanks para la industria petrolera","Tanques de almacenamiento con tren de rodaje para combustibles, agua, ácidos, geles y otros fluidos de las operaciones de producción de petróleo. Hasta 500 barriles.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d3e976e0-6bc6-45ff-bf9b-97556bed6fb1/8a5043c8-b273-47f9-892a-fbbd9f204c82.png?format=500w","https://www.mdivica.com/frac-tank-500bls"],
+  ["Low Boy — carga sobredimensionada","Remolques de cama baja o plana para maquinaria pesada y cargas voluminosas con máxima estabilidad. De 30 a 120 toneladas con configuraciones a la medida.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/a31e9a45-617d-45da-9904-cbe619d6ca67/60a2da6d-453a-40e3-a960-bb277a0bbfa4.png?format=500w","https://www.mdivica.com/low-boy-cargapesada"],
+  ["Cisterna para material a granel (polvo)","Transporte seguro y eficiente de productos secos a granel como cemento, químicos en polvo, materiales pulverizados, granos y más.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/7bd278ec-d13c-48d4-924a-b457a1770919/IMG_1750.JPEG?format=500w","https://www.mdivica.com/cisterna-material-granel"],
+  ["Plataforma para carga pesada — 2 y 3 ejes","Semirremolque de estructura robusta, ideal para transportar material, equipos y carga pesada en general. Capacidad de hasta 35 toneladas.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/b9813fe8-def7-419d-8f0c-92750a3a3d03/IMG_3021.JPEG?format=500w","https://www.mdivica.com/remolque-plataforma"],
+  ["Cisterna para combustibles","Remolques especializados para el transporte seguro de combustibles líquidos, cumpliendo con estándares de seguridad y calidad.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d61ecc6b-3481-4774-b10e-a18473a2b082/1d90501c-1089-4207-bfe4-6e9031766eb2.png?format=500w","https://www.mdivica.com/productos-divica"]
  ],
  "custom": {
   "title": "Diseño y fabricación de soluciones para la industria petrolera",
   "text": "Contamos con un equipo técnico de ingeniería listo para llevar a cabo cualquier requerimiento de la industria: tanques para equipos flush-by, remolques para equipos separadores, tanques mezcladores, tanques para calentamiento de crudo y más.",
-  "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/2b0bf502-aba5-4091-bc6b-86531f366795/FLUSH+BY+TANK?format=1000w"
+  "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/2b0bf502-aba5-4091-bc6b-86531f366795/FLUSH+BY+TANK?format=700w"
  },
  "onsite": {
   "title": "Mantenimiento, adiestramiento de personal y suministro de repuestos on-site",
   "text": "Gracias a nuestra rápida atención, podemos asistir cualquier requerimiento a lo largo de todo el territorio nacional e internacional en tiempo récord.",
-  "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/e4ef758b-e771-42ba-be37-d34ab9f74993/C08AA5C8-DD9E-447D-8885-C19526BC9C62.PNG?format=1000w"
+  "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/e4ef758b-e771-42ba-be37-d34ab9f74993/C08AA5C8-DD9E-447D-8885-C19526BC9C62.PNG?format=700w"
  },
  "servTitle": "Acompañamos tu operación de principio a fin",
  "serv": [
-  ["🏭","Diseño y fabricación","Con más de 20 años de experiencia, la clave está en la **calidad**, la **innovación** y la **adaptación**. Creamos soluciones que mejoran su productividad, reducen costos y maximizan el rendimiento.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/bfafc602-9497-4c2a-9c65-a667707f078a/IMG_8437.JPEG?format=800w"],
-  ["⚙️","Partes y componentes","Todo lo necesario para mantener sus equipos en perfecto estado: **tren de rodaje, válvulas y bombas de vacío**, hasta **motores, compresores y piezas fabricadas en acero**.","https://images.squarespace-cdn.com/content/677fe2dd9524f212e1de1b20/f85906bb-1d72-4e08-91bc-434757344941/IMG_3630.JPEG?content-type=image%2Fjpeg"],
-  ["🔧","Mantenimiento integral","Asistencia técnica enfocada en prevenir fallos y reducir tiempos de inactividad. Atención **personalizada** para que pueda concentrarse en el crecimiento de su negocio.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d2826108-00d8-4a2e-a7b4-a044ef69c185/Tanque+vacuum?format=800w"]
+  ["🏭","Diseño y fabricación","Con más de 20 años de experiencia, la clave está en la **calidad**, la **innovación** y la **adaptación**. Creamos soluciones que mejoran su productividad, reducen costos y maximizan el rendimiento.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/bfafc602-9497-4c2a-9c65-a667707f078a/IMG_8437.JPEG?format=500w"],
+  ["⚙️","Partes y componentes","Todo lo necesario para mantener sus equipos en perfecto estado: **tren de rodaje, válvulas y bombas de vacío**, hasta **motores, compresores y piezas fabricadas en acero**.","https://images.squarespace-cdn.com/content/677fe2dd9524f212e1de1b20/f85906bb-1d72-4e08-91bc-434757344941/IMG_3630.JPEG?format=500w"],
+  ["🔧","Mantenimiento integral","Asistencia técnica enfocada en prevenir fallos y reducir tiempos de inactividad. Atención **personalizada** para que pueda concentrarse en el crecimiento de su negocio.","https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/d2826108-00d8-4a2e-a7b4-a044ef69c185/Tanque+vacuum?format=500w"]
  ],
  "about": {
   "title": "Sobre nosotros",
   "text": "En **Multiservicios Divica, C.A.** nos especializamos en el diseño, fabricación y suministro de equipos industriales de alta calidad para el **transporte de carga pesada, gestión ambiental e industria petrolera**. Con 21 años de experiencia, brindamos soluciones personalizadas que cumplen con los más altos estándares de seguridad y rendimiento.\n\nNuestra misión es ser **aliados estratégicos** para nuestros clientes, aportando innovación, confiabilidad y un enfoque centrado en sus necesidades.",
-  "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/f6fe3560-bf26-48f5-8c80-dfe65f3b3669/FRAC+TANK+500+BLS?format=1000w"
+  "img": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/f6fe3560-bf26-48f5-8c80-dfe65f3b3669/FRAC+TANK+500+BLS?format=700w"
  },
  "brands": [
-  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/015a283a-02b6-40f2-a971-7cc26851a099/jurop+logo.png",
-  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/f0ce9243-a452-4d3d-b31e-045784de8a38/BATTIONI.png",
-  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9b79359f-cfb7-4794-933b-e8fb29e5d150/moro+kaiser+logo.png",
-  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/1e8637e6-1ad7-45ef-9c90-2dc658e65521/Deutz_Logo.svg.png",
-  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/fe4d9a13-3c9f-4844-9da9-22b0e449b866/vm-motori-logo-png_seeklogo-150247.png",
-  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9fb91462-b464-4663-a57c-d5a67bb53851/ISUZU.png",
-  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/ed695936-f78d-45fa-acf5-b1552610b2ad/betico-logo-2010.png",
-  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/eb70e8be-b6ab-48da-baa4-2c9e47953e4a/A6CB8F67-C94B-4CF2-A3B2-20E00DE4D153.PNG"
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/015a283a-02b6-40f2-a971-7cc26851a099/jurop+logo.png?format=300w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/f0ce9243-a452-4d3d-b31e-045784de8a38/BATTIONI.png?format=300w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9b79359f-cfb7-4794-933b-e8fb29e5d150/moro+kaiser+logo.png?format=300w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/1e8637e6-1ad7-45ef-9c90-2dc658e65521/Deutz_Logo.svg.png?format=300w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/fe4d9a13-3c9f-4844-9da9-22b0e449b866/vm-motori-logo-png_seeklogo-150247.png?format=300w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9fb91462-b464-4663-a57c-d5a67bb53851/ISUZU.png?format=300w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/ed695936-f78d-45fa-acf5-b1552610b2ad/betico-logo-2010.png?format=300w",
+  "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/eb70e8be-b6ab-48da-baa4-2c9e47953e4a/A6CB8F67-C94B-4CF2-A3B2-20E00DE4D153.PNG?format=300w"
  ],
  "cta": {
   "title": "¿Listo para tu próximo proyecto?",
@@ -633,6 +684,7 @@ function renderHome(){
     v.id = "heroVideo"; v.className = "hero-video";
     v.autoplay = true; v.muted = true; v.loop = true; v.playsInline = true;
     v.setAttribute("playsinline",""); v.setAttribute("muted","");
+    v.preload = "auto"; v.poster = "video-poster.jpg";
     v.src = vidUrl;
     v.addEventListener("error", function(){ v.remove(); startSlider(H.hero.imgs); });
     var bg = document.getElementById("heroBg");
@@ -687,7 +739,11 @@ renderHome();
 
 /* ═══════ MODO EDICIÓN ═══════ */
 function checkEditAccess(){
-  if(/[?#&]edit/.test(location.search + location.hash)){
+  /* Visible al abrir la página directamente (archivo local o GitHub Pages).
+     Dentro de mdivica.com va en un iframe → los visitantes nunca lo ven. */
+  var enIframe = (window.self !== window.top);
+  var forzado  = /[?#&]edit/.test(location.search + location.hash);
+  if(!enIframe || forzado){
     document.getElementById("editToggle").classList.add("visible");
   }
 }
@@ -718,6 +774,101 @@ const ED_TITLES = {
   brands:"🏷 Editar marcas", cta:"📞 Editar llamado final"
 };
 
+/* ═══════ EDITORES VISUALES DE IMÁGENES ═══════ */
+let edProd = [], edServ = [], edBrands = [];
+
+function esc2(s){ return (s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+function thumbBox(src){
+  return src ? '<img src="'+esc2(src)+'" onerror="this.style.display=\'none\'">' : '🖼️';
+}
+
+/* — Productos — */
+function renderProdEditor(){
+  document.getElementById("prodList").innerHTML = edProd.map((p,i)=>
+    '<div class="rep-row">'+
+      '<div class="rep-thumb">'+
+        '<div class="box">'+thumbBox(p[2])+'</div>'+
+        '<button onclick="pickImg(\'prod\','+i+')">📁 Foto</button>'+
+      '</div>'+
+      '<div class="rep-fields">'+
+        '<div class="rep-top">'+
+          '<input type="text" placeholder="Nombre del equipo" value="'+esc2(p[0])+'" oninput="edProd['+i+'][0]=this.value">'+
+          '<button class="rep-del" title="Eliminar" onclick="edProd.splice('+i+',1);renderProdEditor()">✕</button>'+
+        '</div>'+
+        '<textarea placeholder="Descripción corta" oninput="edProd['+i+'][1]=this.value">'+esc2(p[1])+'</textarea>'+
+        '<input type="text" placeholder="URL de la foto" value="'+esc2(p[2])+'" oninput="edProd['+i+'][2]=this.value">'+
+        '<input type="text" placeholder="Página del equipo (https://www.mdivica.com/...)" value="'+esc2(p[3])+'" oninput="edProd['+i+'][3]=this.value">'+
+      '</div>'+
+    '</div>'
+  ).join("");
+}
+function addProd(){ edProd.push(["","","","https://www.mdivica.com/productos-divica"]); renderProdEditor(); }
+
+/* — Servicios — */
+function renderServEditor(){
+  document.getElementById("servList").innerHTML = edServ.map((s,i)=>
+    '<div class="rep-row">'+
+      '<div class="rep-thumb">'+
+        '<div class="box">'+thumbBox(s[3])+'</div>'+
+        '<button onclick="pickImg(\'serv\','+i+')">📁 Foto</button>'+
+      '</div>'+
+      '<div class="rep-fields">'+
+        '<div class="rep-top">'+
+          '<input class="emoji" type="text" placeholder="🏭" value="'+esc2(s[0])+'" oninput="edServ['+i+'][0]=this.value">'+
+          '<input type="text" placeholder="Título del servicio" value="'+esc2(s[1])+'" oninput="edServ['+i+'][1]=this.value">'+
+          '<button class="rep-del" title="Eliminar" onclick="edServ.splice('+i+',1);renderServEditor()">✕</button>'+
+        '</div>'+
+        '<textarea placeholder="Descripción (**palabra** = negrita)" oninput="edServ['+i+'][2]=this.value">'+esc2(s[2])+'</textarea>'+
+        '<input type="text" placeholder="URL de la foto (opcional)" value="'+esc2(s[3])+'" oninput="edServ['+i+'][3]=this.value">'+
+      '</div>'+
+    '</div>'
+  ).join("");
+}
+function addServ(){ edServ.push(["⚙️","","",""]); renderServEditor(); }
+
+/* — Marcas — */
+function renderBrandEditor(){
+  document.getElementById("brandList").innerHTML = edBrands.map((b,i)=>
+    '<div class="brand-cell">'+
+      '<div class="box">'+(b?'<img src="'+esc2(b)+'" onerror="this.style.display=\'none\'">':'🏷')+'</div>'+
+      '<input type="text" placeholder="URL del logo" value="'+esc2(b)+'" oninput="edBrands['+i+']=this.value">'+
+      '<div class="acts">'+
+        '<button onclick="pickImg(\'brand\','+i+')">📁 Subir</button>'+
+        '<button class="del" title="Eliminar" onclick="edBrands.splice('+i+',1);renderBrandEditor()">✕</button>'+
+      '</div>'+
+    '</div>'
+  ).join("");
+}
+function addBrand(){ edBrands.push(""); renderBrandEditor(); }
+
+/* — Vistas previas de fotos sueltas — */
+function previewOne(inputId, boxId){
+  const v = (document.getElementById(inputId).value||"").trim();
+  document.getElementById(boxId).innerHTML = v
+    ? '<img src="'+esc2(v)+'" onerror="this.parentNode.innerHTML=\'⚠️ no se pudo cargar\'">'
+    : '🖼️';
+}
+function previewList(inputId, boxId){
+  const arr = (document.getElementById(inputId).value||"").split("\n").map(s=>s.trim()).filter(Boolean);
+  document.getElementById(boxId).innerHTML = arr.map((src,i)=>
+    '<div class="pv"><img src="'+esc2(src)+'" onerror="this.style.display=\'none\'">'+
+    '<button title="Quitar" onclick="removeFromList(\''+inputId+'\',\''+boxId+'\','+i+')">✕</button></div>'
+  ).join("");
+}
+function removeFromList(inputId, boxId, i){
+  const el = document.getElementById(inputId);
+  const arr = el.value.split("\n").map(s=>s.trim()).filter(Boolean);
+  arr.splice(i,1); el.value = arr.join("\n");
+  previewList(inputId, boxId);
+}
+
+/* — Selector de archivo compartido — */
+let pickKind = null, pickIndex = -1;
+function pickImg(kind, idx){
+  pickKind = kind; pickIndex = idx; uploadTarget = null;
+  document.getElementById("e_file").click();
+}
+
 /* ── Editor (por sección, o completo sin argumento) ── */
 function openEditor(sec){
   const H = HOME;
@@ -732,7 +883,8 @@ function openEditor(sec){
   document.getElementById("e_heroImgs").value = (H.hero.imgs||[]).join("\n");
   document.getElementById("e_stats").value = (H.stats||[]).map(s=>s[0]+" | "+s[1]).join("\n");
   document.getElementById("e_prodTitle").value = H.prodTitle;
-  document.getElementById("e_prod").value = (H.prod||[]).map(p=>p[0]+" | "+p[1]+" | "+p[2]+" | "+p[3]).join("\n");
+  edProd = (H.prod||[]).map(p=>[p[0]||"",p[1]||"",p[2]||"",p[3]||""]);
+  renderProdEditor();
   document.getElementById("e_customTitle").value = H.custom.title;
   document.getElementById("e_customText").value = H.custom.text;
   document.getElementById("e_customImg").value = H.custom.img;
@@ -740,13 +892,19 @@ function openEditor(sec){
   document.getElementById("e_onsiteText").value = H.onsite.text;
   document.getElementById("e_onsiteImg").value = H.onsite.img;
   document.getElementById("e_servTitle").value = H.servTitle;
-  document.getElementById("e_serv").value = (H.serv||[]).map(s=>s[0]+" | "+s[1]+" | "+s[2]+(s[3]?" | "+s[3]:"")).join("\n");
+  edServ = (H.serv||[]).map(s=>[s[0]||"",s[1]||"",s[2]||"",s[3]||""]);
+  renderServEditor();
   document.getElementById("e_aboutTitle").value = H.about.title;
   document.getElementById("e_aboutText").value = H.about.text;
   document.getElementById("e_aboutImg").value = H.about.img;
-  document.getElementById("e_brands").value = (H.brands||[]).join("\n");
+  edBrands = (H.brands||[]).slice();
+  renderBrandEditor();
   document.getElementById("e_ctaTitle").value = H.cta.title;
   document.getElementById("e_ctaSub").value = H.cta.sub;
+  previewList("e_heroImgs","heroPrev");
+  previewOne("e_customImg","customPrev");
+  previewOne("e_onsiteImg","onsitePrev");
+  previewOne("e_aboutImg","aboutPrev");
   document.getElementById("editorOverlay").classList.add("open");
 }
 function closeEditor(){ document.getElementById("editorOverlay").classList.remove("open"); }
@@ -761,7 +919,7 @@ function saveEditor(){
   };
   HOME.stats = lines(document.getElementById("e_stats").value).map(l=>splitBar(l,2));
   HOME.prodTitle = document.getElementById("e_prodTitle").value.trim();
-  HOME.prod = lines(document.getElementById("e_prod").value).map(l=>splitBar(l,4));
+  HOME.prod = edProd.filter(p=>(p[0]||"").trim());
   HOME.custom = {
     title: document.getElementById("e_customTitle").value.trim(),
     text: document.getElementById("e_customText").value.trim(),
@@ -773,13 +931,13 @@ function saveEditor(){
     img: document.getElementById("e_onsiteImg").value.trim()
   };
   HOME.servTitle = document.getElementById("e_servTitle").value.trim();
-  HOME.serv = lines(document.getElementById("e_serv").value).map(l=>splitBar(l,4));
+  HOME.serv = edServ.filter(s=>(s[1]||"").trim());
   HOME.about = {
     title: document.getElementById("e_aboutTitle").value.trim(),
     text: document.getElementById("e_aboutText").value.trim(),
     img: document.getElementById("e_aboutImg").value.trim()
   };
-  HOME.brands = lines(document.getElementById("e_brands").value);
+  HOME.brands = edBrands.map(b=>(b||"").trim()).filter(Boolean);
   HOME.cta = {
     title: document.getElementById("e_ctaTitle").value.trim(),
     sub: document.getElementById("e_ctaSub").value.trim()
@@ -791,20 +949,27 @@ function saveEditor(){
 
 /* ── Subida de imágenes ── */
 let uploadTarget = null, uploadMode = "set";
-function uploadTo(id){ uploadTarget = id; uploadMode = "set"; document.getElementById("e_file").click(); }
-function uploadAppend(id){ uploadTarget = id; uploadMode = "append"; document.getElementById("e_file").click(); }
+function uploadTo(id){ uploadTarget = id; uploadMode = "set"; pickKind = null; document.getElementById("e_file").click(); }
+function uploadAppend(id){ uploadTarget = id; uploadMode = "append"; pickKind = null; document.getElementById("e_file").click(); }
 document.getElementById("e_file").addEventListener("change", function(){
   const f = this.files && this.files[0];
-  if(!f || !uploadTarget) return;
+  if(!f || (!uploadTarget && !pickKind)) return;
   if(f.size > 400*1024 && !confirm("La imagen pesa "+Math.round(f.size/1024)+" KB. Las imágenes grandes hacen la página más lenta.\n\nRecomendado: menos de 400 KB, o súbela a Squarespace/GitHub y pega la URL.\n\n¿Insertar de todas formas?")){ this.value=""; return; }
   const rd = new FileReader();
   rd.onload = function(){
-    const el = document.getElementById(uploadTarget);
-    if(uploadMode === "append"){
-      el.value = (el.value.trim() ? el.value.trim()+"\n" : "") + rd.result;
-    } else {
-      el.value = rd.result;
+    if(pickKind === "prod"){ edProd[pickIndex][2] = rd.result; renderProdEditor(); }
+    else if(pickKind === "serv"){ edServ[pickIndex][3] = rd.result; renderServEditor(); }
+    else if(pickKind === "brand"){ edBrands[pickIndex] = rd.result; renderBrandEditor(); }
+    else {
+      const el = document.getElementById(uploadTarget);
+      if(uploadMode === "append") el.value = (el.value.trim() ? el.value.trim()+"\n" : "") + rd.result;
+      else el.value = rd.result;
+      if(uploadTarget === "e_heroImgs") previewList("e_heroImgs","heroPrev");
+      if(uploadTarget === "e_customImg") previewOne("e_customImg","customPrev");
+      if(uploadTarget === "e_onsiteImg") previewOne("e_onsiteImg","onsitePrev");
+      if(uploadTarget === "e_aboutImg") previewOne("e_aboutImg","aboutPrev");
     }
+    pickKind = null;
   };
   rd.readAsDataURL(f);
   this.value = "";
@@ -856,7 +1021,7 @@ if(window.ResizeObserver){ new ResizeObserver(dvPostHeight).observe(document.bod
   "@type": "Organization",
   "name": "Multiservicios DIVICA, C.A.",
   "url": "https://www.mdivica.com",
-  "logo": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png",
+  "logo": "https://images.squarespace-cdn.com/content/v1/677fe2dd9524f212e1de1b20/9cd0d17b-f997-44ba-9ff2-fa35e648ccd2/DIvica+logo.png?format=300w",
   "telephone": "+58-414-461-4433",
   "email": "ndiaz@mdivica.com",
   "address": {

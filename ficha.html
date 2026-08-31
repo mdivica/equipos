@@ -191,6 +191,21 @@ footer a:hover{color:white}
   width:32px;height:32px;border-radius:50%;background:var(--bg);border:1px solid var(--border);
   cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--muted)
 }
+/* Botones de edición por sección */
+.sec-edit-btn{display:none;position:absolute;top:10px;right:10px;z-index:20;background:white;color:#4F46E5;border:none;border-radius:7px;padding:6px 13px;font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;align-items:center;gap:6px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.sec-edit-btn:hover{background:#EEF2FF}
+body.edit-mode .sec-edit-btn{display:flex}
+#ficha-hero,.gallery-card,.info-card,.cta-card,.specs-card{position:relative}
+.ed-group.hidden{display:none}
+.ed-sec{font-size:12px;font-weight:800;color:#4F46E5;text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px;padding-bottom:6px;border-bottom:2px solid #EEF2FF}
+/* Miniaturas de la galería */
+.prev-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.prev-list .pv{position:relative;width:92px;height:64px;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;background:var(--bg)}
+.prev-list .pv img{width:100%;height:100%;object-fit:cover}
+.prev-list .pv button{position:absolute;top:2px;right:2px;width:19px;height:19px;border-radius:50%;border:none;background:rgba(17,24,39,.72);color:white;font-size:11px;cursor:pointer;line-height:1;padding:0}
+.prev-list .pv button:hover{background:#dc2626}
+.prev-list .pv .cover{position:absolute;left:0;bottom:0;right:0;background:rgba(208,95,27,.92);color:white;font-size:9px;font-weight:800;text-align:center;padding:2px 0;letter-spacing:.04em}
+.prev-list .pv .mkcover{position:absolute;left:2px;bottom:2px;width:auto;height:16px;border-radius:4px;background:rgba(255,255,255,.9);color:#D05F1B;font-size:9px;font-weight:800;padding:0 6px}
 .editor-body{padding:24px}
 .form-row{margin-bottom:16px}
 .form-row label{display:block;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
@@ -249,7 +264,7 @@ footer a:hover{color:white}
 <div id="editBar">
   <div class="eb-label">✏️ Editando ficha <span id="ebFichaName"></span></div>
   <div class="eb-actions">
-    <button class="eb-btn eb-edit" onclick="openFichaEditor()">✏️ Editar contenido</button>
+    <button class="eb-btn eb-edit" onclick="openFichaEditor()">✏️ Editar todo</button>
     <button class="eb-btn eb-save" onclick="saveFichasData()">💾 Guardar y publicar</button>
     <button class="eb-btn eb-reset" onclick="confirmResetFichas()">↺ Resetear</button>
     <button class="eb-btn eb-exit" onclick="toggleEditMode()">✕ Salir</button>
@@ -292,6 +307,7 @@ footer a:hover{color:white}
 
 <!-- ════ HERO ════ -->
 <section id="ficha-hero">
+  <button class="sec-edit-btn" onclick="openFichaEditor('hero')">✏️ Editar título</button>
   <img id="fichaHeroImg" src="" alt="">
   <div id="fichaHeroBg"></div>
   <div class="hero-inner">
@@ -306,24 +322,29 @@ footer a:hover{color:white}
 <!-- ════ LAYOUT ════ -->
 <div class="ficha-layout">
   <div class="gallery-card">
+    <button class="sec-edit-btn" onclick="openFichaEditor('fotos')">✏️ Editar fotos</button>
     <div class="gallery-main" id="galleryMain"></div>
     <div class="gallery-thumbs" id="galleryThumbs"></div>
   </div>
 
   <div class="info-col">
     <div class="info-card">
+      <button class="sec-edit-btn" onclick="openFichaEditor('desc')">✏️ Editar</button>
       <div class="section-title">Descripción</div>
       <p class="ficha-desc" id="fDesc"></p>
     </div>
     <div class="info-card" id="appsCard">
+      <button class="sec-edit-btn" onclick="openFichaEditor('apps')">✏️ Editar</button>
       <div class="section-title">Aplicaciones</div>
       <div class="apps-tags" id="fApps"></div>
     </div>
     <div class="info-card" id="incluyeCard">
+      <button class="sec-edit-btn" onclick="openFichaEditor('incluye')">✏️ Editar</button>
       <div class="section-title">Incluye</div>
       <ul class="incluye-list" id="fIncluye"></ul>
     </div>
     <div class="cta-card">
+      <button class="sec-edit-btn" onclick="openFichaEditor('cta')">✏️ Editar</button>
       <div class="cta-price">Precio<b>A solicitud — cotización sin compromiso</b></div>
       <div class="cta-buttons">
         <a class="btn-wa-big" id="fWa" href="#" target="_blank">
@@ -340,6 +361,7 @@ footer a:hover{color:white}
 <!-- ════ SPECS ════ -->
 <div class="specs-section">
   <div class="specs-card">
+    <button class="sec-edit-btn" onclick="openFichaEditor('specs')">✏️ Editar especificaciones</button>
     <div class="section-title">Especificaciones Técnicas</div>
     <div class="specs-grid" id="fSpecs"></div>
   </div>
@@ -389,49 +411,77 @@ footer a:hover{color:white}
       <button class="editor-close" onclick="closeFichaEditor()">✕</button>
     </div>
     <div class="editor-body">
-      <div class="form-row">
-        <label>Título</label>
-        <input type="text" id="fe_title">
-      </div>
-      <div class="form-row">
-        <label>Subtítulo</label>
-        <textarea id="fe_sub" style="min-height:52px"></textarea>
-      </div>
-      <div class="form-row-2">
+      <div class="ed-group" data-ed="hero">
+        <div class="ed-sec">🎯 Título y encabezado</div>
         <div class="form-row">
-          <label>Etiqueta superior (eyebrow)</label>
-          <input type="text" id="fe_eyebrow">
+          <label>Título</label>
+          <input type="text" id="fe_title">
         </div>
         <div class="form-row">
-          <label>Referencia / SKU</label>
-          <input type="text" id="fe_sku">
+          <label>Subtítulo</label>
+          <textarea id="fe_sub" style="min-height:52px"></textarea>
+        </div>
+        <div class="form-row-2">
+          <div class="form-row">
+            <label>Etiqueta superior (eyebrow)</label>
+            <input type="text" id="fe_eyebrow">
+          </div>
+          <div class="form-row">
+            <label>Referencia / SKU</label>
+            <input type="text" id="fe_sku">
+          </div>
         </div>
       </div>
-      <div class="form-row">
-        <label>Descripción <span class="hint">(deja una línea en blanco para separar párrafos)</span></label>
-        <textarea id="fe_desc" style="min-height:140px"></textarea>
+
+      <div class="ed-group" data-ed="fotos">
+        <div class="ed-sec">📷 Fotos del equipo</div>
+        <div class="form-row">
+          <label>Imágenes <span class="hint">— la marcada con ★ es la principal; pasa el cursor para elegir otra o quitarla</span></label>
+          <div class="prev-list" id="fePrev"></div>
+          <button class="upload-img-btn" onclick="document.getElementById('fe_imgFile').click()">📁 Subir foto desde mi computadora</button>
+          <input type="file" id="fe_imgFile" accept="image/*" style="display:none" onchange="feUploadImg(this)">
+          <textarea id="fe_imgs" style="min-height:80px;margin-top:8px;font-size:12px" oninput="fePreview()" placeholder="Una URL por línea"></textarea>
+        </div>
       </div>
-      <div class="form-row">
-        <label>Imágenes <span class="hint">(una URL por línea; la primera es la principal)</span></label>
-        <textarea id="fe_imgs" style="min-height:90px"></textarea>
-        <button class="upload-img-btn" onclick="document.getElementById('fe_imgFile').click()">📁 Subir imagen desde mi computadora</button>
-        <input type="file" id="fe_imgFile" accept="image/*" style="display:none" onchange="feUploadImg(this)">
+
+      <div class="ed-group" data-ed="desc">
+        <div class="ed-sec">📝 Descripción</div>
+        <div class="form-row">
+          <label>Texto <span class="hint">(deja una línea en blanco para separar párrafos)</span></label>
+          <textarea id="fe_desc" style="min-height:140px"></textarea>
+        </div>
       </div>
-      <div class="form-row">
-        <label>Aplicaciones <span class="hint">(una por línea)</span></label>
-        <textarea id="fe_apps"></textarea>
+
+      <div class="ed-group" data-ed="apps">
+        <div class="ed-sec">🎯 Aplicaciones</div>
+        <div class="form-row">
+          <label>Una por línea</label>
+          <textarea id="fe_apps"></textarea>
+        </div>
       </div>
-      <div class="form-row">
-        <label>Incluye <span class="hint">(una por línea)</span></label>
-        <textarea id="fe_incluye"></textarea>
+
+      <div class="ed-group" data-ed="incluye">
+        <div class="ed-sec">✅ Incluye</div>
+        <div class="form-row">
+          <label>Una por línea</label>
+          <textarea id="fe_incluye"></textarea>
+        </div>
       </div>
-      <div class="form-row">
-        <label>Especificaciones <span class="hint">(una por línea, formato: Nombre | Valor)</span></label>
-        <textarea id="fe_specs" style="min-height:140px"></textarea>
+
+      <div class="ed-group" data-ed="specs">
+        <div class="ed-sec">📊 Especificaciones técnicas</div>
+        <div class="form-row">
+          <label>Una por línea, formato: <span class="hint">Nombre | Valor</span></label>
+          <textarea id="fe_specs" style="min-height:180px"></textarea>
+        </div>
       </div>
-      <div class="form-row">
-        <label>Mensaje de WhatsApp</label>
-        <input type="text" id="fe_waMsg">
+
+      <div class="ed-group" data-ed="cta">
+        <div class="ed-sec">📞 Botón de cotización</div>
+        <div class="form-row">
+          <label>Mensaje de WhatsApp</label>
+          <input type="text" id="fe_waMsg">
+        </div>
       </div>
     </div>
     <div class="editor-footer">
@@ -700,6 +750,8 @@ renderFicha();
 /* Auto-altura: avisa al padre (Squarespace) la altura real del contenido */
 function dvPostHeight(){
   if(window.self === window.top) return;
+  /* Medir el contenido real (body), NO la ventana: documentElement.scrollHeight
+     crece con el iframe y causaba un bucle infinito de altura */
   var h = Math.ceil(document.body.getBoundingClientRect().height) + 10;
   window.parent.postMessage({type:"divicaFichaHeight", height:h, id:id}, "*");
 }
@@ -714,7 +766,10 @@ if(window.ResizeObserver){ new ResizeObserver(dvPostHeight).observe(document.bod
    (ej. ficha.html?id=tanque-vacuum&edit) o con Ctrl+Shift+E.
    "Guardar y publicar" descarga ficha.html actualizado para subirlo a GitHub. */
 function checkEditAccess(){
-  if(/[?#&]edit/.test(location.search + location.hash)){
+  /* Visible al abrir la página directamente; oculto dentro de mdivica.com (iframe). */
+  var enIframe = (window.self !== window.top);
+  var forzado  = /[?#&]edit/.test(location.search + location.hash);
+  if(!enIframe || forzado){
     document.getElementById("editToggle").classList.add("visible");
   }
 }
@@ -738,10 +793,35 @@ function confirmResetFichas(){
   }
 }
 
-/* ── Editor ── */
-function openFichaEditor(){
+/* ── Miniaturas de fotos ── */
+const FE_TITLES = {
+  hero:"🎯 Editar título", fotos:"📷 Editar fotos", desc:"📝 Editar descripción",
+  apps:"🎯 Editar aplicaciones", incluye:"✅ Editar 'Incluye'",
+  specs:"📊 Editar especificaciones", cta:"📞 Editar botón de cotización"
+};
+function feImgs(){ return document.getElementById("fe_imgs").value.split("\n").map(s=>s.trim()).filter(Boolean); }
+function feSetImgs(arr){ document.getElementById("fe_imgs").value = arr.join("\n"); fePreview(); }
+function fePreview(){
+  const arr = feImgs();
+  document.getElementById("fePrev").innerHTML = arr.map((src,i)=>
+    '<div class="pv"><img src="'+src.replace(/"/g,"&quot;")+'" onerror="this.style.display=\'none\'">'+
+    '<button title="Quitar" onclick="feDelImg('+i+')">✕</button>'+
+    (i===0 ? '<span class="cover">★ PRINCIPAL</span>'
+           : '<button class="mkcover" title="Usar como principal" onclick="feMakeCover('+i+')">★</button>')+
+    '</div>'
+  ).join("");
+}
+function feDelImg(i){ const a = feImgs(); a.splice(i,1); feSetImgs(a); }
+function feMakeCover(i){ const a = feImgs(); a.unshift(a.splice(i,1)[0]); feSetImgs(a); }
+
+/* ── Editor (por sección, o completo sin argumento) ── */
+function openFichaEditor(sec){
   const F = FICHAS[id];
   if(!F) return;
+  document.querySelector(".editor-title").textContent = sec ? FE_TITLES[sec] : "✏️ Editar toda la ficha";
+  document.querySelectorAll(".ed-group").forEach(function(g){
+    g.classList.toggle("hidden", !!sec && g.getAttribute("data-ed") !== sec);
+  });
   document.getElementById("fe_title").value = F.title||"";
   document.getElementById("fe_sub").value = F.sub||"";
   document.getElementById("fe_eyebrow").value = F.eyebrow||"";
@@ -752,6 +832,7 @@ function openFichaEditor(){
   document.getElementById("fe_incluye").value = (F.incluye||[]).join("\n");
   document.getElementById("fe_specs").value = (F.specs||[]).map(s=>s[0]+" | "+s[1]).join("\n");
   document.getElementById("fe_waMsg").value = F.waMsg||"";
+  fePreview();
   document.getElementById("fichaEditorOverlay").classList.add("open");
 }
 function closeFichaEditor(){ document.getElementById("fichaEditorOverlay").classList.remove("open"); }
@@ -763,6 +844,7 @@ function feUploadImg(input){
   rd.onload = function(){
     const ta = document.getElementById("fe_imgs");
     ta.value = (ta.value.trim() ? ta.value.trim()+"\n" : "") + rd.result;
+    fePreview();
   };
   rd.readAsDataURL(f);
   input.value = "";
